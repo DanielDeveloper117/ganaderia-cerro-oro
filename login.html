@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Iniciar sesión</title>
+</head>
+<body>
+
+  <style>
+    section form div{
+      width: 100%;
+        margin-bottom: 20px;
+    }
+    .label-form{
+        margin-bottom: 10px;
+        font-weight: 400;
+    }
+    .option-hover{
+        color: black !important;   
+    }
+    .option-hover:hover{
+        color: black !important;
+        cursor:pointer !important;
+    }
+</style>
+
+<section class="d-flex col-12 flex-column align-items-center justify-content-center" >
+    <img class="mb-1 mt-4" src="img/logo-copia.png" alt="" width="110" height="100">
+    <h1 class="">Iniciar sesión</h1>
+
+    <form class=" d-flex flex-column col-10 col-md-3 justify-content-center align-items-center" action="login-form.php" method="POST" >
+  
+
+        <div class="" >
+            <label class="label-form" for="usuario">Usuario</label>
+            <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario" required>
+        </div>
+
+        <div class=" ">
+            <label class="label-form" for="pass">Contraseña</label>
+            <input type="password" class="form-control" id="pass" placeholder="Contraseña" name="pass" required>
+        </div>
+
+        <input type="submit" class="btn btn-primary col-6" style="width: 100%;" value="Iniciar sesión" >
+
+    </form>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
