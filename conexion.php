@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "rancho_cerro_oro";
+$database = "ganaderia_cerro_oro";
 
 try {
     $conexion = new PDO("mysql:host=$servername;dbname=$database", $username, $password);

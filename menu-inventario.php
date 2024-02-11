@@ -49,7 +49,7 @@ include("conexion.php");
 
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
-                <a href="hembra.php"><button class="form-control btn-primary btn-options" >Registrar hembra</button></a>
+                <a href="hembra.php"><button class="form-control btn-primary btn-options" >Registrar vaca</button></a>
             </div>
             <div class="col-12 col-md-5">
                 <a href="macho.php"><button class="form-control btn-primary btn-options" >Registrar macho</button></a>
@@ -58,7 +58,7 @@ include("conexion.php");
            
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
             <div class="col-12 col-md-5">
-                <a href="hembra-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de hembras</button></a>
+                <a href="hembra-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de vacas</button></a>
             </div>
             <div class="col-12 col-md-5">
                 <a  href="macho-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de machos</button></a>
