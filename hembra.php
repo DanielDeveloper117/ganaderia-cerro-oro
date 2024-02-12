@@ -112,7 +112,7 @@ include("conexion.php");
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class="col-md-2 " >
                 <label class="label-form" for="madre_numero">Número de la madre</label>
-                <input type="number" class="form-control" id="padre_numero" placeholder="Número de la vaca" name="madre_numero" >
+                <input type="number" class="form-control" id="madre_numero" placeholder="Número de la vaca" name="madre_numero" >
             </div>
 
             <!-- Nuevo input -->
@@ -239,11 +239,11 @@ include("conexion.php");
             </div>
             <div class="col-md-3" >
                 <label class="label-form" for="vaca_edad_destete">Edad de destete</label>
-                <input type="text" class="form-control" id="edad_edad_destete" placeholder="Edad en meses" name="vaca_edad_destete" >
+                <input type="text" class="form-control" id="vaca_edad_destete" placeholder="Edad en meses" name="vaca_edad_destete" >
             </div>
             <div class="col-md-3" >
                 <label class="label-form" for="vaca_edad_venta">Edad de venta</label>
-                <input type="text" class="form-control" id="evaca_edad_venta" placeholder="Edad en meses" name="vaca_edad_venta" >
+                <input type="text" class="form-control" id="vaca_edad_venta" placeholder="Edad en meses" name="vaca_edad_venta" >
             </div>
         </div>
 
