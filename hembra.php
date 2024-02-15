@@ -108,7 +108,6 @@ include("conexion.php");
         
         <h3 class="pt-4">Madre</h3>  
         
-        
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class="col-md-2 " >
                 <label class="label-form" for="madre_numero">Número de la madre</label>
@@ -349,6 +348,7 @@ include("conexion.php");
                 <input class="form-control" type="file" id="vaca_foto_fierro"  accept="image/*" name="vaca_foto_fierro">
         </div>
         </div>
+        
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class="col-md-12" > 
                 <label class="label-form" for="vaca_observaciones">Observaciones</label>

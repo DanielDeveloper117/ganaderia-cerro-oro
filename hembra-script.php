@@ -127,8 +127,25 @@ if (isset($_POST['vaca_numero'])
     $vaca_fecha_fierro= $_POST['vaca_fecha_fierro'];
     $vaca_fecha_probable= $_POST['vaca_fecha_probable'];
     $vaca_fecha_venta= $_POST['vaca_fecha_venta'];
-    $vaca_foto_ruta = $vaca_directorioDestino . $vaca_nombreArchivo;
-    $fierro_foto_ruta = $fierro_directorioDestino . $fierro_nombreArchivo;
+    //si esta vacio el campo, llenar con ejemplo
+    if (empty($_FILES['vaca_foto']['name'])){
+        $vaca_foto_ruta = $vaca_directorioDestino . "ejemplo.jpg";
+    }
+    //si no esta vacio, llenar con lo que vas a mandar
+    else{
+        $vaca_foto_ruta = $vaca_directorioDestino . $vaca_nombreArchivo;
+    }
+    //-------------------------------------------------------------------------------------------
+    //si esta vacio el campo, llenar con ejemplo
+    if (empty($_FILES['vaca_foto_fierro']['name'])){
+        $fierro_foto_ruta = $fierro_directorioDestino . "ejemplo.jpg";
+    }
+    //si no esta vacio, llenar con lo que vas a mandar
+    else{
+       $fierro_foto_ruta = $fierro_directorioDestino . $fierro_nombreArchivo;
+    }
+    //$vaca_foto_ruta = $vaca_directorioDestino . $vaca_nombreArchivo;
+    //$fierro_foto_ruta = $fierro_directorioDestino . $fierro_nombreArchivo;
     $vaca_observaciones= $_POST['vaca_observaciones'];
  
 

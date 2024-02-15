@@ -4,280 +4,273 @@
 <?php
 include("conexion.php");
     //si el campo foto esta vacio
-    if ($_FILES['foto']['error'] === UPLOAD_ERR_NO_FILE  ) {//si el campo foto no tiene cambios se autorrellena con la ruta de la foto actual
-        //actualiza los demas campos y excluye el campo de la foto
-        try{
-            $id_vaca = $_POST['id_vaca'];
-            $padre_num = $_POST['padre_num'];
-            $padre_raza = $_POST['padre_raza'];
-            $madre_num = $_POST['madre_num'];
-            $madre_raza = $_POST['madre_raza'];
-            $fecha_nacimiento = $_POST['fecha_nacimiento'];
-            $fecha_destete = $_POST['fecha_destete'];
-            $fecha_venta = $_POST['fecha_venta'];
-            $edad_actual = $_POST['edad_actual'];
-            $edad_destete = $_POST['edad_destete'];
-            $edad_venta = $_POST['edad_venta'];
-            $peso_nacimiento = $_POST['peso_nacimiento'];
-            $peso_3meses = $_POST['peso_3meses'];
-            $peso_destete = $_POST['peso_destete'];
-            $peso_venta = $_POST['peso_venta'];
-            $ganancia_peso_dia = $_POST['ganancia_peso_dia'];
-            $ganancia_peso_mes = $_POST['ganancia_peso_mes'];
-            $finado = $_POST['finado'];
-            $cria_num = $_POST['cria_num'];
-            $cria_arete = $_POST['cria_arete'];
-            $destino_cria = $_POST['destino_cria'];
-            $vaca_num = $_POST['vaca_num'];
-            $vaca_arete = $_POST['vaca_arete'];
-            $vaca_raza = $_POST['vaca_raza'];
-            $fecha_aretado = $_POST['fecha_aretado'];
-            $estatus = $_POST['estatus'];
-            $potrero = $_POST['potrero'];
-            $lote = $_POST['lote'];
-            $estado_reproductivo = $_POST['estado_reproductivo'];
-            $celo = $_POST['celo'];
-            $parto_num = $_POST['parto_num'];
-            $estado_palpacion = $_POST['estado_palpacion'];
-            $fecha_probable = $_POST['fecha_probable'];
-            $observaciones = $_POST['observaciones'];
 
-            $sql = "UPDATE hembra SET 
-             padre_num = :padre_num,
-             padre_raza = :padre_raza,
-             madre_num = :madre_num,
-             madre_raza = :madre_raza,
-             fecha_nacimiento = :fecha_nacimiento,
-             fecha_destete = :fecha_destete,
-             fecha_venta = :fecha_venta,
-             edad_actual = :edad_actual,
-             edad_destete = :edad_destete,
-             edad_venta = :edad_venta,
-             peso_nacimiento = :peso_nacimiento,
-             peso_3meses = :peso_3meses,
-             peso_destete = :peso_destete,
-             peso_venta = :peso_venta,
-             ganancia_peso_dia = :ganancia_peso_dia,
-             ganancia_peso_mes = :ganancia_peso_mes,
-             finado = :finado,
-             cria_num = :cria_num,
-             cria_arete = :cria_arete,
-             destino_cria = :destino_cria,
-             vaca_num = :vaca_num,
-             vaca_arete = :vaca_arete,
-             vaca_raza = :vaca_raza,
-             fecha_aretado = :fecha_aretado,
-             estatus = :estatus,
-             potrero = :potrero,
-             lote = :lote,
-             estado_reproductivo = :estado_reproductivo,
-             celo = :celo,
-             parto_num = :parto_num,
-             estado_palpacion = :estado_palpacion,
-             fecha_probable = :fecha_probable,
-             observaciones = :observaciones
-             WHERE id_vaca = :id_vaca";
-            $stmt = $conexion->prepare($sql); 
-
-            $stmt->bindParam(':id_vaca', $id_vaca);
-            $stmt->bindParam(':padre_num', $padre_num);
-            $stmt->bindParam(':padre_raza', $padre_raza);
-            $stmt->bindParam(':madre_num', $madre_num);
-            $stmt->bindParam(':madre_raza', $madre_raza);
-            $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
-            $stmt->bindParam(':fecha_destete', $fecha_destete);
-            $stmt->bindParam(':fecha_venta', $fecha_venta);
-            $stmt->bindParam(':edad_actual', $edad_actual);
-            $stmt->bindParam(':edad_destete', $edad_destete);
-            $stmt->bindParam(':edad_venta', $edad_venta);
-            $stmt->bindParam(':peso_nacimiento', $peso_nacimiento);
-            $stmt->bindParam(':peso_3meses', $peso_3meses);
-            $stmt->bindParam(':peso_destete', $peso_destete);
-            $stmt->bindParam(':peso_venta', $peso_venta);
-            $stmt->bindParam(':ganancia_peso_dia', $ganancia_peso_dia);
-            $stmt->bindParam(':ganancia_peso_mes', $ganancia_peso_mes);
-            $stmt->bindParam(':finado', $finado);
-            $stmt->bindParam(':cria_num', $cria_num);
-            $stmt->bindParam(':cria_arete', $cria_arete);
-            $stmt->bindParam(':destino_cria', $destino_cria);
-            $stmt->bindParam(':vaca_num', $vaca_num);
-            $stmt->bindParam(':vaca_arete', $vaca_arete);
-            $stmt->bindParam(':vaca_raza', $vaca_raza);
-            $stmt->bindParam(':fecha_aretado', $fecha_aretado);
-            $stmt->bindParam(':estatus', $estatus);
-            $stmt->bindParam(':potrero', $potrero);
-            $stmt->bindParam(':lote', $lote);
-            $stmt->bindParam(':estado_reproductivo', $estado_reproductivo);
-            $stmt->bindParam(':celo', $celo);
-            $stmt->bindParam(':parto_num', $parto_num);
-            $stmt->bindParam(':estado_palpacion', $estado_palpacion);
-            $stmt->bindParam(':fecha_probable', $fecha_probable);
-            $stmt->bindParam(':observaciones', $observaciones);
-            $stmt->execute();
-            //si no hay errores, lanzar mensaje de exito y mostrar boton
-            echo "<script>alert('Datos actualizados con éxito.');</script>";
-            echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-            <h2 style="margin-bottom:20px;">Los datos se han actualizado correctamente.</h2>
-            <a href="hembra-tabla.php" class="btn btn-success" ><i class="bi bi-arrow-left"></i>Regresar a la tabla</a></div>';
-
-        }catch (PDOException $e) {
-            // Error cuando no se ejecuta la consulta SQL
-            echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
-            echo "Error: " . $e->getMessage();
-            echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-            <h2 style="margin-bottom:20px;">Error: los datos no fueron enviados.</h2>
-            <a href="hembra-tabla.php" class="btn btn-warning" ><i class="bi bi-arrow-left"></i>Regresar</a></div>';
-        } 
-    }else{// si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
-        if (isset($_POST['id_vaca']) && isset($_POST['padre_raza']) && isset($_POST['madre_num']) && isset($_POST['madre_raza']) 
-        && isset($_POST['fecha_nacimiento']) && isset($_POST['fecha_destete']) && isset($_POST['fecha_venta']) 
-        && isset($_POST['edad_actual']) && isset($_POST['edad_destete']) && isset($_POST['edad_venta']) 
-        && isset($_POST['peso_nacimiento']) && isset($_POST['peso_3meses']) && isset($_POST['peso_destete']) && isset($_POST['peso_venta']) 
-        && isset($_POST['ganancia_peso_dia']) && isset($_POST['ganancia_peso_mes']) && isset($_POST['finado']) 
-        && isset($_POST['cria_num']) && isset($_POST['cria_arete']) && isset($_POST['destino_cria']) 
-        && isset($_POST['vaca_num']) && isset($_POST['vaca_arete']) && isset($_POST['vaca_raza']) && isset($_POST['fecha_aretado']) 
-        && isset($_POST['estatus']) && isset($_POST['potrero']) && isset($_POST['lote'])&& isset($_POST['estado_reproductivo'])
-        && isset($_POST['celo']) && isset($_POST['parto_num']) && isset($_POST['estado_palpacion']) && isset($_POST['fecha_probable']) 
-        && isset($_FILES['foto']) 
-        && isset($_POST['observaciones'])) {
+//------------------------------------------------------------------- si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
+        if (isset($_POST['id_vaca'])
+            && isset($_POST['vaca_numero'])
+            && isset($_POST['vaca_arete'])
+            && isset($_POST['vaca_tatuaje'])
+            && isset($_POST['vaca_raza'])
+            && isset($_POST['madre_numero'])
+            && isset($_POST['madre_arete'])
+            && isset($_POST['madre_tatuaje'])
+            && isset($_POST['madre_raza'])
+            && isset($_POST['padre_numero'])
+            && isset($_POST['padre_arete'])
+            && isset($_POST['padre_tatuaje'])
+            && isset($_POST['padre_raza'])
+            && isset($_POST['vaca_color'])
+            && isset($_POST['vaca_talla'])
+            && isset($_POST['vaca_pelo'])
+            && isset($_POST['vaca_condicion'])
+            && isset($_POST['vaca_estatus'])
+            && isset($_POST['vaca_potrero'])
+            && isset($_POST['vaca_lote'])
+            && isset($_POST['vaca_estado_re'])
+            && isset($_POST['vaca_celo'])
+            && isset($_POST['vaca_partos'])
+            && isset($_POST['vaca_estado_pal'])
+            && isset($_POST['vaca_finada'])
+            && isset($_POST['vaca_edad_actual'])
+            && isset($_POST['vaca_edad_destete'])
+            && isset($_POST['vaca_edad_venta'])
+            && isset($_POST['vaca_peso_nacimiento'])
+            && isset($_POST['vaca_peso_actual'])
+            && isset($_POST['vaca_peso_destete'])
+            && isset($_POST['vaca_peso_venta'])
+            && isset($_POST['vaca_gan_peso_dia'])
+            && isset($_POST['vaca_gan_peso_mes'])
+            && isset($_POST['vaca_peso_3meses'])
+            && isset($_POST['vaca_fecha_nacimiento'])
+            && isset($_POST['vaca_fecha_destete'])
+            && isset($_POST['vaca_fecha_aretado'])
+            && isset($_POST['vaca_fecha_tatuaje'])
+            && isset($_POST['vaca_fecha_fierro'])
+            && isset($_POST['vaca_fecha_probable'])
+            && isset($_POST['vaca_fecha_venta'])
+            && isset($_FILES['vaca_foto'])
+            && isset($_FILES['vaca_foto_fierro'])
+            && isset($_POST['vaca_observaciones'])) {
             //establecer ruta para almacenar la foto
-            $directorioDestino = 'fotografias/';
-            $nombreArchivo = $_FILES['foto']['name'];
-            $ubicacionTemporal = $_FILES['foto']['tmp_name'];
+            $random_number1 = rand(1, 1000);
+            $random_number2 = rand(1, 1000);
+         
+            $vaca_directorioDestino = 'vacas_fotos/';
+            $vaca_nombreArchivo =  $_POST['vaca_numero'] . "_" . $_FILES['vaca_foto']['name'];
+            $vaca_ubicacionTemporal = $_FILES['vaca_foto']['tmp_name'];
+        
+            $fierro_directorioDestino = 'vacas_fotos_fierro/';
+            $fierro_nombreArchivo = $_POST['vaca_numero'] . "_" . $_FILES['vaca_foto_fierro']['name'];
+            $fierro_ubicacionTemporal = $_FILES['vaca_foto_fierro']['tmp_name'];
+            
             // Mueve la imagen al directorio deseado
-            if (move_uploaded_file($ubicacionTemporal, $directorioDestino . $nombreArchivo)) {
-               // echo "La imagen se ha guardado correctamente en la carpeta 'fotografias'.";
-               echo "<script>alert('Imagen guardada con exito.');</script>";
+            if (move_uploaded_file($vaca_ubicacionTemporal, $vaca_directorioDestino . $vaca_nombreArchivo)) {
+               echo "La imagen se ha guardado correctamente en la carpeta 'vacas_fotos'";
+               echo '</br>';
             } else {
-                echo "<script>alert('Hubo un error al guardar la imagen.');</script>";
+                echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
             }
+               // Mueve la imagen al directorio deseado
+               if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
+                echo "La imagen se ha guardado correctamente en la carpeta 'vacas_fotos_fierro'";
+                echo '</br>';
+             } else {
+                 echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
+             }
             // Acceder y guardar en variables los datos del formulario recibido
-            $id_vaca = $_POST['id_vaca'];
-            $padre_num = $_POST['padre_num'];
-            $padre_raza = $_POST['padre_raza'];
-            $madre_num = $_POST['madre_num'];
-            $madre_raza = $_POST['madre_raza'];
-            $fecha_nacimiento = $_POST['fecha_nacimiento'];
-            $fecha_destete = $_POST['fecha_destete'];
-            $fecha_venta = $_POST['fecha_venta'];
-            $edad_actual = $_POST['edad_actual'];
-            $edad_destete = $_POST['edad_destete'];
-            $edad_venta = $_POST['edad_venta'];
-            $peso_nacimiento = $_POST['peso_nacimiento'];
-            $peso_3meses = $_POST['peso_3meses'];
-            $peso_destete = $_POST['peso_destete'];
-            $peso_venta = $_POST['peso_venta'];
-            $ganancia_peso_dia = $_POST['ganancia_peso_dia'];
-            $ganancia_peso_mes = $_POST['ganancia_peso_mes'];
-            $finado = $_POST['finado'];
-            $cria_num = $_POST['cria_num'];
-            $cria_arete = $_POST['cria_arete'];
-            $destino_cria = $_POST['destino_cria'];
-            $vaca_num = $_POST['vaca_num'];
-            $vaca_arete = $_POST['vaca_arete'];
-            $vaca_raza = $_POST['vaca_raza'];
-            $fecha_aretado = $_POST['fecha_aretado'];
-            $estatus = $_POST['estatus'];
-            $potrero = $_POST['potrero'];
-            $lote = $_POST['lote'];
-            $estado_reproductivo = $_POST['estado_reproductivo'];
-            $celo = $_POST['celo'];
-            $parto_num = $_POST['parto_num'];
-            $estado_palpacion = $_POST['estado_palpacion'];
-            $fecha_probable = $_POST['fecha_probable'];
-            $observaciones = $_POST['observaciones'];
-            $foto_ruta = $directorioDestino . $nombreArchivo;
+            $id_vaca= $_POST['id_vaca'];
+            $vaca_numero= $_POST['vaca_numero'];
+            $vaca_arete= $_POST['vaca_arete'];
+            $vaca_tatuaje= $_POST['vaca_tatuaje'];
+            $vaca_raza= $_POST['vaca_raza'];
+            $madre_numero= $_POST['madre_numero'];
+            $madre_arete= $_POST['madre_arete'];
+            $madre_tatuaje= $_POST['madre_tatuaje'];
+            $madre_raza= $_POST['madre_raza'];
+            $padre_numero= $_POST['padre_numero'];
+            $padre_arete= $_POST['padre_arete'];
+            $padre_tatuaje= $_POST['padre_tatuaje'];
+            $padre_raza= $_POST['padre_raza'];
+            $vaca_color= $_POST['vaca_color'];
+            $vaca_talla = $_POST['vaca_talla'];
+            $vaca_pelo= $_POST['vaca_pelo'];
+            $vaca_condicion= $_POST['vaca_condicion'];
+            $vaca_estatus= $_POST['vaca_estatus'];
+            $vaca_potrero= $_POST['vaca_potrero'];
+            $vaca_lote= $_POST['vaca_lote'];
+            $vaca_estado_re= $_POST['vaca_estado_re'];
+            $vaca_celo= $_POST['vaca_celo'];
+            $vaca_partos= $_POST['vaca_partos'];
+            $vaca_estado_pal= $_POST['vaca_estado_pal'];
+            $vaca_finada= $_POST['vaca_finada'];
+            $vaca_edad_actual= $_POST['vaca_edad_actual'];
+            $vaca_edad_destete= $_POST['vaca_edad_destete'];
+            $vaca_edad_venta= $_POST['vaca_edad_venta'];
+            $vaca_peso_nacimiento= $_POST['vaca_peso_nacimiento'];
+            $vaca_peso_actual= $_POST['vaca_peso_actual'];
+            $vaca_peso_destete= $_POST['vaca_peso_destete'];
+            $vaca_peso_venta= $_POST['vaca_peso_venta'];
+            $vaca_gan_peso_dia= $_POST['vaca_gan_peso_dia'];
+            $vaca_gan_peso_mes= $_POST['vaca_gan_peso_mes'];
+            $vaca_peso_3meses= $_POST['vaca_peso_3meses'];
+            $vaca_fecha_nacimiento= $_POST['vaca_fecha_nacimiento'];
+            $vaca_fecha_destete= $_POST['vaca_fecha_destete'];
+            $vaca_fecha_aretado= $_POST['vaca_fecha_aretado'];
+            $vaca_fecha_tatuaje= $_POST['vaca_fecha_tatuaje'];
+            $vaca_fecha_fierro= $_POST['vaca_fecha_fierro'];
+            $vaca_fecha_probable= $_POST['vaca_fecha_probable'];
+            $vaca_fecha_venta= $_POST['vaca_fecha_venta'];
+            $sql = "SELECT id_vaca,
+            vaca_foto, vaca_foto_fierro 
+             FROM vacas WHERE id_vaca = :id_vaca";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bindParam(':id_vaca', $id_vaca); 
+            $stmt->execute();
+
+            $arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            //si esta vacio el que me mandaste y esta vacio en la bd, llenar con ejemplo
+            if (empty($_FILES['vaca_foto']['name']) and empty($arreglo_sql['vaca_foto'])){
+                $vaca_foto_ruta = $vaca_directorioDestino . "ejemplo.jpg";
+            }
+            //si no esta vacio el que me mandaste o hay algo en la bd, llenar con el de la bd
+            if(!empty($_FILES['vaca_foto']['name']) or  !empty($arreglo_sql['vaca_foto']) ){
+                $vaca_foto_ruta=$arreglo_sql['vaca_foto'];
+            }
+            //si no esta vacio en la que me mandaste, llenar con lo que vas a mandar
+            if(!empty($_FILES['vaca_foto']['name'])){
+                $vaca_foto_ruta = $vaca_directorioDestino . $vaca_nombreArchivo;
+            }
+            //-------------------------------------------------------------------------------------------
+            //si esta vacio el que me mandaste y esta vacio en la bd, llenar con ejemplo
+            if (empty($_FILES['vaca_foto_fierro']['name']) and empty($arreglo_sql['vaca_foto_fierro'])){
+                $fierro_foto_ruta = $fierro_directorioDestino . "ejemplo.jpg";
+            }
+            //si no esta vacio el que me mandaste o hay algo en la bd, llenar con el de la bd
+            if(!empty($_FILES['vaca_foto_fierro']['name']) or !empty($arreglo_sql['vaca_foto_fierro']) ){
+                $fierro_foto_ruta=$arreglo_sql['vaca_foto_fierro'];
+            }
+            //si no esta vacio en la que me mandaste, llenar con lo que vas a mandar
+            if(!empty($_FILES['vaca_foto_fierro']['name'])){
+               $fierro_foto_ruta = $fierro_directorioDestino . $fierro_nombreArchivo;
+            }
+        
+
+            $vaca_observaciones= $_POST['vaca_observaciones'];
             //intentar la consulta de actualizar todos los campos
             try {
                 //instancia que indica que la conexion "$conexion" de conexion.php sera usada aqui con PDO
                 $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 // Construir la consulta de inserción con marcadores de posición
-                $sql = "UPDATE hembra SET 
-                padre_num = :padre_num,
-                padre_raza = :padre_raza,
-                madre_num = :madre_num,
-                madre_raza = :madre_raza,
-                fecha_nacimiento = :fecha_nacimiento,
-                fecha_destete = :fecha_destete,
-                fecha_venta = :fecha_venta,
-                edad_actual = :edad_actual,
-                edad_destete = :edad_destete,
-                edad_venta = :edad_venta,
-                peso_nacimiento = :peso_nacimiento,
-                peso_3meses = :peso_3meses,
-                peso_destete = :peso_destete,
-                peso_venta = :peso_venta,
-                ganancia_peso_dia = :ganancia_peso_dia,
-                ganancia_peso_mes = :ganancia_peso_mes,
-                finado = :finado,
-                cria_num = :cria_num,
-                cria_arete = :cria_arete,
-                destino_cria = :destino_cria,
-                vaca_num = :vaca_num,
+                $sql = "UPDATE vacas SET 
+                vaca_numero = :vaca_numero,
                 vaca_arete = :vaca_arete,
+                vaca_tatuaje = :vaca_tatuaje,
                 vaca_raza = :vaca_raza,
-                fecha_aretado = :fecha_aretado,
-                estatus = :estatus,
-                potrero = :potrero,
-                lote = :lote,
-                estado_reproductivo = :estado_reproductivo,
-                celo = :celo,
-                parto_num = :parto_num,
-                estado_palpacion = :estado_palpacion,
-                fecha_probable = :fecha_probable,
-                foto = :foto,
-                observaciones = :observaciones
+                madre_numero = :madre_numero,
+                madre_arete = :madre_arete,
+                madre_tatuaje = :madre_tatuaje,
+                madre_raza = :madre_raza,
+                padre_numero = :padre_numero,
+                padre_arete = :padre_arete,
+                padre_tatuaje = :padre_tatuaje,
+                padre_raza = :padre_raza,
+                vaca_color = :vaca_color,
+                vaca_talla = :vaca_talla,
+                vaca_pelo = :vaca_pelo,
+                vaca_condicion = :vaca_condicion,
+                vaca_estatus = :vaca_estatus,
+                vaca_potrero = :vaca_potrero,
+                vaca_lote = :vaca_lote,
+                vaca_estado_re = :vaca_estado_re,
+                vaca_celo = :vaca_celo,
+                vaca_partos = :vaca_partos,
+                vaca_estado_pal = :vaca_estado_pal,
+                vaca_finada = :vaca_finada,
+                vaca_edad_actual = :vaca_edad_actual,
+                vaca_edad_destete = :vaca_edad_destete,
+                vaca_edad_venta = :vaca_edad_venta,
+                vaca_peso_nacimiento = :vaca_peso_nacimiento,
+                vaca_peso_actual = :vaca_peso_actual,
+                vaca_peso_destete = :vaca_peso_destete,
+                vaca_peso_venta = :vaca_peso_venta,
+                vaca_gan_peso_dia = :vaca_gan_peso_dia,
+                vaca_gan_peso_mes = :vaca_gan_peso_mes,
+                vaca_peso_3meses = :vaca_peso_3meses,
+                vaca_fecha_nacimiento = :vaca_fecha_nacimiento,
+                vaca_fecha_destete = :vaca_fecha_destete,
+                vaca_fecha_aretado = :vaca_fecha_aretado,
+                vaca_fecha_tatuaje = :vaca_fecha_tatuaje,
+                vaca_fecha_fierro = :vaca_fecha_fierro,
+                vaca_fecha_probable = :vaca_fecha_probable,
+                vaca_fecha_venta = :vaca_fecha_venta,
+                vaca_foto = :vaca_foto,
+                vaca_foto_fierro = :vaca_foto_fierro,
+                vaca_observaciones = :vaca_observaciones
                 WHERE id_vaca = :id_vaca";
                 $stmt = $conexion->prepare($sql);
                 // Vincular los valores a los marcadores de posición de las columnas de la consulta
                 #$id_usuario=$_SESSION['id_usuario']; //insertar id del usuario actual en sesion para clave foranea
                 //$stmt->bindParam(':id_usuario', $id_usuario);
                 $stmt->bindParam(':id_vaca', $id_vaca);
-                $stmt->bindParam(':padre_num', $padre_num);
-                $stmt->bindParam(':padre_raza', $padre_raza);
-                $stmt->bindParam(':madre_num', $madre_num);
-                $stmt->bindParam(':madre_raza', $madre_raza);
-                $stmt->bindParam(':fecha_nacimiento', $fecha_nacimiento);
-                $stmt->bindParam(':fecha_destete', $fecha_destete);
-                $stmt->bindParam(':fecha_venta', $fecha_venta);
-                $stmt->bindParam(':edad_actual', $edad_actual);
-                $stmt->bindParam(':edad_destete', $edad_destete);
-                $stmt->bindParam(':edad_venta', $edad_venta);
-                $stmt->bindParam(':peso_nacimiento', $peso_nacimiento);
-                $stmt->bindParam(':peso_3meses', $peso_3meses);
-                $stmt->bindParam(':peso_destete', $peso_destete);
-                $stmt->bindParam(':peso_venta', $peso_venta);
-                $stmt->bindParam(':ganancia_peso_dia', $ganancia_peso_dia);
-                $stmt->bindParam(':ganancia_peso_mes', $ganancia_peso_mes);
-                $stmt->bindParam(':finado', $finado);
-                $stmt->bindParam(':cria_num', $cria_num);
-                $stmt->bindParam(':cria_arete', $cria_arete);
-                $stmt->bindParam(':destino_cria', $destino_cria);
-                $stmt->bindParam(':vaca_num', $vaca_num);
+                $stmt->bindParam(':vaca_numero', $vaca_numero);
                 $stmt->bindParam(':vaca_arete', $vaca_arete);
+                $stmt->bindParam(':vaca_tatuaje', $vaca_tatuaje);
                 $stmt->bindParam(':vaca_raza', $vaca_raza);
-                $stmt->bindParam(':fecha_aretado', $fecha_aretado);
-                $stmt->bindParam(':estatus', $estatus);
-                $stmt->bindParam(':potrero', $potrero);
-                $stmt->bindParam(':lote', $lote);
-                $stmt->bindParam(':estado_reproductivo', $estado_reproductivo);
-                $stmt->bindParam(':celo', $celo);
-                $stmt->bindParam(':parto_num', $parto_num);
-                $stmt->bindParam(':estado_palpacion', $estado_palpacion);
-                $stmt->bindParam(':fecha_probable', $fecha_probable);
-                $stmt->bindParam(':foto', $foto_ruta);
-                $stmt->bindParam(':observaciones', $observaciones);
+                $stmt->bindParam(':madre_numero', $madre_numero);
+                $stmt->bindParam(':madre_arete', $madre_arete);
+                $stmt->bindParam(':madre_tatuaje', $madre_tatuaje);
+                $stmt->bindParam(':madre_raza', $madre_raza);
+                $stmt->bindParam(':padre_numero', $padre_numero);
+                $stmt->bindParam(':padre_arete', $padre_arete);
+                $stmt->bindParam(':padre_tatuaje', $padre_tatuaje);
+                $stmt->bindParam(':padre_raza', $padre_raza);
+                $stmt->bindParam(':vaca_color', $vaca_color);
+                $stmt->bindParam(':vaca_talla', $vaca_talla);
+                $stmt->bindParam(':vaca_pelo', $vaca_pelo);
+                $stmt->bindParam(':vaca_condicion', $vaca_condicion);
+                $stmt->bindParam(':vaca_estatus', $vaca_estatus);
+                $stmt->bindParam(':vaca_potrero', $vaca_potrero);
+                $stmt->bindParam(':vaca_lote', $vaca_lote);
+                $stmt->bindParam(':vaca_estado_re', $vaca_estado_re);
+                $stmt->bindParam(':vaca_celo', $vaca_celo);
+                $stmt->bindParam(':vaca_partos', $vaca_partos);
+                $stmt->bindParam(':vaca_estado_pal', $vaca_estado_pal);
+                $stmt->bindParam(':vaca_finada', $vaca_finada);
+                $stmt->bindParam(':vaca_edad_actual', $vaca_edad_actual);
+                $stmt->bindParam(':vaca_edad_destete', $vaca_edad_destete);
+                $stmt->bindParam(':vaca_edad_venta', $vaca_edad_venta);
+                $stmt->bindParam(':vaca_peso_nacimiento', $vaca_peso_nacimiento);
+                $stmt->bindParam(':vaca_peso_actual', $vaca_peso_actual);
+                $stmt->bindParam(':vaca_peso_destete', $vaca_peso_destete);
+                $stmt->bindParam(':vaca_peso_venta', $vaca_peso_venta);
+                $stmt->bindParam(':vaca_gan_peso_dia', $vaca_gan_peso_dia);
+                $stmt->bindParam(':vaca_gan_peso_mes', $vaca_gan_peso_mes);
+                $stmt->bindParam(':vaca_peso_3meses', $vaca_peso_3meses);
+                $stmt->bindParam(':vaca_fecha_nacimiento', $vaca_fecha_nacimiento);
+                $stmt->bindParam(':vaca_fecha_destete', $vaca_fecha_destete);
+                $stmt->bindParam(':vaca_fecha_aretado', $vaca_fecha_aretado);
+                $stmt->bindParam(':vaca_fecha_tatuaje', $vaca_fecha_tatuaje);
+                $stmt->bindParam(':vaca_fecha_fierro', $vaca_fecha_fierro);
+                $stmt->bindParam(':vaca_fecha_probable', $vaca_fecha_probable);
+                $stmt->bindParam(':vaca_fecha_venta', $vaca_fecha_venta);
+                $stmt->bindParam(':vaca_foto', $vaca_foto_ruta);
+                $stmt->bindParam(':vaca_foto_fierro', $fierro_foto_ruta);
+                $stmt->bindParam(':vaca_observaciones', $vaca_observaciones);
                 $stmt->execute();
                 $conexion = null;
                 echo "<script>alert('Registro actualizado con éxito');</script>";
                 echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
                 <h2 style="margin-bottom:20px;">Los datos se han actualizado correctamente.</h2>
                 <a href="hembra-tabla.php" class="btn btn-success" ><i class="bi bi-arrow-left"></i>Regresar a la tabla</a></div>';
+                echo ''.$arreglo_sql['vaca_foto']. '</br>';
+                echo ''.$arreglo_sql['vaca_foto_fierro']. '</br>';
+
             
             } catch (PDOException $e) {
                  // Error cuando no se ejecuta la consulta SQL
                 echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
-                echo "Error: " . $e->getMessage();
+                echo "Error en la segunda condicional : " . $e->getMessage();
                 echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
                 <h2 style="margin-bottom:20px;">Error: los datos no fueron enviados.</h2>
                 <a href="hembra-tabla.php" class="btn btn-warning" ><i class="bi bi-arrow-left"></i>Regresar</a></div>';
@@ -290,6 +283,6 @@ include("conexion.php");
             <h2 style="margin-bottom:20px;">Error: los datos no fueron actualizados.</h2>
             <a href="hembra-tabla.php" class="btn btn-warning" ><i class="bi bi-arrow-left"></i>Regresar</a></div>';
         }
-    }
+    
 
 ?>

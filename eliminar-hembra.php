@@ -8,7 +8,7 @@ if (isset($_POST['id_vaca'])) {
     try {
         // Establecer la conexión PDO aquí
 
-        $sql = "DELETE FROM hembra WHERE id_vaca = :id_vaca";
+        $sql = "DELETE FROM vacas WHERE id_vaca = :id_vaca";
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':id_vaca', $id_vaca);
         $stmt->execute();
