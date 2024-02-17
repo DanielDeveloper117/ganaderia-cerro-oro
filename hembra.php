@@ -329,7 +329,7 @@ include("conexion.php");
 
         <div class="justify-content-md-around d-md-flex flex-md-row col-md-12">
             <div class="col-md-5 btn-prod" >
-                <a href="hembra-tabla.php" class="form-control btn-primary">Formulario de producción</a>  
+                <a href="crias-form.php" class="form-control btn-primary">Formulario de producción</a>  
             </div>
             <div class="col-md-5 btn-prod" >
                 <a href="hembra-tabla.php" class="form-control btn-primary">Ver registros de producción</a>  

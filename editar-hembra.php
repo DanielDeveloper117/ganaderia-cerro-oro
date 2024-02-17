@@ -9,48 +9,48 @@ include("conexion.php");
 //    echo 'Usuario autenticado con ID: '.$_SESSION['id_usuario'];
 //}
 
-if (isset($_POST['id_vaca'])) {
-    $id_vaca = $_POST['id_vaca'];
+    if (isset($_POST['id_vaca'])) {
+        $id_vaca = $_POST['id_vaca'];
 
-    try {
+        try {
 
-        $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, 
-        madre_numero, madre_arete, madre_tatuaje, madre_raza, 
-        padre_numero, padre_arete, padre_tatuaje, padre_raza, 
-        vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
-        vaca_lote, vaca_estado_re, vaca_celo, vaca_partos, vaca_estado_pal, vaca_finada, 
-        vaca_edad_actual, vaca_edad_destete, vaca_edad_venta, 
-        vaca_peso_nacimiento, vaca_peso_actual, vaca_peso_destete, vaca_peso_venta, 
-        vaca_gan_peso_dia, vaca_gan_peso_mes, vaca_peso_3meses, 
-        vaca_fecha_nacimiento, vaca_fecha_destete, vaca_fecha_aretado, 
-        vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
-        vaca_foto, vaca_foto_fierro, 
-        vaca_observaciones FROM vacas WHERE id_vaca = :id_vaca";
-        $stmt = $conexion->prepare($sql);
-        $stmt->bindParam(':id_vaca', $id_vaca);
-        $stmt->execute();
-        $arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC);
-        // Cerrar la conexión
-        //$conexion = null;
-        
-        // Redireccionar a la página anterior o mostrar un mensaje de éxito
-        //header("Location: hembra-tabla.php");
-        //exit();
-    } catch (PDOException $e) {
-        // Manejar errores de la base de datos
-        echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
-        echo "Error: " . $e->getMessage();
+            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, 
+            madre_numero, madre_arete, madre_tatuaje, madre_raza, 
+            padre_numero, padre_arete, padre_tatuaje, padre_raza, 
+            vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
+            vaca_lote, vaca_estado_re, vaca_celo, vaca_partos, vaca_estado_pal, vaca_finada, 
+            vaca_edad_actual, vaca_edad_destete, vaca_edad_venta, 
+            vaca_peso_nacimiento, vaca_peso_actual, vaca_peso_destete, vaca_peso_venta, 
+            vaca_gan_peso_dia, vaca_gan_peso_mes, vaca_peso_3meses, 
+            vaca_fecha_nacimiento, vaca_fecha_destete, vaca_fecha_aretado, 
+            vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
+            vaca_foto, vaca_foto_fierro, 
+            vaca_observaciones FROM vacas WHERE id_vaca = :id_vaca";
+            $stmt = $conexion->prepare($sql);
+            $stmt->bindParam(':id_vaca', $id_vaca);
+            $stmt->execute();
+            $arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC);
+            // Cerrar la conexión
+            //$conexion = null;
+
+            // Redireccionar a la página anterior o mostrar un mensaje de éxito
+            //header("Location: hembra-tabla.php");
+            //exit();
+        } catch (PDOException $e) {
+            // Manejar errores de la base de datos
+            echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
+            echo "Error: " . $e->getMessage();
+            echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
+            <h2 style="margin-bottom:20px;">Error: los datos no fueron recibidos.</h2>
+            <a href="hembra-tabla.php" class="btn btn-warning" >Regresar</a></div>';
+        }
+    } else {
+        // Manejar solicitudes no válidas (puede ser útil para seguridad)
+        echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
         echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-        <h2 style="margin-bottom:20px;">Error: los datos no fueron recibidos.</h2>
+        <h2 style="margin-bottom:20px;">Error: los datos no fueron obtenidos.</h2>
         <a href="hembra-tabla.php" class="btn btn-warning" >Regresar</a></div>';
     }
-} else {
-    // Manejar solicitudes no válidas (puede ser útil para seguridad)
-    echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
-    echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-    <h2 style="margin-bottom:20px;">Error: los datos no fueron obtenidos.</h2>
-    <a href="hembra-tabla.php" class="btn btn-warning" >Regresar</a></div>';
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -257,7 +257,8 @@ if (isset($_POST['id_vaca'])) {
             
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_finada">Finado</label>
-                <select class="form-select" style="cursor: pointer; " id="vaca_finada" value="<?php echo '' . $arreglo_sql['vaca_finada'] . '';?>" name="vaca_finada">
+                <select class="form-select" style="cursor: pointer; " id="vaca_finada" name="vaca_finada">
+                        <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_finada'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_finada'] . '';?></option>
                         <option class="option-hover" value="si">Si</option>
                         <option class="option-hover" value="no" selected>No</option>
                 </select>

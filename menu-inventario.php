@@ -45,8 +45,6 @@ include("conexion.php");
 
     <div class="d-flex col-10 col-md-6 flex-column ">
         
-      
-
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
                 <a href="hembra.php"><button class="form-control btn-primary btn-options" >Registrar vaca</button></a>
@@ -65,9 +63,34 @@ include("conexion.php");
             </div>
         </div>
 
-            
-        
     </div>
+
+    <h3 class="pb-4">Producción</h3>
+
+
+    <div class="d-flex col-10 col-md-6 flex-column ">
+        
+        <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
+             <div class="col-12 col-md-5" >
+                <a href="crias-form.php"><button class="form-control btn-primary btn-options" >Registrar cría</button></a>
+            </div>
+            <div class="col-12 col-md-5">
+                <a href="#"><button class="form-control btn-primary btn-options" >x</button></a>
+            </div>
+        </div>
+           
+        <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
+            <div class="col-12 col-md-5">
+                <a href="crias-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de crías</button></a>
+            </div>
+            <div class="col-12 col-md-5">
+                <a  href="#"><button class="form-control btn-primary btn-options" >Ver registros de leche</button></a>
+            </div>
+        </div>
+
+    </div>
+
+    
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

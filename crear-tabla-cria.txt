@@ -1,0 +1,24 @@
+-- TABLA "crias"
+CREATE TABLE crias (
+id_cria INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+madre_numero INT,
+parto_numero INT,
+cria_sexo VARCHAR(50),
+cria_fecha_nacimiento VARCHAR(20),
+cria_numero INT,
+cria_arete VARCHAR(50),
+cria_tatuaje VARCHAR(50),
+cria_raza VARCHAR(50),
+cria_peso_nacimiento VARCHAR(50),
+cria_peso_actual VARCHAR(50),
+cria_peso_destete VARCHAR(50),
+cria_peso_venta VARCHAR(50),
+cria_finada VARCHAR(50),
+cria_fecha_destete VARCHAR(20),
+cria_fecha_aretado VARCHAR(20),
+cria_fecha_tatuaje VARCHAR(20),
+cria_fecha_fierro VARCHAR(20),
+cria_fecha_venta VARCHAR(20),
+cria_observaciones VARCHAR(200),
+fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

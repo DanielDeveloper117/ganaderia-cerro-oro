@@ -16,6 +16,7 @@ include("conexion.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
 
     <title>Tabla de inventario - Hembras</title>
 </head>
@@ -47,16 +48,27 @@ include("conexion.php");
 
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-1 mt-2">
-    <div class="col-10">
+    <div class="col-11">
           <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
-        <h1 class=" text-center mb-4">Registros de hembras de inventario</h1>
-        <div class="d-flex flex-row mb-1 mb-0">
-            <div class="col-1 col-xl-9"></div>
-            <div class="d-flex flex-row justify-content-around align-items-center col-11 col-xl-3">
-                <a href="hembra.php"><button class="form-control btn btn-warning" style="" ><i class="bi bi-arrow-left"></i>Regresar </button></a>
+        <h1 class=" text-center mb-4">Inventario de registros de vacas</h1>
+
+        <div class="d-flex flex-row justify-content-between mb-1 mb-0">
+
+            <div class="col-1 col-xl-8"></div>
+
+            <div class="d-flex flex-row justify-content-around align-items-center col-11 col-xl-4">
+
+                <a class="form-control btn btn-primary d-flex flex-row justify-content-evenly align-items-center" href="hembra.php">
+                    <i class="fa-solid fa-circle-plus fa-2x"></i>
+                    <span>Registrar una vaca</span>
+                </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-                <a href="menu-inventario.php"><button class="form-control btn btn-secondary" style="" >Regresar al menú</button></a> 
+                <a class="mx-2 h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
+                    <span>Regresar al menú</span>
+                </a> 
+
             </div>
+
         </div>
         <!-- <div class="d-flex  flex-row mb-2 justify-content-start col-md-2 col-7">
             <button class="form-control btn btn-danger " style="font-size:12px;" onclick="habilitarBotonEliminar()">Habilitar Botón Eliminar</button>
@@ -66,7 +78,7 @@ include("conexion.php");
     
 <section class="mb-5 mt-4" style=" padding-right: 3%; padding-left: 3%;">
     <div style=" border: 1px solid #000; overflow-x:auto;">
-        <?php
+    <?php
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
             //$sql = "SELECT id_vaca, padre_num, padre_raza, madre_num, madere_raza FROM hembra WHERE rol = 'agente'";
@@ -89,7 +101,7 @@ include("conexion.php");
                     <thead>
                     <tr>
                         <th scope="col">Eliminar</th>
-                        <th scope="col">Editar</th>
+                        <th scope="col">Editar hoja de vida</th>
                         <th scope="col">Id</th>
                         <th scope="col">Número de la vaca</th>
                         <th scope="col">Número de arete</th>
@@ -220,8 +232,7 @@ include("conexion.php");
         }
         // Cerrar la conexión
         $conexion = null;
-        ?>
-
+    ?>
     </div>
 </section>
 
