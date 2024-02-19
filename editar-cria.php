@@ -95,17 +95,31 @@ include("conexion.php");
 </style>
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5">
-    <div class="col-10">
-          <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
-        <h1 class=" text-center mb-4">Cría número <?php echo '' . $arreglo_sql['cria_numero'] . '';?></h1>
-        <div class="d-flex flex-row mb-2">
-            <div class="col-3 col-xl-9"></div>
-            <div class="d-flex flex-row justify-content-around align-items-center col-9 col-xl-3">
-                <a href="crias-tabla.php"><button class="form-control btn btn-warning" style="" ><i class="bi bi-arrow-left"></i>Regresar </button></a>
+
+    <div class="col-11 col-md-10">
+        <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
+        <h1 class=" text-center mb-4">Cría número: <?php echo '' . $arreglo_sql['cria_numero'] . '';?></h1>
+
+        <div class="d-flex flex-row justify-content-between mb-1 mb-0">
+
+            <div class="col-0 col-xl-8"></div>
+
+            <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
+
+                <a class="mx-2  h-100 form-control btn btn-warning d-flex flex-row justify-content-evenly align-items-center" href="crias-tabla.php">
+                    <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
+                    <span>Cancelar y regresar</span>
+                </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
+                <a class=" h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
+                    <span>Regresar al menú</span>
+                </a> 
+
             </div>
+
         </div>
     </div> 
+
 </section>
 
  
@@ -248,7 +262,7 @@ include("conexion.php");
             </div>           
         </div>
 
-        <input type="submit" class="btn btn-success col-6" value="Actualizar datos" >
+        <input type="submit" class="btn btn-success col-12 col-xl-6 py-3" value="Actualizar datos" >
 
     </form>
 </section>

@@ -64,16 +64,27 @@ include("conexion.php");
 
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5">
-    <div class="col-10">
-          <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
+    <div class="col-11 col-md-10">
+        <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
         <h1 class=" text-center mb-4">Producción de crías</h1>
-        <div class="d-flex flex-row mb-2">
-            <div class="col-3 col-xl-9"></div>
-            <div class="d-flex flex-row justify-content-around align-items-center col-9 col-xl-3">
-                <a href="menu-inventario.php"><button class="form-control btn btn-warning" style="" ><i class="bi bi-arrow-left"></i>Regresar al menu</button></a>
+
+        <div class="d-flex flex-row justify-content-between mb-1 mb-0">
+
+            <div class="col-0 col-xl-8"></div>
+
+            <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
+
+                <a class="mx-2  h-100 form-control btn btn-primary d-flex flex-row justify-content-evenly align-items-center" href="crias-tabla.php">
+                    <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
+                    <span>Ver registros</span>
+                </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-                <a href="crias-tabla.php"><button class="form-control btn-primary" style="" >Ver registros</button></a>  
+                <a class=" h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
+                    <span>Regresar al menú</span>
+                </a> 
+
             </div>
+
         </div>
     </div> 
 </section>
@@ -83,11 +94,27 @@ include("conexion.php");
 
     <form class=" d-flex flex-column col-11 col-md-10 justify-content-center align-items-center"  action="crias-form-script.php" method="POST" >
         <p class="p-form">Formulario de registro de producción de crías.</p>
-        <h3>Registrar cría</h3> 
+        <h3>Registrar parto</h3> 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">        
             <div class=" col-md-3" >
                 <label class="label-form" for="cria_numero">Número de la madre</label>
-                <input type="number" class="form-control" id="cria_numero" placeholder="Número de la madre" name="madre_numero" >
+                <?php
+                    if (isset($_POST['id_vaca'])) {
+                        $id_vaca = $_POST['id_vaca'];
+                    
+                        $sql = "SELECT id_vaca, vaca_numero FROM vacas WHERE id_vaca = :id_vaca";
+                        $stmt = $conexion->prepare($sql);
+                        $stmt->bindParam(':id_vaca', $id_vaca);
+
+                        $stmt->execute();
+                        $arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC);
+                        echo '<input type="number" class="form-control" id="cria_numero" value="'.$arreglo_sql['vaca_numero'].'" name="madre_numero" >';
+                    } else{
+                        echo '<input type="number" class="form-control" id="cria_numero" placeholder="Número de la madre" name="madre_numero" >';
+                    }
+
+                ?>
+                
             </div>
 
             <div class=" col-md-2" >
@@ -116,12 +143,10 @@ include("conexion.php");
                 <label class="label-form" for="cria_numero">Número de la cria</label>
                 <input type="number" class="form-control" id="cria_numero" placeholder="Número de la cría" name="cria_numero" >
             </div>
-
             <div class=" col-md-3" >
                 <label class="label-form" for="cria_arete">Arete de la cria</label>
                 <input type="text" class="form-control" id="cria_arete" placeholder="Número del arete de la cria" name="cria_arete" >
             </div>  
-            <!-- Nuevo input -->
             <div class=" col-md-3" >
                 <label class="label-form" for="cria_tatuaje">Tatuaje de la cria</label>
                 <input type="text" class="form-control" id="cria_tatuaje" placeholder="Tatuaje de la cria" name="cria_tatuaje" >
@@ -180,7 +205,7 @@ include("conexion.php");
         </div>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
-            <!-- Nuevo input -->
+
             <div class="col-md-2 " >
                 <label class="label-form" for="cria_fecha_fierro">Fecha de fierro</label>
                 <input type="date" class="form-control" id="cria_fecha_fierro" placeholder="Fecha aretado" name="cria_fecha_fierro" >
@@ -214,7 +239,7 @@ include("conexion.php");
             </div>           
         </div>
 
-        <input type="submit" class="btn btn-success col-6" value="Registrar" >
+        <input type="submit" class="btn btn-success col-12 col-xl-6 py-3" value="Registrar" >
 
     </form>
 </section>

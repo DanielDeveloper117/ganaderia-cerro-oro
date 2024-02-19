@@ -1,5 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+<script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
+
 
 <?php
 include("conexion.php");
@@ -54,39 +56,43 @@ if (isset($_POST['vaca_numero'])
     && isset($_POST['vaca_fecha_fierro'])
     && isset($_POST['vaca_fecha_probable'])
     && isset($_POST['vaca_fecha_venta'])
+    && isset($_POST['vaca_leche_dia'])
+    && isset($_POST['vaca_leche_mes'])
+    && isset($_POST['vaca_leche_comentario'])
     && isset($_FILES['vaca_foto'])
     && isset($_FILES['vaca_foto_fierro'])
     && isset($_POST['vaca_observaciones'])) {
 
     $random_number1 = rand(1, 1000);
     $random_number2 = rand(1, 1000);
+    $vaca_numero= $_POST['vaca_numero'];
  
     $vaca_directorioDestino = 'vacas_fotos/';
-    $vaca_nombreArchivo =  $_POST['vaca_numero'] . "_" . $_FILES['vaca_foto']['name'];
+    $vaca_nombreArchivo = $vaca_numero  . "_" . $_FILES['vaca_foto']['name'];
     $vaca_ubicacionTemporal = $_FILES['vaca_foto']['tmp_name'];
 
     $fierro_directorioDestino = 'vacas_fotos_fierro/';
-    $fierro_nombreArchivo = $_POST['vaca_numero'] . "_" . $_FILES['vaca_foto_fierro']['name'];
+    $fierro_nombreArchivo = $vaca_numero . "_" . $_FILES['vaca_foto_fierro']['name'];
     $fierro_ubicacionTemporal = $_FILES['vaca_foto_fierro']['tmp_name'];
     
     // Mueve la imagen al directorio deseado
     if (move_uploaded_file($vaca_ubicacionTemporal, $vaca_directorioDestino . $vaca_nombreArchivo)) {
-       echo "La imagen se ha guardado correctamente en la carpeta 'vacas_fotos'.";
-       echo '</br>';
+       echo '<p class="text-center mt-4 mb-2 text-secondary">Imagen guardada en la carpeta: ' . $vaca_directorioDestino . $vaca_nombreArchivo . '</p>';
+     
     } else {
-        echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
+        //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
     }
        // Mueve la imagen al directorio deseado
-       if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
-        echo "La imagen se ha guardado correctamente en la carpeta 'vacas_fotos_fierro'.";
-        echo '</br>';
+    if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
+        echo '<p class="text-center mb-0 pb-0 text-secondary">Imagen guardada en la carpeta: ' . $fierro_directorioDestino . $fierro_nombreArchivo . '</p>';
+    
      } else {
-         echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
+         //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
      }
 
 
     // Acceder y guardar en viariables los datos del formulario recibido
-    $vaca_numero= $_POST['vaca_numero'];
+    
     $vaca_arete= $_POST['vaca_arete'];
     $vaca_tatuaje= $_POST['vaca_tatuaje'];
     $vaca_raza= $_POST['vaca_raza'];
@@ -127,6 +133,10 @@ if (isset($_POST['vaca_numero'])
     $vaca_fecha_fierro= $_POST['vaca_fecha_fierro'];
     $vaca_fecha_probable= $_POST['vaca_fecha_probable'];
     $vaca_fecha_venta= $_POST['vaca_fecha_venta'];
+    $vaca_leche_dia= $_POST['vaca_leche_dia'];
+    $vaca_leche_mes= $_POST['vaca_leche_mes'];
+    $vaca_leche_comentario= $_POST['vaca_leche_comentario'];
+
     //si esta vacio el campo, llenar con ejemplo
     if (empty($_FILES['vaca_foto']['name'])){
         $vaca_foto_ruta = $vaca_directorioDestino . "ejemplo.jpg";
@@ -163,6 +173,7 @@ if (isset($_POST['vaca_numero'])
             vaca_gan_peso_dia, vaca_gan_peso_mes, vaca_peso_3meses, 
             vaca_fecha_nacimiento, vaca_fecha_destete, vaca_fecha_aretado, 
             vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
+            vaca_leche_dia, vaca_leche_mes, vaca_leche_comentario,
             vaca_foto, vaca_foto_fierro, 
             vaca_observaciones) VALUES (null, :vaca_numero, :vaca_arete, :vaca_tatuaje, :vaca_raza, 
             :madre_numero, :madre_arete, :madre_tatuaje, :madre_raza, 
@@ -174,6 +185,7 @@ if (isset($_POST['vaca_numero'])
             :vaca_gan_peso_dia, :vaca_gan_peso_mes, :vaca_peso_3meses, 
             :vaca_fecha_nacimiento, :vaca_fecha_destete, :vaca_fecha_aretado, 
             :vaca_fecha_tatuaje, :vaca_fecha_fierro, :vaca_fecha_probable, :vaca_fecha_venta, 
+            :vaca_leche_dia, :vaca_leche_mes, :vaca_leche_comentario, 
             :vaca_foto, :vaca_foto_fierro, 
             :vaca_observaciones)";
         $stmt = $conexion->prepare($sql); // Preparar la consulta
@@ -221,6 +233,9 @@ if (isset($_POST['vaca_numero'])
         $stmt->bindParam(':vaca_fecha_fierro', $vaca_fecha_fierro);
         $stmt->bindParam(':vaca_fecha_probable', $vaca_fecha_probable);
         $stmt->bindParam(':vaca_fecha_venta', $vaca_fecha_venta);
+        $stmt->bindParam(':vaca_leche_dia', $vaca_leche_dia);
+        $stmt->bindParam(':vaca_leche_mes', $vaca_leche_mes);
+        $stmt->bindParam(':vaca_leche_comentario', $vaca_leche_comentario);
         $stmt->bindParam(':vaca_foto', $vaca_foto_ruta);
         $stmt->bindParam(':vaca_foto_fierro', $fierro_foto_ruta);
         $stmt->bindParam(':vaca_observaciones', $vaca_observaciones);
@@ -228,25 +243,63 @@ if (isset($_POST['vaca_numero'])
         $stmt->execute();
         $conexion = null;
         echo "<script>alert('Registro guardado con éxito');</script>";
-        echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-        <h2 style="margin-bottom:20px;">Los datos se han enviado correctamente.</h2>
-        <a href="hembra.php" class="btn btn-success" ><i class="bi bi-arrow-left"></i>Regresar al formulario</a>
-        <a href="hembra-tabla.php"><button class="form-control btn-primary mt-3" style="" >Ir a la tabla</button></a> </div> ';
+        echo '
+        <div class="d-flex col-12 justify-content-center align-items-center flex-column mt-5" style="width:100%;">
+            <h2 class="mb-3 text-center">Los datos se han enviado correctamente.</h2>
+            <i style="color:green;" class="col-8 col-xl-5 mb-3 text-center fa-solid fa-circle-check fa-3x"></i>
+            <a href="hembra.php" class="col-8 col-xl-5 mb-3 btn btn-success" >
+                Registrar otra hoja de vida
+            </a>
+            <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+                Ir a la tabla
+            </a>
+            <a href="menu-inventario.php" class="col-8 col-xl-5 mb-3 btn btn-secondary" >
+                Ir al menú
+            </a>
+        </div> 
+        ';
 
     } catch (PDOException $e) {
         // Error cuando no se ejecuta la consulta SQL
         echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
-        echo "Error: " . $e->getMessage();
-        echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-        <h2 style="margin-bottom:20px;">Error: los datos no fueron enviados.</h2>
-        <a href="hembra.php" class="btn btn-warning" ><i class="bi bi-arrow-left"></i>Regresar</a></div>';
+        //echo "Error: " . $e->getMessage();
+        echo '
+        <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
+            <h2 class="mb-3">Los datos no fueron enviados</h2>
+            <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
+            <a href="hembra.php" class="col-8 col-xl-5 mb-3 btn btn-warning" >
+                Regresar al formulario
+            </a>
+            <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+                Ir a la tabla
+            </a>
+            <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+                Ir al menú
+            </a>
+            <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
+        </div> 
+        ';
     }  
     
 }else {
     echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
-    echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-    <h2 style="margin-bottom:20px;">Error: los datos no fueron enviados.</h2>
-    <a href="hembra.php" class="btn btn-warning" ><i class="bi bi-arrow-left"></i>Regresar</a></div>';
+    //echo "Error: " . $e->getMessage();
+    echo '
+    <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
+        <h2 class="mb-3">Los datos no fueron enviados</h2>
+        <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
+        <a href="hembra.php" class="col-8 col-xl-5 mb-3 btn btn-warning" >
+            Regresar al formulario
+        </a>
+        <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+            Ir a la tabla
+        </a>
+        <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+            Ir al menú
+        </a>
+        <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
+    </div> 
+    ';
 }
 
 ?>

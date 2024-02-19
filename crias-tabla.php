@@ -48,22 +48,22 @@ include("conexion.php");
 
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-1 mt-2">
-    <div class="col-11">
+    <div class="col-11 col-md-11">
           <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
         <h1 class=" text-center mb-4">Tabla de registros de crias</h1>
         
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
 
-            <div class="col-1 col-xl-8"></div>
+            <div class="col-0 col-xl-8"></div>
 
-            <div class="d-flex flex-row justify-content-around align-items-center col-11 col-xl-4">
+            <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
 
-                <a class="form-control btn btn-primary d-flex flex-row justify-content-evenly align-items-center" href="crias-form.php">
+                <a class="mx-2 form-control btn btn-primary d-flex flex-row justify-content-evenly align-items-center" href="crias-form.php">
                     <i class="fa-solid fa-circle-plus fa-2x"></i>
                     <span>Registrar una cría</span>
                 </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-                <a class="mx-2 h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
+                <a class="h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
                     <span>Regresar al menú</span>
                 </a> 
             </div>
@@ -127,7 +127,7 @@ include("conexion.php");
                 echo '<tr>';
                    // echo '<td> <a href="hembra-tabla.php"><button class="form-control btn-danger"><i style="margin-right:5px;" class="bi bi-trash"></i>Eliminar</button></a></td>';
                     echo '<td> 
-                            <form action="#" method="POST">
+                            <form action="eliminar-cria.php" method="POST">
                                 <input type="hidden" name="id_cria"  value="'. $arreglo_sql['id_cria'].'" >
                                 <button type="submit" id="botonEliminar" class="form-control btn-danger" style="font-size:12px; " ><i style="margin-right:5px;" class="bi bi-trash"></i>
                                      Eliminar

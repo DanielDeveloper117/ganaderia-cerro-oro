@@ -48,22 +48,22 @@ include("conexion.php");
 
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-1 mt-2">
-    <div class="col-11">
+    <div class="col-11 col-md-11">
           <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
         <h1 class=" text-center mb-4">Inventario de registros de vacas</h1>
 
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
 
-            <div class="col-1 col-xl-8"></div>
+            <div class="col-0 col-xl-8"></div>
 
-            <div class="d-flex flex-row justify-content-around align-items-center col-11 col-xl-4">
+            <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
 
-                <a class="form-control btn btn-primary d-flex flex-row justify-content-evenly align-items-center" href="hembra.php">
+                <a class="mx-2 form-control btn btn-primary d-flex flex-row justify-content-evenly align-items-center" href="hembra.php">
                     <i class="fa-solid fa-circle-plus fa-2x"></i>
                     <span>Registrar una vaca</span>
                 </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-                <a class="mx-2 h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
+                <a class="h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
                     <span>Regresar al menú</span>
                 </a> 
 
@@ -92,6 +92,7 @@ include("conexion.php");
             vaca_gan_peso_dia, vaca_gan_peso_mes, vaca_peso_3meses, 
             vaca_fecha_nacimiento, vaca_fecha_destete, vaca_fecha_aretado, 
             vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
+            vaca_leche_dia, vaca_leche_mes, vaca_leche_comentario, 
             vaca_foto, vaca_foto_fierro, 
             vaca_observaciones, fecha_registro FROM vacas";
             $stmt = $conexion->prepare($sql);
@@ -102,7 +103,7 @@ include("conexion.php");
                     <tr>
                         <th scope="col">Eliminar</th>
                         <th scope="col">Editar hoja de vida</th>
-                        <th scope="col">Id</th>
+                        <th scope="col">Agregar parto</th>
                         <th scope="col">Número de la vaca</th>
                         <th scope="col">Número de arete</th>
                         <th scope="col">Tatuaje</th>
@@ -144,6 +145,9 @@ include("conexion.php");
                         <th scope="col">Fecha de fierro</th>
                         <th scope="col">Fecha probable</th>
                         <th scope="col">Fecha de venta</th>
+                        <th scope="col">Leche al día</th>
+                        <th scope="col">Leche al mes</th>
+                        <th scope="col">Comentario de leche</th>
                         <th scope="col">Fotografía</th>
                         <th scope="col">Fotografía del fierro</th>
                         <th scope="col">Observaciones</th>
@@ -155,7 +159,7 @@ include("conexion.php");
         
             while ($arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
-                   // echo '<td> <a href="hembra-tabla.php"><button class="form-control btn-danger"><i style="margin-right:5px;" class="bi bi-trash"></i>Eliminar</button></a></td>';
+
                     echo '<td> 
                             <form action="eliminar-hembra.php" method="POST">
                                 <input type="hidden" name="id_vaca"  value="'. $arreglo_sql['id_vaca'].'" >
@@ -165,15 +169,20 @@ include("conexion.php");
                             </form>
                          </td>';
 
-                   // echo '<td> <a href="editar-hembra.php"><button class="form-control btn-info"><i style="margin-right:5px;" class="bi bi-pencil-square"></i>Editar</button></a></td>';
                     echo '<td> 
                             <form action="editar-hembra.php" method="POST">
                                 <input type="hidden" name="id_vaca" value="'. $arreglo_sql['id_vaca'].'">
                                 <button type="submit" class="form-control btn-info"><i style="margin-right:5px;" class="bi bi-pencil-square"></i>Editar</button>
                             </form>
                          </td>';
+                        
+                    echo '<td> 
+                         <form action="crias-form.php" method="POST">
+                             <input type="hidden" name="id_vaca" value="'. $arreglo_sql['id_vaca'].'">
+                             <button type="submit" class="form-control btn-info"><i style="color:white;" class="fa-solid fa-circle-plus"></i>Agregar</button>
+                         </form>
+                      </td>';
                    
-                         echo '<td>' . $arreglo_sql['id_vaca'] . '</td>';
                          echo '<td>' . $arreglo_sql['vaca_numero'] . '</td>';
                          echo '<td>' . $arreglo_sql['vaca_arete'] . '</td>';
                          echo '<td>' . $arreglo_sql['vaca_tatuaje'] . '</td>';
@@ -215,6 +224,9 @@ include("conexion.php");
                          echo '<td>' . $arreglo_sql['vaca_fecha_fierro'] . '</td>';
                          echo '<td>' . $arreglo_sql['vaca_fecha_probable'] . '</td>';
                          echo '<td>' . $arreglo_sql['vaca_fecha_venta'] . '</td>';
+                         echo '<td>' . $arreglo_sql['vaca_leche_dia'] . '</td>';
+                         echo '<td>' . $arreglo_sql['vaca_leche_mes'] . '</td>';
+                         echo '<td>' . $arreglo_sql['vaca_leche_comentario'] . '</td>';
                          echo '<td> <img src="' . $arreglo_sql['vaca_foto'] .'" width="50" height="40" alt="Vacio"></td>';
                          echo '<td> <img src="' . $arreglo_sql['vaca_foto_fierro'] .'" width="50" height="40" alt="Vacio"></td>';
                          echo '<td>' . $arreglo_sql['vaca_observaciones'] . '</td>';

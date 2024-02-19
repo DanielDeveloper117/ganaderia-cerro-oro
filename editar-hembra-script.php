@@ -1,5 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+<script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
+
 
 <?php
 include("conexion.php");
@@ -48,6 +50,9 @@ include("conexion.php");
             && isset($_POST['vaca_fecha_fierro'])
             && isset($_POST['vaca_fecha_probable'])
             && isset($_POST['vaca_fecha_venta'])
+            && isset($_POST['vaca_leche_dia'])
+            && isset($_POST['vaca_leche_mes'])
+            && isset($_POST['vaca_leche_comentario'])
             && isset($_FILES['vaca_foto'])
             && isset($_FILES['vaca_foto_fierro'])
             && isset($_POST['vaca_observaciones'])) {
@@ -65,18 +70,18 @@ include("conexion.php");
             
             // Mueve la imagen al directorio deseado
             if (move_uploaded_file($vaca_ubicacionTemporal, $vaca_directorioDestino . $vaca_nombreArchivo)) {
-               echo "La imagen se ha guardado correctamente en la carpeta 'vacas_fotos'";
-               echo '</br>';
-            } else {
-                echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
-            }
-               // Mueve la imagen al directorio deseado
-               if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
-                echo "La imagen se ha guardado correctamente en la carpeta 'vacas_fotos_fierro'";
-                echo '</br>';
+                echo '<p class="text-center mt-4 mb-2 text-secondary">Imagen guardada en la carpeta: ' . $vaca_directorioDestino . $vaca_nombreArchivo . '</p>';
+            
              } else {
-                 echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
+                 //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
              }
+                // Mueve la imagen al directorio deseado
+             if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
+                 echo '<p class="text-center mb-0 pb-0 text-secondary">Imagen guardada en la carpeta: ' . $fierro_directorioDestino . $fierro_nombreArchivo . '</p>';
+            
+              } else {
+                  //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
+              }
             // Acceder y guardar en variables los datos del formulario recibido
             $id_vaca= $_POST['id_vaca'];
             $vaca_numero= $_POST['vaca_numero'];
@@ -120,6 +125,9 @@ include("conexion.php");
             $vaca_fecha_fierro= $_POST['vaca_fecha_fierro'];
             $vaca_fecha_probable= $_POST['vaca_fecha_probable'];
             $vaca_fecha_venta= $_POST['vaca_fecha_venta'];
+            $vaca_leche_dia= $_POST['vaca_leche_dia'];
+            $vaca_leche_mes= $_POST['vaca_leche_mes'];
+            $vaca_leche_comentario= $_POST['vaca_leche_comentario'];
             $sql = "SELECT id_vaca,
             vaca_foto, vaca_foto_fierro 
              FROM vacas WHERE id_vaca = :id_vaca";
@@ -203,9 +211,12 @@ include("conexion.php");
                 vaca_fecha_tatuaje = :vaca_fecha_tatuaje,
                 vaca_fecha_fierro = :vaca_fecha_fierro,
                 vaca_fecha_probable = :vaca_fecha_probable,
-                vaca_fecha_venta = :vaca_fecha_venta,
-                vaca_foto = :vaca_foto,
-                vaca_foto_fierro = :vaca_foto_fierro,
+                vaca_fecha_venta = :vaca_fecha_venta, 
+                vaca_leche_dia = :vaca_leche_dia, 
+                vaca_leche_mes = :vaca_leche_mes, 
+                vaca_leche_comentario = :vaca_leche_comentario,
+                vaca_foto = :vaca_foto, 
+                vaca_foto_fierro = :vaca_foto_fierro, 
                 vaca_observaciones = :vaca_observaciones
                 WHERE id_vaca = :id_vaca";
                 $stmt = $conexion->prepare($sql);
@@ -254,34 +265,64 @@ include("conexion.php");
                 $stmt->bindParam(':vaca_fecha_fierro', $vaca_fecha_fierro);
                 $stmt->bindParam(':vaca_fecha_probable', $vaca_fecha_probable);
                 $stmt->bindParam(':vaca_fecha_venta', $vaca_fecha_venta);
+                $stmt->bindParam(':vaca_fecha_venta', $vaca_fecha_venta);
+                $stmt->bindParam(':vaca_leche_dia', $vaca_leche_dia);
+                $stmt->bindParam(':vaca_leche_mes', $vaca_leche_mes);
+                $stmt->bindParam(':vaca_leche_comentario', $vaca_leche_comentario);
                 $stmt->bindParam(':vaca_foto', $vaca_foto_ruta);
                 $stmt->bindParam(':vaca_foto_fierro', $fierro_foto_ruta);
                 $stmt->bindParam(':vaca_observaciones', $vaca_observaciones);
                 $stmt->execute();
                 $conexion = null;
                 echo "<script>alert('Registro actualizado con éxito');</script>";
-                echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                <h2 style="margin-bottom:20px;">Los datos se han actualizado correctamente.</h2>
-                <a href="hembra-tabla.php" class="btn btn-success" ><i class="bi bi-arrow-left"></i>Regresar a la tabla</a></div>';
-                echo ''.$arreglo_sql['vaca_foto']. '</br>';
-                echo ''.$arreglo_sql['vaca_foto_fierro']. '</br>';
-
+                echo '
+                <div class="d-flex col-12 justify-content-center align-items-center flex-column mt-5" style="width:100%;">
+                    <h2 class="mb-3 text-center">Los datos se han actualizado correctamente.</h2>
+                    <i style="color:green;" class="col-8 col-xl-5 mb-3 text-center fa-solid fa-circle-check fa-3x"></i>
+                    <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+                        Ir a la tabla
+                    </a>
+                    <a href="menu-inventario.php" class="col-8 col-xl-5 mb-3 btn btn-secondary" >
+                        Ir al menú
+                    </a>
+                </div> 
+                ';
             
             } catch (PDOException $e) {
-                 // Error cuando no se ejecuta la consulta SQL
+                // Error cuando no se ejecuta la consulta SQL
                 echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
-                echo "Error en la segunda condicional : " . $e->getMessage();
-                echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                <h2 style="margin-bottom:20px;">Error: los datos no fueron enviados.</h2>
-                <a href="hembra-tabla.php" class="btn btn-warning" ><i class="bi bi-arrow-left"></i>Regresar</a></div>';
+                //echo "Error: " . $e->getMessage();
+                echo '
+                <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
+                    <h2 class="mb-3">Los datos no fueron actualizados</h2>
+                    <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
+                    <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+                        Ir a la tabla
+                    </a>
+                    <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+                        Ir al menú
+                    </a>
+                    <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
+                </div> 
+                ';
             }  
         
         }else {
-            //cuando no se reciben los datos desde el formulario
             echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
-            echo '<div class="d-flex justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-            <h2 style="margin-bottom:20px;">Error: los datos no fueron actualizados.</h2>
-            <a href="hembra-tabla.php" class="btn btn-warning" ><i class="bi bi-arrow-left"></i>Regresar</a></div>';
+            //echo "Error: " . $e->getMessage();
+            echo '
+            <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
+                <h2 class="mb-3">Los datos no fueron actualizados</h2>
+                <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
+                <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+                    Ir a la tabla
+                </a>
+                <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+                    Ir al menú
+                </a>
+                <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
+            </div> 
+            ';
         }
     
 

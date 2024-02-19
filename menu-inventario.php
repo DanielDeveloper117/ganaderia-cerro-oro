@@ -33,17 +33,33 @@ include("conexion.php");
     }
 </style>
 
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3">
+    <div class="col-11 col-md-10">
+        <img class="mb-4 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
+        <h1 class=" text-center mb-4">Módulo de inventario</h1>
+
+        <div class="d-flex flex-row justify-content-between mb-1 mb-0">
+
+            <div class="col-0 col-xl-8"></div>
+
+            <div class="d-flex flex-row justify-content-around align-items-center col-6 col-md-4">
+
+                <a class="mx-2  h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-principal.php">
+                    <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
+                    <span>Regresar al menú principal</span>
+                </a>
+                <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
+                <!-- <a class=" h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
+                    <span>Regresar al menú</span>
+                </a>  -->
+
+            </div>
+
+        </div>
+</section>
+
 <section class="d-flex col-12 flex-column align-items-center justify-content-center">
-
-    <img class="mb-3 mt-4" src="img/logo-copia.png" alt="" width="110" height="100">
-
-    <div class="mb-5 d-flex justify-content-around col-10 col-md-6">
-        <h2 class="">Menu del módulo Inventario</h2>
-        <a href="menu-principal.php"><button class="form-control btn btn-warning" style="" ><i class="bi bi-arrow-left"></i>Regresar </button></a>
-        <!-- <a href="logout.php"><button class="form-control btn-danger"  >Cerrar sesión </button></a> -->
-    </div>
-
-    <div class="d-flex col-10 col-md-6 flex-column ">
+    <div class="d-flex col-10  flex-column ">
         
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
@@ -68,7 +84,7 @@ include("conexion.php");
     <h3 class="pb-4">Producción</h3>
 
 
-    <div class="d-flex col-10 col-md-6 flex-column ">
+    <div class="d-flex col-10  flex-column ">
         
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
