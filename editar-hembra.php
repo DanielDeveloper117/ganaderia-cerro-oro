@@ -92,14 +92,43 @@ include("conexion.php");
         padding: 3%;
         border-radius:10px
     }
+    .img-fotos-perfil{
+        width: auto;
+        height: -webkit-fill-available;
+    }
+    .div-imgs{
+        height:auto;
+        width:max-content;
+    }
+    .div-imgs-container{
+        height:200px;
+    }
+    @media (min-width: 1px) and (max-width: 992px) {
+        .div-imgs-container{
+            height:120px;
+        }
+
+    }
    
 </style>
 
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3">
     <div class="col-11 col-md-10">
-        <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
-        <h1 class=" text-center mb-4">Editar hoja de vida</h1>
+        <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
+        <h2 class=" text-center mb-4">Editar hoja de vida de vaca: <?php echo '' . $arreglo_sql['vaca_numero'] . '';?></h2>
+
+        <div class="justify-content-end d-flex flex-row col-12 mb-2 div-imgs-container">
+ 
+            <div class="div-imgs justify-content-end d-flex px-1" >
+                <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>"  alt="Vacio">
+            </div>
+
+            <div class="div-imgs justify-content-end d-flex  px-1" >
+                <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
+            </div>
+
+        </div>
 
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
 
@@ -119,6 +148,7 @@ include("conexion.php");
             </div>
 
         </div>
+    </div>
 </section>
 
  
@@ -126,13 +156,13 @@ include("conexion.php");
 <form class="form-vaca d-flex flex-column col-11 col-md-10 justify-content-center align-items-center"  action="editar-hembra-script.php" method="POST" enctype="multipart/form-data">
         <input type="hidden"  value="<?php echo '' . $arreglo_sql['id_vaca'] . '';?>" name="id_vaca">
 
-        <p class="p-form">Formulario de registro de hoja de vida de una vaca.</p>
+        <p class="p-form">Formulario de editar datos de la hoja de vida.</p>
         <h3 class="mb-3">Vaca</h3> 
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_numero">Número de la vaca</label>
-                <input type="number" class="form-control" id="vaca_numero" placeholder="Número de la vaca"  value="<?php echo '' . $arreglo_sql['vaca_numero'] . '';?>" name="vaca_numero" >
+                <input type="number" class="form-control" id="vaca_numero" placeholder="Número de la vaca"  value="<?php echo '' . $arreglo_sql['vaca_numero'] . '';?>" name="vaca_numero" required>
             </div>
 
             <div class=" col-md-3" >
@@ -254,7 +284,7 @@ include("conexion.php");
             </div>
 
             <div class=" col-md-2" >
-                <label class="label-form" for="vaca_partos">Número de partos</label>
+                <label class="label-form" for="vaca_partos">Partos totales</label>
                 <input type="number" class="form-control" id="vaca_partos" placeholder="Número de partos" value="<?php echo '' . $arreglo_sql['vaca_partos'] . '';?>" name="vaca_partos" >
             </div>
 
@@ -398,24 +428,25 @@ include("conexion.php");
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
  
             <div class=" col-md-5" >
-                <label class="label-form" for="foto">Seleccionar nueva fotografía</label>
+                <label class="label-form" for="foto">Seleccionar nueva fotografía de la vaca</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto">
                 <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
                 <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
             </div>
 
             <div class=" col-md-5" >
-                <label class="label-form" for="foto">Seleccionar nueva fotografía</label>
+                <label class="label-form" for="foto">Seleccionar nueva fotografía del fierro</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto_fierro">
                 <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
                 <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>"  alt="Vacio">
             </div>
+
         </div>
         
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class="col-md-12" > 
                 <label class="label-form" for="vaca_observaciones">Observaciones</label>
-                <textarea class="form-control" id="vaca_observaciones"  rows="4" cols="50" value="<?php echo '' . $arreglo_sql['vaca_observaciones'] . '';?>" name="vaca_observaciones"></textarea> 
+                <textarea class="form-control" id="vaca_observaciones"  rows="4" cols="50" value="<?php echo '' . $arreglo_sql['vaca_observaciones'] . '';?>" name="vaca_observaciones"><?php echo '' . $arreglo_sql['vaca_observaciones'] . '';?></textarea> 
             </div>           
         </div>
 

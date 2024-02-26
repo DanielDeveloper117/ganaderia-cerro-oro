@@ -65,7 +65,7 @@ include("conexion.php");
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5">
     <div class="col-11 col-md-10">
-        <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
+        <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
         <h1 class=" text-center mb-4">Hoja de vida de una vaca</h1>
 
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
@@ -107,7 +107,7 @@ include("conexion.php");
 
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_numero">Número de la vaca</label>
-                <input type="number" class="form-control" id="vaca_numero" placeholder="Número de la vaca" name="vaca_numero" >
+                <input type="number" class="form-control" id="vaca_numero" placeholder="Número de la vaca" name="vaca_numero" required>
             </div>
             <div class=" col-md-3" >
                 <label class="label-form" for="vaca_arete">Arete de la vaca</label>
@@ -218,7 +218,7 @@ include("conexion.php");
             </div>
 
             <div class=" col-md-2" >
-                <label class="label-form" for="vaca_partos">Número de partos</label>
+                <label class="label-form" for="vaca_partos">Partos totales</label>
                 <input type="number" class="form-control" id="vaca_partos" placeholder="Número de partos" name="vaca_partos" >
             </div>
 

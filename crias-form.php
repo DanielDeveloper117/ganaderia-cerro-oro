@@ -65,7 +65,7 @@ include("conexion.php");
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5">
     <div class="col-11 col-md-10">
-        <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
+        <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
         <h1 class=" text-center mb-4">Producción de crías</h1>
 
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
@@ -108,9 +108,9 @@ include("conexion.php");
 
                         $stmt->execute();
                         $arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC);
-                        echo '<input type="number" class="form-control" id="cria_numero" value="'.$arreglo_sql['vaca_numero'].'" name="madre_numero" >';
+                        echo '<input type="number" class="form-control" id="cria_numero" value="'.$arreglo_sql['vaca_numero'].'" name="madre_numero" required>';
                     } else{
-                        echo '<input type="number" class="form-control" id="cria_numero" placeholder="Número de la madre" name="madre_numero" >';
+                        echo '<input type="number" class="form-control" id="cria_numero" placeholder="Número de la madre" name="madre_numero" required>';
                     }
 
                 ?>
@@ -119,7 +119,7 @@ include("conexion.php");
 
             <div class=" col-md-2" >
                 <label class="label-form" for="cria_arete">Número de parto</label>
-                <input type="number" class="form-control" id="cria_arete" placeholder="Número del parto" name="parto_numero" >
+                <input type="number" class="form-control" id="cria_arete" placeholder="Número del parto" name="parto_numero">
             </div>  
 
             <div class=" col-md-2" >

@@ -125,7 +125,7 @@ include("conexion.php");
                         <th scope="col">Lote</th>
                         <th scope="col">Estado reproductivo</th>
                         <th scope="col">Celo</th>
-                        <th scope="col">Número de partos</th>
+                        <th scope="col">Partos totales</th>
                         <th scope="col">Estado de palpación</th>
                         <th scope="col">Finada</th>
                         <th scope="col">Edad actual</th>

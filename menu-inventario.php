@@ -38,13 +38,11 @@ include("conexion.php");
         <img class="mb-4 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
         <h1 class=" text-center mb-4">Módulo de inventario</h1>
 
-        <div class="d-flex flex-row justify-content-between mb-1 mb-0">
+        <div class="d-flex flex-row justify-content-end mb-1 mb-0">
 
-            <div class="col-0 col-xl-8"></div>
+            <div class="d-flex flex-row justify-content-around align-items-center col-6 col-md-3">
 
-            <div class="d-flex flex-row justify-content-around align-items-center col-6 col-md-4">
-
-                <a class="mx-2  h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-principal.php">
+                <a class="mx-2  p-3 h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-principal.php">
                     <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
                     <span>Regresar al menú principal</span>
                 </a>
@@ -66,16 +64,17 @@ include("conexion.php");
                 <a href="hembra.php"><button class="form-control btn-primary btn-options" >Registrar vaca</button></a>
             </div>
             <div class="col-12 col-md-5">
-                <a href="macho.php"><button class="form-control btn-primary btn-options" >Registrar macho</button></a>
-            </div>
+                <a href="hembra-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de vacas</button></a>
+            </div>            
+
         </div>
            
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
             <div class="col-12 col-md-5">
-                <a href="hembra-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de vacas</button></a>
+                <a href="#"><button class="form-control btn-dark btn-options" >Registrar macho</button></a>
             </div>
             <div class="col-12 col-md-5">
-                <a  href="macho-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de machos</button></a>
+                <a  href="#"><button class="form-control btn-dark btn-options" >Ver registros de machos</button></a>
             </div>
         </div>
 
@@ -91,18 +90,18 @@ include("conexion.php");
                 <a href="crias-form.php"><button class="form-control btn-primary btn-options" >Registrar cría</button></a>
             </div>
             <div class="col-12 col-md-5">
-                <a href="#"><button class="form-control btn-primary btn-options" >x</button></a>
+                <a href="crias-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de crías</button></a>
             </div>
         </div>
            
-        <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
+        <!-- <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
             <div class="col-12 col-md-5">
-                <a href="crias-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de crías</button></a>
+                <a  href="#"><button class="form-control btn-dark btn-options" >x</button></a>
             </div>
             <div class="col-12 col-md-5">
-                <a  href="#"><button class="form-control btn-primary btn-options" >Ver registros de leche</button></a>
+                <a  href="#"><button class="form-control btn-dark btn-options" >x</button></a>
             </div>
-        </div>
+        </div> -->
 
     </div>
 

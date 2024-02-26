@@ -125,7 +125,6 @@ include("conexion.php");
         
             while ($arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<tr>';
-                   // echo '<td> <a href="hembra-tabla.php"><button class="form-control btn-danger"><i style="margin-right:5px;" class="bi bi-trash"></i>Eliminar</button></a></td>';
                     echo '<td> 
                             <form action="eliminar-cria.php" method="POST">
                                 <input type="hidden" name="id_cria"  value="'. $arreglo_sql['id_cria'].'" >
@@ -135,15 +134,21 @@ include("conexion.php");
                             </form>
                          </td>';
 
-                   // echo '<td> <a href="editar-hembra.php"><button class="form-control btn-info"><i style="margin-right:5px;" class="bi bi-pencil-square"></i>Editar</button></a></td>';
                     echo '<td> 
                             <form action="editar-cria.php" method="POST">
                                 <input type="hidden" name="id_cria" value="'. $arreglo_sql['id_cria'].'">
                                 <button type="submit" class="form-control btn-info"><i style="margin-right:5px;" class="bi bi-pencil-square"></i>Editar</button>
                             </form>
                          </td>';
-                   
+                    // $madre_num=$arreglo_sql['madre_numero'];
+                    // $sql2 = "SELECT * FROM vacas WHERE vaca_numero = ". $madre_num."";
+                    // $stmt2 = $conexion->prepare($sql2);
+                    // $stmt2->execute();
+                    // $arreglo_sql2 = $stmt2->fetch(PDO::FETCH_ASSOC);
                          //echo '<td>' . $arreglo_sql['id_cria'] . '</td>';
+                        // echo '<td>' . $arreglo_sql2['vaca_numero'] . '</td>';
+                        // echo '<td><a href="editar-hembra.php?vaca_numero=' . $arreglo_sql2['vaca_numero'] . '">' . $arreglo_sql['madre_numero'] . '</a></td>';
+
                          echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
                          echo '<td>' . $arreglo_sql['parto_numero'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_sexo'] . '</td>';

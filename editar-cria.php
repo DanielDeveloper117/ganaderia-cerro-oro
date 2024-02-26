@@ -97,7 +97,7 @@ include("conexion.php");
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5">
 
     <div class="col-11 col-md-10">
-        <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
+        <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
         <h1 class=" text-center mb-4">Cría número: <?php echo '' . $arreglo_sql['cria_numero'] . '';?></h1>
 
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
