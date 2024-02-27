@@ -35,12 +35,12 @@ include("conexion.php");
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3">
     <div class="col-11 col-md-10">
-        <img class="mb-4 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100"> 
+        <!-- <img class="mb-4 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
         <h1 class=" text-center mb-4">Módulo de inventario</h1>
 
         <div class="d-flex flex-row justify-content-end mb-1 mb-0">
 
-            <div class="d-flex flex-row justify-content-around align-items-center col-6 col-md-3">
+            <div class="d-flex flex-row justify-content-around align-items-center col-6 col-md-3" style="padding-right:3%;">
 
                 <a class="mx-2  p-3 h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-principal.php">
                     <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->

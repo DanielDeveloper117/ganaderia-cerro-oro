@@ -17,8 +17,12 @@ include("conexion.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link href="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.js"></script>
 
-    <title>Tabla de inventario - Hembras</title>
+
+    <title>Tabla de inventario - Vacas</title>
 </head>
 <body>
 
@@ -43,7 +47,16 @@ include("conexion.php");
     section a{
         text-decoration: none;
     }
-   
+    .dt-layout-row{
+        padding:10px;
+    }
+    .dt-search{
+        margin-right:40px;
+    }
+    .dt-search label{
+        margin-right:10px;
+        font-weight:600;
+    }
 </style>
 
 
@@ -98,7 +111,7 @@ include("conexion.php");
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             // Mostrar los resultados en una tabla HTML
-            echo '<table class="table table-bordered table-striped border border-2 " >
+            echo '<table id="tabla_vacas" class="table table-bordered table-striped border border-2 " >
                     <thead>
                     <tr>
                         <th scope="col">Eliminar</th>
@@ -248,6 +261,41 @@ include("conexion.php");
     </div>
 </section>
 
+<script>
+    $(document).ready(function() {
+        $('#tabla_vacas').DataTable({
+            ordering: true, //botones de ordenacion de las columnas
+            "orderable": true,
+            "searching": true, // función de búsqueda activada
+            search: {
+               return: false
+            },
+            "language": { 
+              "decimal" : "",
+              "emptyTable":"No hay registros",
+              "info": "Mostrando _END_ de _TOTAL_ registros",
+              "infoEmpty": "Mostrando 0 de 0 registros",
+              "infoFiltered": "(Se filtraron _MAX_ registros)",
+              "infoPostFix":"",
+              "thousands": ", ",
+              "lengthMenu": "Mostrar _MENU_ registros",
+              "loadingRecords":"Cargando...",
+              "processing": "Procesando...",
+              "search": "Buscar: ",
+              "zeroRecords":"No se encontraron resultados.",
+              "paginate":{
+                "first":"<<",
+                "last":">>",
+                "next": "Siguiente",
+                "previous": "Anterior"
+              }
+            },
+            "lengthMenu": [ [10, 20, 30, 40, 50, 100, 1000], [10, 20, 30, 40, 50, 100, 1000] ],
+            "scrollY": "500px", // Altura del área de desplazamiento vertical
+            "scrollCollapse": true // Colapso del scroll cuando no es necesario
+        });
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
