@@ -6,22 +6,20 @@
 include("conexion.php");
 
 
-if (isset($_POST['id_cria'])) {
-    $id_cria = $_POST['id_cria'];
+if (isset($_POST['id_macho'])) {
+    $id_macho = $_POST['id_macho'];
 
     try {
         // Establecer la conexión PDO aquí
 
-        $sql = "DELETE FROM crias WHERE id_cria = :id_cria";
+        $sql = "DELETE FROM machos WHERE id_macho = :id_macho";
         $stmt = $conexion->prepare($sql);
-        $stmt->bindParam(':id_cria', $id_cria);
+        $stmt->bindParam(':id_macho', $id_macho);
         $stmt->execute();
-
         // Cerrar la conexión
         $conexion = null;
-
         // Redireccionar a la página anterior o mostrar un mensaje de éxito
-        header("Location: crias-tabla.php");
+        header("Location: macho-tabla.php");
         exit();
 
     } catch (PDOException $e) {
@@ -32,10 +30,10 @@ if (isset($_POST['id_cria'])) {
         <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
             <h2 class="mb-3">No fue posible eliminar el registro</h2>
             <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
-            <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+            <a href="macho-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                 Regresar a la tabla
             </a>
-            <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+            <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
                 Ir al menú
             </a>
             <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
@@ -49,10 +47,10 @@ if (isset($_POST['id_cria'])) {
     <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
         <h2 class="mb-3">No fue posible eliminar el registro</h2>
         <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
-        <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
+        <a href="macho-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
             Ir a la tabla
         </a>
-        <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+        <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
             Ir al menú
         </a>
         <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>

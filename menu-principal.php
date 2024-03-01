@@ -1,5 +1,5 @@
 <?php
-include("conexion.php");
+//include("conexion.php");
 // session_start();
 
 // if (!isset($_SESSION['id_usuario'])) {
@@ -59,7 +59,7 @@ div button:hover  {
 
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
-                <a href="menu-inventario.php"><button class="form-control btn btn-options" >Módulo de inventario</button></a>
+                <a href="ModuloInventario/menu-inventario.php"><button class="form-control btn btn-options" >Módulo de inventario</button></a>
             </div>
             <div class="col-12 col-md-5">
                 <a href=""><button class="form-control btn btn-options" >Opcion</button></a>

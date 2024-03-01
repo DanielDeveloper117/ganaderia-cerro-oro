@@ -8,7 +8,8 @@ include("conexion.php");
     //si el campo foto esta vacio
 
 //------------------------------------------------------------------- si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
-        if (isset($_POST['madre_numero'])
+        if (isset($_POST['id_cria'])
+            && isset($_POST['madre_numero'])
             && isset($_POST['parto_numero'])
             && isset($_POST['cria_sexo'])
             && isset($_POST['cria_fecha_nacimiento'])
@@ -25,9 +26,9 @@ include("conexion.php");
             && isset($_POST['cria_fecha_tatuaje'])
             && isset($_POST['cria_fecha_fierro'])
             && isset($_POST['cria_fecha_venta'])
-            && isset($_POST['cria_observaciones'])) {
             //&& isset($_FILES['cria_foto'])
             //&& isset($_FILES['cria_foto_fierro'])
+            && isset($_POST['cria_observaciones'])) {
             //establecer ruta para almacenar la foto
             // $random_number1 = rand(1, 1000);
             // $random_number2 = rand(1, 1000);
@@ -56,6 +57,7 @@ include("conexion.php");
             //  }
 
             // Acceder y guardar en VARIABLES los datos del formulario recibido
+            $id_cria= $_POST['id_cria'];
             $madre_numero= $_POST['madre_numero'];
             $parto_numero= $_POST['parto_numero'];
             $cria_sexo= $_POST['cria_sexo'];
@@ -112,25 +114,35 @@ include("conexion.php");
             // }
             $cria_observaciones= $_POST['cria_observaciones'];
             //intentar la consulta de actualizar todos los campos
-
-            try {  
+            try {
                 //instancia que indica que la conexion "$conexion" de conexion.php sera usada aqui con PDO
                 $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                // Consulta SQL con marcadores de posición
-                $sql = "INSERT INTO crias (id_cria, madre_numero, parto_numero, cria_sexo, 
-                    cria_fecha_nacimiento, cria_numero, cria_arete, cria_tatuaje, cria_raza,  
-                    cria_peso_nacimiento, cria_peso_destete, cria_peso_venta, cria_finada, 
-                    cria_fecha_destete, cria_fecha_aretado, cria_fecha_tatuaje, 
-                    cria_fecha_fierro, cria_fecha_venta, cria_observaciones) 
-                    VALUES (null, :madre_numero, :parto_numero, :cria_sexo, 
-                    :cria_fecha_nacimiento, :cria_numero, :cria_arete, :cria_tatuaje, :cria_raza, 
-                    :cria_peso_nacimiento, :cria_peso_destete, :cria_peso_venta, :cria_finada, 
-                    :cria_fecha_destete, :cria_fecha_aretado, :cria_fecha_tatuaje, 
-                    :cria_fecha_fierro, :cria_fecha_venta, :cria_observaciones)";
-                $stmt = $conexion->prepare($sql); // Preparar la consulta
-                // Vincular los valores a los marcadores de posición
+                // Construir la consulta de inserción con marcadores de posición
+                $sql = "UPDATE crias SET 
+                madre_numero = :madre_numero, 
+                parto_numero = :parto_numero, 
+                cria_sexo = :cria_sexo, 
+                cria_fecha_nacimiento = :cria_fecha_nacimiento,
+                cria_numero = :cria_numero, 
+                cria_arete = :cria_arete, 
+                cria_tatuaje = :cria_tatuaje, 
+                cria_raza = :cria_raza, 
+                cria_peso_nacimiento = :cria_peso_nacimiento, 
+                cria_peso_destete = :cria_peso_destete, 
+                cria_peso_venta = :cria_peso_venta, 
+                cria_finada = :cria_finada, 
+                cria_fecha_destete = :cria_fecha_destete, 
+                cria_fecha_aretado = :cria_fecha_aretado, 
+                cria_fecha_tatuaje = :cria_fecha_tatuaje, 
+                cria_fecha_fierro = :cria_fecha_fierro, 
+                cria_fecha_venta = :cria_fecha_venta, 
+                cria_observaciones = :cria_observaciones  
+                WHERE id_cria = :id_cria";
+                $stmt = $conexion->prepare($sql);
+                // Vincular los valores a los marcadores de posición de las columnas de la consulta
                 #$id_usuario=$_SESSION['id_usuario']; //insertar id del usuario actual en sesion para clave foranea
                 //$stmt->bindParam(':id_usuario', $id_usuario);
+                $stmt->bindParam(':id_cria', $id_cria);
                 $stmt->bindParam(':madre_numero', $madre_numero);   
                 $stmt->bindParam(':parto_numero', $parto_numero);   
                 $stmt->bindParam(':cria_sexo', $cria_sexo);  
@@ -154,69 +166,63 @@ include("conexion.php");
                 // $stmt->bindParam(':cria_foto', $cria_foto_ruta);
                 // $stmt->bindParam(':cria_foto_fierro', $fierro_foto_ruta);
                 $stmt->bindParam(':cria_observaciones', $cria_observaciones);
-                
+       
                 $stmt->execute();
                 $conexion = null;
-                echo "<script>alert('Registro guardado con éxito');</script>";
+                echo "<script>alert('Registro actualizado con éxito');</script>";
                 echo '
                 <div class="d-flex col-12 justify-content-center align-items-center flex-column mt-5" style="width:100%;">
-                    <h2 class="mb-3 text-center">Los datos se han enviado correctamente.</h2>
+                    <h2 class="mb-3 text-center">Los datos se han actualizado correctamente.</h2>
                     <i style="color:green;" class="col-8 col-xl-5 mb-3 text-center fa-solid fa-circle-check fa-3x"></i>
-                    <a href="crias-form.php" class="col-8 col-xl-5 mb-3 btn btn-success" >
-                        Registrar otra cría
-                    </a>
                     <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                         Ir a la tabla
                     </a>
-                    <a href="menu-inventario.php" class="col-8 col-xl-5 mb-3 btn btn-secondary" >
+                    <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-3 btn btn-secondary" >
                         Ir al menú
                     </a>
                 </div> 
                 ';
-        
 
+                // echo ''.$arreglo_sql['cria_foto']. '</br>';
+                // echo ''.$arreglo_sql['cria_foto_fierro']. '</br>';
+
+            
             } catch (PDOException $e) {
                 // Error cuando no se ejecuta la consulta SQL
                 echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
                 //echo "Error: " . $e->getMessage();
                 echo '
                 <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                    <h2 class="mb-3">Los datos no fueron enviados</h2>
+                    <h2 class="mb-3">Los datos no fueron actualizados</h2>
                     <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
-                    <a href="crias-form.php" class="col-8 col-xl-5 mb-3 btn btn-warning" >
-                        Regresar al formulario
-                    </a>
                     <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                         Ir a la tabla
                     </a>
-                    <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+                    <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
                         Ir al menú
                     </a>
                     <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
                 </div> 
                 ';
             }  
-            
+        
         }else {
             echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
             //echo "Error: " . $e->getMessage();
             echo '
             <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                <h2 class="mb-3">Los datos no fueron enviados</h2>
+                <h2 class="mb-3">Los datos no fueron actualizados</h2>
                 <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
-                <a href="crias-form.php" class="col-8 col-xl-5 mb-3 btn btn-warning" >
-                    Regresar al formulario
-                </a>
                 <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                     Ir a la tabla
                 </a>
-                <a href="menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
+                <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
                     Ir al menú
                 </a>
                 <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
             </div> 
             ';
         }
-        
+    
+
 ?>
-        
