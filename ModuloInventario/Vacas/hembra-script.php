@@ -35,7 +35,7 @@ if (isset($_POST['vaca_numero'])
     && isset($_POST['vaca_potrero'])
     && isset($_POST['vaca_lote'])
     && isset($_POST['vaca_estado_re'])
-    && isset($_POST['vaca_celo'])
+    
     && isset($_POST['vaca_partos'])
     && isset($_POST['vaca_estado_pal'])
     && isset($_POST['vaca_finada'])
@@ -92,7 +92,6 @@ if (isset($_POST['vaca_numero'])
 
 
     // Acceder y guardar en viariables los datos del formulario recibido
-    
     $vaca_arete= $_POST['vaca_arete'];
     $vaca_tatuaje= $_POST['vaca_tatuaje'];
     $vaca_raza= $_POST['vaca_raza'];
@@ -112,7 +111,7 @@ if (isset($_POST['vaca_numero'])
     $vaca_potrero= $_POST['vaca_potrero'];
     $vaca_lote= $_POST['vaca_lote'];
     $vaca_estado_re= $_POST['vaca_estado_re'];
-    $vaca_celo= $_POST['vaca_celo'];
+    //$vaca_celo= $_POST['vaca_celo'];
     $vaca_partos= $_POST['vaca_partos'];
     $vaca_estado_pal= $_POST['vaca_estado_pal'];
     $vaca_finada= $_POST['vaca_finada'];
@@ -167,7 +166,7 @@ if (isset($_POST['vaca_numero'])
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
-            vaca_lote, vaca_estado_re, vaca_celo, vaca_partos, vaca_estado_pal, vaca_finada, 
+            vaca_lote, vaca_estado_re, vaca_partos, vaca_estado_pal, vaca_finada, 
             vaca_edad_actual, vaca_edad_destete, vaca_edad_venta, 
             vaca_peso_nacimiento, vaca_peso_actual, vaca_peso_destete, vaca_peso_venta, 
             vaca_gan_peso_dia, vaca_gan_peso_mes, vaca_peso_3meses, 
@@ -175,11 +174,11 @@ if (isset($_POST['vaca_numero'])
             vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
             vaca_leche_dia, vaca_leche_mes, vaca_leche_comentario,
             vaca_foto, vaca_foto_fierro, 
-            vaca_observaciones) VALUES (null, :vaca_numero, :vaca_arete, :vaca_tatuaje, :vaca_raza, 
+            vaca_observaciones) VALUES (null, :vaca_numero, :vaca_arete, :vaca_tatuaje, :vaca_raza,  
             :madre_numero, :madre_arete, :madre_tatuaje, :madre_raza, 
             :padre_numero, :padre_arete, :padre_tatuaje, :padre_raza, 
             :vaca_color, :vaca_talla, :vaca_pelo, :vaca_condicion, :vaca_estatus, :vaca_potrero, 
-            :vaca_lote, :vaca_estado_re, :vaca_celo, :vaca_partos, :vaca_estado_pal, :vaca_finada, 
+            :vaca_lote, :vaca_estado_re, :vaca_partos, :vaca_estado_pal, :vaca_finada, 
             :vaca_edad_actual, :vaca_edad_destete, :vaca_edad_venta, 
             :vaca_peso_nacimiento, :vaca_peso_actual, :vaca_peso_destete, :vaca_peso_venta, 
             :vaca_gan_peso_dia, :vaca_gan_peso_mes, :vaca_peso_3meses, 
@@ -212,7 +211,7 @@ if (isset($_POST['vaca_numero'])
         $stmt->bindParam(':vaca_potrero', $vaca_potrero);
         $stmt->bindParam(':vaca_lote', $vaca_lote);
         $stmt->bindParam(':vaca_estado_re', $vaca_estado_re);
-        $stmt->bindParam(':vaca_celo', $vaca_celo);
+        //$stmt->bindParam(':vaca_celo', $vaca_celo);
         $stmt->bindParam(':vaca_partos', $vaca_partos);
         $stmt->bindParam(':vaca_estado_pal', $vaca_estado_pal);
         $stmt->bindParam(':vaca_finada', $vaca_finada);
@@ -248,7 +247,7 @@ if (isset($_POST['vaca_numero'])
             <h2 class="mb-3 text-center">Los datos se han enviado correctamente.</h2>
             <i style="color:green;" class="col-8 col-xl-5 mb-3 text-center fa-solid fa-circle-check fa-3x"></i>
             <a href="hembra.php" class="col-8 col-xl-5 mb-3 btn btn-success" >
-                Registrar otra hoja de vida
+                Dar de alta otra hembra
             </a>
             <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                 Ir a la tabla

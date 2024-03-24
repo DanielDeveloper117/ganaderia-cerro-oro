@@ -16,6 +16,8 @@ include("conexion.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="../../jquery-3.7.1.min.js"></script>
 
     <title>Registrar macho</title>
 </head>
@@ -66,14 +68,12 @@ include("conexion.php");
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5">
     <div class="col-11 col-md-10">
         <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
-        <h1 class=" text-center mb-4">Hoja de vida de un macho</h1>
+        <h1 class=" text-center mb-4">Alta de machos</h1>
 
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
-
             <div class="col-0 col-xl-8"></div>
 
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
-
                 <a class="mx-2  h-100 form-control btn btn-dark d-flex flex-row justify-content-evenly align-items-center" href="macho-tabla.php">
                     <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
                     <span>Ver registros</span>
@@ -82,9 +82,7 @@ include("conexion.php");
                 <a class=" h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
                     <span>Regresar al menú</span>
                 </a> 
-
             </div>
-
         </div>
             <!--<div class="d-flex flex-row mb-2">
             <div class="col-3 col-xl-9"></div>
@@ -100,11 +98,10 @@ include("conexion.php");
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
     <form class=" d-flex flex-column col-11 col-md-10 justify-content-center align-items-center"  action="macho-form-script.php" method="POST" enctype="multipart/form-data">
-        <p class="p-form">Formulario de registro de hoja de vida de una macho.</p>
-        <h3 class="mb-3">Macho</h3> 
+        <p class="p-form">Formulario para dar de alta un macho.</p>
+        <h3 class="mb-3">Información principal</h3> 
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">        
-
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_numero">Número del macho</label>
                 <input type="number" class="form-control" id="macho_numero" placeholder="Número del macho" name="macho_numero" required>
@@ -121,13 +118,31 @@ include("conexion.php");
                 <label class="label-form" for="macho_raza">Raza del macho</label>
                 <input type="text" class="form-control" id="macho_raza" placeholder="Raza del macho" name="macho_raza" >
             </div>
+        </div>
 
+        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
+            <div class="col-md-3 " >
+                <label class="label-form" for="macho_estado_re">Estado reproductivo</label>
+                <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re">
+                    <option class="option-hover" value="No seleccionado" selected>Seleccionar</option>
+                    <option class="option-hover" value="Torete">Torete</option>
+                    <option class="option-hover" value="Toro semental">Toro semental</option>
+                </select>             
+            </div>
+            <div class=" col-md-2" >
+                <label class="label-form" for="macho_estatus">Estatus del arete</label>
+                <select class="form-select" style="cursor: pointer; " id="macho_estatus" name="macho_estatus">
+                        <option class="option-hover" value="No seleccionado" selected>Seleccionar</option>
+                        <option class="option-hover" value="Vigente">Vigente</option>
+                        <option class="option-hover" value="Pendiente">Pendiente</option>
+                        <option class="option-hover" value="Baja">Baja</option>
+                </select>  
+            </div>
         </div>
         
         <h3 class="pt-4">Madre</h3>  
         
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
-
             <div class="col-md-2 " >
                 <label class="label-form" for="madre_numero">Número de la madre</label>
                 <input type="number" class="form-control" id="madre_numero" placeholder="Número del macho" name="madre_numero" >
@@ -144,13 +159,11 @@ include("conexion.php");
                 <label class="label-form" for="madre_raza">Raza de la madre</label>
                 <input type="text" class="form-control" id="madre_raza" placeholder="Raza de la madre" name="madre_raza" >
             </div>
-
         </div>    
 
         <h3 class="pt-4">Padre</h3>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
-
             <div class=" col-md-2" >
                 <label class="label-form" for="padre_numero">Número del padre</label>
                 <input type="number" class="form-control" id="padre_numero" placeholder="Número del padre" name="padre_numero" >
@@ -170,7 +183,7 @@ include("conexion.php");
 
         </div>
 
-        <h3 class="pt-4">Información del macho</h3>
+        <h3 class="pt-4">Información adicional</h3>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class=" col-md-2" >
@@ -193,10 +206,6 @@ include("conexion.php");
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
             <div class=" col-md-2" >
-                <label class="label-form" for="macho_estatus">Estatus</label>
-                <input type="text" class="form-control" id="macho_estatus" placeholder="Estatus del macho" name="macho_estatus" >
-            </div>
-            <div class=" col-md-2" >
                 <label class="label-form" for="macho_potrero">Potrero</label>
                 <input type="text" class="form-control" id="macho_potrero" placeholder="Potrero actual" name="macho_potrero" >
             </div>
@@ -204,27 +213,14 @@ include("conexion.php");
                 <label class="label-form" for="macho_lote">Lote</label>
                 <input type="text" class="form-control" id="macho_lote" placeholder="Lote" name="macho_lote" >
             </div>
-            <div class="col-md-3 " >
-                <label class="label-form" for="macho_estado_re">Estado reproductivo</label>
-                <input type="text" class="form-control" id="macho_estado_re" placeholder="Estado reproductivo" name="macho_estado_re" >
-            </div>        
-        </div>
-
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
-
-            <div class=" col-md-2" >
-                <label class="label-form" for="macho_celo">Celo</label>
-                <input type="text" class="form-control" id="macho_celo" placeholder="Celo" name="macho_celo" >
-            </div>
-            
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_finado">Finado</label>
                 <select class="form-select" style="cursor: pointer; " id="macho_finado" name="macho_finado">
-                        <option class="option-hover" value="si">Si</option>
-                        <option class="option-hover" value="no" selected>No</option>
+                        <option class="option-hover" value="Si">Si</option>
+                        <option class="option-hover" value="No" selected>No</option>
                 </select>
             </div>
-
+            <div class="col-md-3"></div>
         </div>
 
         <h3 class="pt-4">Edades</h3>
@@ -319,9 +315,11 @@ include("conexion.php");
 
             <div class=" col-md-2" >
             </div>
+            <div class=" col-md-2" >
+            </div>
         </div>  
 
-        <h3 class="pt-4">Información adicional</h3>
+        <h3 class="pt-4">Fotografías y observaciones</h3>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class=" col-md-5" >
@@ -346,6 +344,22 @@ include("conexion.php");
     </form>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- ------------------scripts section----------------- -->
+<script>
+    $(document).ready(function() {
+        // Detecta cambios en el input de ganancia de peso por día
+        $('#macho_gan_peso_dia').on('input', function() {
+            // Obtiene el valor del input de ganancia de peso por día
+            var ganPesoDia = parseFloat($(this).val());
+            // Calcula la ganancia de peso por mes (multiplica por 30)
+            var ganPesoMes = ganPesoDia * 30;
+            // Calcula el peso en 3 meses (multiplica por 90)
+            var peso3Meses = ganPesoDia * 90; 
+            // Asigna los valores a los inputs correspondientes
+            $('#macho_gan_peso_mes').val(ganPesoMes.toFixed(3)); // Limita a 3 decimales
+            $('#macho_peso_3meses').val(peso3Meses.toFixed(3)); // Limita a 3 decimales
+        });
+    });
+</script>
 </body>
 </html>

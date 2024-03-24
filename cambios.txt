@@ -1,0 +1,29 @@
+calculo promedio de leche por dia
+
+selector Estatus -> Estatus de arete: vigente, pendiente, baja
+
+estatus de reproduccion: vaca, novillona
+
+en vacas hay dos selectores; categoria y estado reproductivo.
+De las que tengo entendido a que selector pertenesen cada una?
+vaca
+vaca horra
+vaca parida
+vaca preñada
+vaca novillona
+hay otra?
+Ademas, novillona va en crias? o es un estado reproductivo de vacas 
+
+ternero: 0-6 meses
+becerro: 6-12 meses
+torete: 12-18 meses
+toro/semental: 18-en adelante
+
+ternera: 0-6 meses
+becerra: 6-12 meses
+novillona: 12-24 meses
+vaca: 24-en adelante
+mas de 36 meses ya no es fertil, no sirve
+
+recuadro de resumen debajo de tabla
+

@@ -20,9 +20,12 @@ include("conexion.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <link href="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 
-    <title>Tabla de inventario - Vacas</title>
+
+    <title>Tabla de inventario - Hembras</title>
 </head>
 <body>
 
@@ -62,28 +65,21 @@ include("conexion.php");
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-1 mt-2">
     <div class="col-11 col-md-11">
-          <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
-        <h1 class=" text-center mb-4">Inventario de registros de vacas</h1>
-
+        <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
+        <h1 class=" text-center mb-4">Inventario de registros de hembras</h1>
         <div class="d-flex flex-row justify-content-between mb-1 mb-0">
-
             <div class="col-0 col-xl-8"></div>
-
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
-
                 <a class="mx-2 form-control btn btn-primary d-flex flex-row justify-content-evenly align-items-center" href="hembra.php">
                     <i class="fa-solid fa-circle-plus fa-2x"></i>
-                    <span>Registrar una vaca</span>
+                    <span>Capturar una hembra</span>
                 </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
                 <a class="h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
                     <span>Regresar al menú</span>
                 </a> 
-
             </div>
-
         </div>
-
     </div> 
 </section>
     
@@ -93,7 +89,7 @@ include("conexion.php");
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
             //$sql = "SELECT id_vaca, padre_num, padre_raza, madre_num, madere_raza FROM hembra WHERE rol = 'agente'";
-            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, 
+            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza,  
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
@@ -119,6 +115,8 @@ include("conexion.php");
                         <th scope="col">Número de arete</th>
                         <th scope="col">Tatuaje</th>
                         <th scope="col">Raza de la vaca</th>
+                        <th scope="col">Estado reproductivo</th>
+                        <th scope="col">Estatus del arete</th>
                         <th scope="col">Número de la madre</th>
                         <th scope="col">Número de arete de la madre</th>
                         <th scope="col">Tatuaje de la madre</th>
@@ -131,11 +129,8 @@ include("conexion.php");
                         <th scope="col">Talla</th>
                         <th scope="col">Pelo</th>
                         <th scope="col">Condición</th>
-                        <th scope="col">Estatus</th>
                         <th scope="col">Potrero</th>
                         <th scope="col">Lote</th>
-                        <th scope="col">Estado reproductivo</th>
-                        <th scope="col">Celo</th>
                         <th scope="col">Partos totales</th>
                         <th scope="col">Estado de palpación</th>
                         <th scope="col">Finada</th>
@@ -163,7 +158,6 @@ include("conexion.php");
                         <th scope="col">Fotografía del fierro</th>
                         <th scope="col">Observaciones</th>
                         <th scope="col">Fecha de registro</th>
-
                     </tr>
                     </thead>
                     <tbody>';
@@ -194,54 +188,53 @@ include("conexion.php");
                             </form>
                         </td>';
                    
-                         echo '<td>' . $arreglo_sql['vaca_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_raza'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_raza'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_raza'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_color'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_talla'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_pelo'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_condicion'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_estatus'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_potrero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_lote'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_estado_re'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_celo'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_partos'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_estado_pal'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_finada'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_edad_actual'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_edad_destete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_edad_venta'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_peso_nacimiento'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_peso_actual'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_peso_destete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_peso_venta'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_gan_peso_dia'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_gan_peso_mes'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_peso_3meses'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_fecha_nacimiento'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_fecha_destete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_fecha_aretado'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_fecha_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_fecha_fierro'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_fecha_probable'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_fecha_venta'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_leche_dia'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_leche_mes'] . '</td>';
-                         echo '<td>' . $arreglo_sql['vaca_leche_comentario'] . '</td>';
-                         echo '<td> <img src="' . $arreglo_sql['vaca_foto'] .'" width="50" height="40" alt="Vacio"></td>';
-                         echo '<td> <img src="' . $arreglo_sql['vaca_foto_fierro'] .'" width="50" height="40" alt="Vacio"></td>';
-                         echo '<td>' . $arreglo_sql['vaca_observaciones'] . '</td>';
-                         echo '<td>' . $arreglo_sql['fecha_registro'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_numero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_arete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_raza'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_estado_re'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_estatus'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_raza'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_numero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_arete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_raza'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_color'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_talla'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_pelo'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_condicion'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_potrero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_lote'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_partos'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_estado_pal'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_finada'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_edad_actual'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_edad_destete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_edad_venta'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_peso_nacimiento'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_peso_actual'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_peso_destete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_peso_venta'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_gan_peso_dia'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_gan_peso_mes'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_peso_3meses'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_fecha_nacimiento'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_fecha_destete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_fecha_aretado'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_fecha_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_fecha_fierro'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_fecha_probable'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_fecha_venta'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_leche_dia'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_leche_mes'] . '</td>';
+                        echo '<td>' . $arreglo_sql['vaca_leche_comentario'] . '</td>';
+                        echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['vaca_foto'] .'"><img src="' . $arreglo_sql['vaca_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
+                        echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['vaca_foto_fierro'] .'"><img src="' . $arreglo_sql['vaca_foto_fierro'] .'" width="50" height="40" alt="Vacio"></a></td>';
+                        echo '<td>' . $arreglo_sql['vaca_observaciones'] . '</td>';
+                        echo '<td>' . $arreglo_sql['fecha_registro'] . '</td>';
                     // echo '<td><a href="fpdf/reporte-agente.php?id=' . $arreglo_sql['id_usuario'] . '" target="_blank" class="btn btn-success">Generar reporte<svg style="padding-left:5px;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
                     //      <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/>
                     //     </svg></a></td>';
@@ -254,11 +247,166 @@ include("conexion.php");
             echo "Error: " . $e->getMessage();
         }
         // Cerrar la conexión
-        $conexion = null;
+       
     ?>
     </div>
 </section>
+<div class="d-flex col-12 justify-content-center" style="margin-bottom: 20px;">
+    <h5 class="col-11">Resumen de inventario de hembras</h5>
+</div>
 
+
+<?php
+    /// ESTADO REPRODUCTIVO /////////////////////////////////////////////////////////////////////////
+    // Realizar la consulta para Vacas horras
+    $sql_horras = "SELECT COUNT(*) as total_horras FROM vacas WHERE vaca_estado_re = 'Vaca horra'";
+    $stmt_horras = $conexion->prepare($sql_horras);
+    $stmt_horras->execute();
+    $result_horras = $stmt_horras->fetch(PDO::FETCH_ASSOC);
+    $vacas_horras = $result_horras['total_horras'];
+
+    // Realizar la consulta para Vacas preñadas
+    $sql_prenadas = "SELECT COUNT(*) as total_prenadas FROM vacas WHERE vaca_estado_re = 'Vaca preñada'";
+    $stmt_prenadas = $conexion->prepare($sql_prenadas);
+    $stmt_prenadas->execute();
+    $result_prenadas = $stmt_prenadas->fetch(PDO::FETCH_ASSOC);
+    $vacas_prenadas = $result_prenadas['total_prenadas'];
+
+    // Realizar la consulta para Vacas paridas
+    $sql_paridas = "SELECT COUNT(*) as total_paridas FROM vacas WHERE vaca_estado_re = 'Vaca parida'";
+    $stmt_paridas = $conexion->prepare($sql_paridas);
+    $stmt_paridas->execute();
+    $result_paridas = $stmt_paridas->fetch(PDO::FETCH_ASSOC);
+    $vacas_paridas = $result_paridas['total_paridas'];
+
+    // Realizar la consulta para Vacas lactantes
+    $sql_lactantes = "SELECT COUNT(*) as total_lactantes FROM vacas WHERE vaca_estado_re = 'Vaca lactante'";
+    $stmt_lactantes = $conexion->prepare($sql_lactantes);
+    $stmt_lactantes->execute();
+    $result_lactantes = $stmt_lactantes->fetch(PDO::FETCH_ASSOC);
+    $vacas_lactantes = $result_lactantes['total_lactantes'];
+
+    // Realizar la consulta para Vacas lactantes
+    $sql_secas = "SELECT COUNT(*) as total_secas FROM vacas WHERE vaca_estado_re = 'Vaca seca'";
+    $stmt_secas = $conexion->prepare($sql_secas);
+    $stmt_secas->execute();
+    $result_secas = $stmt_secas->fetch(PDO::FETCH_ASSOC);
+    $vacas_secas = $result_secas['total_secas'];
+
+    // ARETADOS //////////////////////////////////////////////////////////////////////////////////////////
+    $sql_vigentes = "SELECT COUNT(*) as total_vigentes FROM vacas WHERE vaca_estatus = 'Vigente'";
+    $stmt_vigentes = $conexion->prepare($sql_vigentes);
+    $stmt_vigentes->execute();
+    $arreglo_vigentes = $stmt_vigentes->fetch(PDO::FETCH_ASSOC);
+    $aretes_vigentes = $arreglo_vigentes['total_vigentes'];
+
+    $sql_pendientes = "SELECT COUNT(*) as total_pendientes FROM vacas WHERE vaca_estatus = 'Pendiente'";
+    $stmt_pendientes = $conexion->prepare($sql_pendientes);
+    $stmt_pendientes->execute();
+    $arreglo_pendientes = $stmt_pendientes->fetch(PDO::FETCH_ASSOC);
+    $aretes_pendientes = $arreglo_pendientes['total_pendientes'];
+    
+    $sql_bajas = "SELECT COUNT(*) as total_bajas FROM vacas WHERE vaca_estatus = 'Baja'";
+    $stmt_bajas = $conexion->prepare($sql_bajas);
+    $stmt_bajas->execute();
+    $arreglo_bajas = $stmt_bajas->fetch(PDO::FETCH_ASSOC);
+    $aretes_bajas = $arreglo_bajas['total_bajas'];
+
+    // FINADAS ////////////////////////////////////////////////////////////////////////////
+    $sql_finadas = "SELECT COUNT(*) as total_finadas FROM vacas WHERE vaca_finada = 'Si'";
+    $stmt_finadas = $conexion->prepare($sql_finadas);
+    $stmt_finadas->execute();
+    $arreglo_finadas = $stmt_finadas->fetch(PDO::FETCH_ASSOC);
+    $finadas = $arreglo_finadas['total_finadas'];
+
+?>
+
+<section class="d-flex col-12 justify-content-center" style="margin-bottom: 200px;">
+    <div class="d-flex col-11 justify-content-md-around justify-content-center flex-md-row flex-column " style=" border: #000 solid 1px; padding: 20px; ">
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Estado reproductivo</th>
+                    <th>Cantidad</th>
+                </tr>
+                <tr>
+                    <td>Vacas horras</td>
+                    <td><?php echo $vacas_horras; ?></td>
+                </tr>
+                <tr>
+                    <td>Vacas preñadas</td>
+                    <td><?php echo $vacas_prenadas; ?></td>
+                </tr>
+                <tr>
+                    <td>Vacas paridas</td>
+                    <td><?php echo $vacas_paridas; ?></td>
+                </tr>
+                <tr>
+                    <td>Vacas lactantes</td>
+                    <td><?php echo $vacas_lactantes; ?></td>
+                </tr>
+                <tr>
+                    <td>Vacas secas</td>
+                    <td><?php echo $vacas_secas; ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="fw-bold"><?php echo ($vacas_horras + $vacas_prenadas + $vacas_paridas + $vacas_lactantes + $vacas_secas); ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Aretes</th>
+                    <th>Cantidad</th>
+                </tr>
+
+                <tr>
+                    <td>Vigente</td>
+                    <td><?php echo $aretes_vigentes; ?></td>
+                </tr>
+                <tr>
+                    <td>Pendiente</td>
+                    <td><?php echo $aretes_pendientes; ?></td>
+                </tr>
+                <tr>
+                    <td>Baja</td>
+                    <td><?php echo $aretes_bajas; ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="fw-bold"><?php echo ($aretes_vigentes + $aretes_pendientes + $aretes_bajas); ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Fallecidas</th>
+                </tr>
+
+                <tr>
+                    <td><?php echo $finadas; ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- codigo de fancybox -->
+<script>
+    $(document).ready(function() {
+  // Inicializar FancyBox
+  $('[data-fancybox="gallery"]').fancybox({
+    // Opciones adicionales aquí
+  });
+});
+</script>
+
+<!-- codigo de datatables -->
 <script>
     $(document).ready(function() {
         $('#tabla_vacas').DataTable({

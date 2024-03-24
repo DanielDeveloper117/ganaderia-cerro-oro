@@ -20,7 +20,8 @@ include("conexion.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <link href="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.js"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
     <title>Tabla de inventario - machos</title>
 </head>
@@ -73,7 +74,7 @@ include("conexion.php");
 
                 <a class="mx-2 form-control btn btn-dark d-flex flex-row justify-content-evenly align-items-center" href="macho-form.php">
                     <i class="fa-solid fa-circle-plus fa-2x"></i>
-                    <span>Registrar un macho</span>
+                    <span>Capturar un macho</span>
                 </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
                 <a class="h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
@@ -97,13 +98,12 @@ include("conexion.php");
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             macho_color, macho_talla, macho_pelo, macho_condicion, macho_estatus, macho_potrero, 
-            macho_lote, macho_estado_re, macho_celo, macho_finado, 
+            macho_lote, macho_estado_re, macho_finado, 
             macho_edad_actual, macho_edad_destete, macho_edad_venta, 
             macho_peso_nacimiento, macho_peso_actual, macho_peso_destete, macho_peso_venta, 
             macho_gan_peso_dia, macho_gan_peso_mes, macho_peso_3meses, 
             macho_fecha_nacimiento, macho_fecha_destete, macho_fecha_aretado, 
             macho_fecha_tatuaje, macho_fecha_fierro, macho_fecha_venta, 
-            
             macho_foto, macho_foto_fierro, 
             macho_observaciones, fecha_registro FROM machos";
             $stmt = $conexion->prepare($sql);
@@ -114,11 +114,13 @@ include("conexion.php");
                     <tr>
                         <th scope="col">Eliminar</th>
                         <th scope="col">Editar hoja de vida</th>
-                        
+
                         <th scope="col">Número del macho</th>
                         <th scope="col">Número de arete</th>
                         <th scope="col">Tatuaje</th>
                         <th scope="col">Raza de la macho</th>
+                        <th scope="col">Estado reproductivo</th>
+                        <th scope="col">Estatus del arete</th>
                         <th scope="col">Número de la madre</th>
                         <th scope="col">Número de arete de la madre</th>
                         <th scope="col">Tatuaje de la madre</th>
@@ -131,13 +133,8 @@ include("conexion.php");
                         <th scope="col">Talla</th>
                         <th scope="col">Pelo</th>
                         <th scope="col">Condición</th>
-                        <th scope="col">Estatus</th>
                         <th scope="col">Potrero</th>
-                        <th scope="col">Lote</th>
-                        <th scope="col">Estado reproductivo</th>
-                        <th scope="col">Celo</th>
-
-
+                        <th scope="col">Lote</th>                        
                         <th scope="col">Finado</th>
                         <th scope="col">Edad actual</th>
                         <th scope="col">Edad destete</th>
@@ -153,17 +150,12 @@ include("conexion.php");
                         <th scope="col">Fecha de destete</th>
                         <th scope="col">Fecha de aretado</th>
                         <th scope="col">Fecha de tatuaje</th>
-                        <th scope="col">Fecha de fierro</th>
-                        
+                        <th scope="col">Fecha de fierro</th>     
                         <th scope="col">Fecha de venta</th>
-
-
-
                         <th scope="col">Fotografía</th>
                         <th scope="col">Fotografía del fierro</th>
                         <th scope="col">Observaciones</th>
                         <th scope="col">Fecha de registro</th>
-
                     </tr>
                     </thead>
                     <tbody>';
@@ -186,56 +178,48 @@ include("conexion.php");
                                 <button type="submit" class="form-control btn-info"><i style="margin-right:5px;" class="bi bi-pencil-square"></i>Editar</button>
                             </form>
                          </td>';
-                    
                    
-                         echo '<td>' . $arreglo_sql['macho_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_raza'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['madre_raza'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['padre_raza'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_color'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_talla'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_pelo'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_condicion'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_estatus'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_potrero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_lote'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_estado_re'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_celo'] . '</td>';
-                        
-
-                         echo '<td>' . $arreglo_sql['macho_finado'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_edad_actual'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_edad_destete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_edad_venta'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_peso_nacimiento'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_peso_actual'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_peso_destete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_peso_venta'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_gan_peso_dia'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_gan_peso_mes'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_peso_3meses'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_fecha_nacimiento'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_fecha_destete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_fecha_aretado'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_fecha_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['macho_fecha_fierro'] . '</td>';
-                         
-                         echo '<td>' . $arreglo_sql['macho_fecha_venta'] . '</td>';
-
-
-
-                         echo '<td> <img src="' . $arreglo_sql['macho_foto'] .'" width="50" height="40" alt="Vacio"></td>';
-                         echo '<td> <img src="' . $arreglo_sql['macho_foto_fierro'] .'" width="50" height="40" alt="Vacio"></td>';
-                         echo '<td>' . $arreglo_sql['macho_observaciones'] . '</td>';
-                         echo '<td>' . $arreglo_sql['fecha_registro'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_numero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_arete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_raza'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_estado_re'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_estatus'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['madre_raza'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_numero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_arete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['padre_raza'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_color'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_talla'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_pelo'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_condicion'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_potrero'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_lote'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_finado'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_edad_actual'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_edad_destete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_edad_venta'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_peso_nacimiento'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_peso_actual'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_peso_destete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_peso_venta'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_gan_peso_dia'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_gan_peso_mes'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_peso_3meses'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_fecha_nacimiento'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_fecha_destete'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_fecha_aretado'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_fecha_tatuaje'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_fecha_fierro'] . '</td>';
+                        echo '<td>' . $arreglo_sql['macho_fecha_venta'] . '</td>';
+                        echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['macho_foto'] .'"><img src="' . $arreglo_sql['macho_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
+                        echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['macho_foto_fierro'] .'"><img src="' . $arreglo_sql['macho_foto_fierro'] .'" width="50" height="40" alt="Vacio"></a></td>';
+                        echo '<td>' . $arreglo_sql['macho_observaciones'] . '</td>';
+                        echo '<td>' . $arreglo_sql['fecha_registro'] . '</td>';
                     // echo '<td><a href="fpdf/reporte-agente.php?id=' . $arreglo_sql['id_usuario'] . '" target="_blank" class="btn btn-success">Generar reporte<svg style="padding-left:5px;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
                     //      <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5zM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/>
                     //     </svg></a></td>';
@@ -248,11 +232,133 @@ include("conexion.php");
             echo "Error: " . $e->getMessage();
         }
         // Cerrar la conexión
-        $conexion = null;
     ?>
     </div>
 </section>
 
+<div class="d-flex col-12 justify-content-center" style="margin-bottom: 20px;">
+    <h5 class="col-11">Resumen de inventario de machos</h5>
+</div>
+
+<?php
+    /// ESTADO REPRODUCTIVO /////////////////////////////////////////////////////////////////////////
+    // Realizar la consulta para machos toretes
+    $sql_toretes = "SELECT COUNT(*) as total_toretes FROM machos WHERE macho_estado_re = 'Torete'";
+    $stmt_toretes = $conexion->prepare($sql_toretes);
+    $stmt_toretes->execute();
+    $result_toretes = $stmt_toretes->fetch(PDO::FETCH_ASSOC);
+    $machos_toretes = $result_toretes['total_toretes'];
+
+    // Realizar la consulta para machos preñadas
+    $sql_sementales = "SELECT COUNT(*) as total_sementales FROM machos WHERE macho_estado_re = 'Toro semental'";
+    $stmt_sementales = $conexion->prepare($sql_sementales);
+    $stmt_sementales->execute();
+    $result_sementales = $stmt_sementales->fetch(PDO::FETCH_ASSOC);
+    $machos_sementales = $result_sementales['total_sementales'];
+
+
+    // ARETADOS //////////////////////////////////////////////////////////////////////////////////////////
+    $sql_vigentes = "SELECT COUNT(*) as total_vigentes FROM machos WHERE macho_estatus = 'Vigente'";
+    $stmt_vigentes = $conexion->prepare($sql_vigentes);
+    $stmt_vigentes->execute();
+    $arreglo_vigentes = $stmt_vigentes->fetch(PDO::FETCH_ASSOC);
+    $aretes_vigentes = $arreglo_vigentes['total_vigentes'];
+
+    $sql_pendientes = "SELECT COUNT(*) as total_pendientes FROM machos WHERE macho_estatus = 'Pendiente'";
+    $stmt_pendientes = $conexion->prepare($sql_pendientes);
+    $stmt_pendientes->execute();
+    $arreglo_pendientes = $stmt_pendientes->fetch(PDO::FETCH_ASSOC);
+    $aretes_pendientes = $arreglo_pendientes['total_pendientes'];
+    
+    $sql_bajas = "SELECT COUNT(*) as total_bajas FROM machos WHERE macho_estatus = 'Baja'";
+    $stmt_bajas = $conexion->prepare($sql_bajas);
+    $stmt_bajas->execute();
+    $arreglo_bajas = $stmt_bajas->fetch(PDO::FETCH_ASSOC);
+    $aretes_bajas = $arreglo_bajas['total_bajas'];
+
+    // FINADAS ////////////////////////////////////////////////////////////////////////////
+    $sql_finados = "SELECT COUNT(*) as total_finados FROM machos WHERE macho_finado = 'Si'";
+    $stmt_finados = $conexion->prepare($sql_finados);
+    $stmt_finados->execute();
+    $arreglo_finados = $stmt_finados->fetch(PDO::FETCH_ASSOC);
+    $finados = $arreglo_finados['total_finados'];
+
+?>
+
+<section class="d-flex col-12 justify-content-center" style="margin-bottom: 200px;">
+    <div class="d-flex col-11 justify-content-md-around justify-content-center flex-md-row flex-column " style=" border: #000 solid 1px; padding: 20px; ">
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Estado reproductivo</th>
+                    <th>Cantidad</th>
+                </tr>
+                <tr>
+                    <td>Toretes</td>
+                    <td><?php echo $machos_toretes; ?></td>
+                </tr>
+                <tr>
+                    <td>Toro semental</td>
+                    <td><?php echo $machos_sementales; ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="fw-bold"><?php echo ($machos_toretes + $machos_sementales); ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Aretes</th>
+                    <th>Cantidad</th>
+                </tr>
+
+                <tr>
+                    <td>Vigente</td>
+                    <td><?php echo $aretes_vigentes; ?></td>
+                </tr>
+                <tr>
+                    <td>Pendiente</td>
+                    <td><?php echo $aretes_pendientes; ?></td>
+                </tr>
+                <tr>
+                    <td>Baja</td>
+                    <td><?php echo $aretes_bajas; ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="fw-bold"><?php echo ($aretes_vigentes + $aretes_pendientes + $aretes_bajas); ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Fallecidos</th>
+                </tr>
+
+                <tr>
+                    <td><?php echo $finados; ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- codigo de fancybox -->
+<script>
+    $(document).ready(function() {
+  // Inicializar FancyBox
+  $('[data-fancybox="gallery"]').fancybox({
+    // Opciones adicionales aquí
+  });
+});
+</script>
+
+<!-- codigo de datatables -->
 <script>
     $(document).ready(function() {
         $('#tabla_machos').DataTable({

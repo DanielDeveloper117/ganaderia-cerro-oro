@@ -29,9 +29,6 @@ include("conexion.php");
             && isset($_POST['macho_potrero'])
             && isset($_POST['macho_lote'])
             && isset($_POST['macho_estado_re'])
-            && isset($_POST['macho_celo'])
-            
-
             && isset($_POST['macho_finado'])
             && isset($_POST['macho_edad_actual'])
             && isset($_POST['macho_edad_destete'])
@@ -48,11 +45,7 @@ include("conexion.php");
             && isset($_POST['macho_fecha_aretado'])
             && isset($_POST['macho_fecha_tatuaje'])
             && isset($_POST['macho_fecha_fierro'])
-            
             && isset($_POST['macho_fecha_venta'])
-
-
-
             && isset($_FILES['macho_foto'])
             && isset($_FILES['macho_foto_fierro'])
             && isset($_POST['macho_observaciones'])) {
@@ -71,17 +64,15 @@ include("conexion.php");
             // Mueve la imagen al directorio deseado
             if (move_uploaded_file($macho_ubicacionTemporal, $macho_directorioDestino . $macho_nombreArchivo)) {
                 echo '<p class="text-center mt-4 mb-2 text-secondary">Imagen guardada en la carpeta: ' . $macho_directorioDestino . $macho_nombreArchivo . '</p>';
-            
+            } else {
+                //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
+            }
+               // Mueve la imagen al directorio deseado
+            if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
+                echo '<p class="text-center mb-0 pb-0 text-secondary">Imagen guardada en la carpeta: ' . $fierro_directorioDestino . $fierro_nombreArchivo . '</p>';
              } else {
                  //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
              }
-                // Mueve la imagen al directorio deseado
-             if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
-                 echo '<p class="text-center mb-0 pb-0 text-secondary">Imagen guardada en la carpeta: ' . $fierro_directorioDestino . $fierro_nombreArchivo . '</p>';
-            
-              } else {
-                  //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
-              }
             // Acceder y guardar en variables los datos del formulario recibido
             $id_macho= $_POST['id_macho'];
             $macho_numero= $_POST['macho_numero'];
@@ -104,9 +95,6 @@ include("conexion.php");
             $macho_potrero= $_POST['macho_potrero'];
             $macho_lote= $_POST['macho_lote'];
             $macho_estado_re= $_POST['macho_estado_re'];
-            $macho_celo= $_POST['macho_celo'];
-            
-
             $macho_finado= $_POST['macho_finado'];
             $macho_edad_actual= $_POST['macho_edad_actual'];
             $macho_edad_destete= $_POST['macho_edad_destete'];
@@ -123,10 +111,7 @@ include("conexion.php");
             $macho_fecha_aretado= $_POST['macho_fecha_aretado'];
             $macho_fecha_tatuaje= $_POST['macho_fecha_tatuaje'];
             $macho_fecha_fierro= $_POST['macho_fecha_fierro'];
-            
             $macho_fecha_venta= $_POST['macho_fecha_venta'];
-            
-
 
             $sql = "SELECT id_macho,
             macho_foto, macho_foto_fierro 
@@ -163,7 +148,6 @@ include("conexion.php");
                $fierro_foto_ruta = $fierro_directorioDestino . $fierro_nombreArchivo;
             }
         
-
             $macho_observaciones= $_POST['macho_observaciones'];
             //intentar la consulta de actualizar todos los campos
             try {
@@ -191,7 +175,6 @@ include("conexion.php");
                 macho_potrero = :macho_potrero,
                 macho_lote = :macho_lote,
                 macho_estado_re = :macho_estado_re,
-                macho_celo = :macho_celo,
                 macho_finado = :macho_finado,
                 macho_edad_actual = :macho_edad_actual,
                 macho_edad_destete = :macho_edad_destete,
@@ -238,9 +221,6 @@ include("conexion.php");
                 $stmt->bindParam(':macho_potrero', $macho_potrero);
                 $stmt->bindParam(':macho_lote', $macho_lote);
                 $stmt->bindParam(':macho_estado_re', $macho_estado_re);
-                $stmt->bindParam(':macho_celo', $macho_celo);
-
-
                 $stmt->bindParam(':macho_finado', $macho_finado);
                 $stmt->bindParam(':macho_edad_actual', $macho_edad_actual);
                 $stmt->bindParam(':macho_edad_destete', $macho_edad_destete);
@@ -257,11 +237,7 @@ include("conexion.php");
                 $stmt->bindParam(':macho_fecha_aretado', $macho_fecha_aretado);
                 $stmt->bindParam(':macho_fecha_tatuaje', $macho_fecha_tatuaje);
                 $stmt->bindParam(':macho_fecha_fierro', $macho_fecha_fierro);
-                
                 $stmt->bindParam(':macho_fecha_venta', $macho_fecha_venta);
-
-
-
                 $stmt->bindParam(':macho_foto', $macho_foto_ruta);
                 $stmt->bindParam(':macho_foto_fierro', $fierro_foto_ruta);
                 $stmt->bindParam(':macho_observaciones', $macho_observaciones);
@@ -305,7 +281,7 @@ include("conexion.php");
             //echo "Error: " . $e->getMessage();
             echo '
             <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                <h2 class="mb-3">Los datos no fueron actualizados</h2>
+                <h2 class="mb-3">Ha ocurrido un error</h2>
                 <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
                 <a href="macho-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                     Ir a la tabla

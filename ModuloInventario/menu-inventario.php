@@ -61,16 +61,16 @@
         
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
-                <a href="Vacas/hembra.php"><button class="form-control btn-primary btn-options" >Registrar vaca</button></a>
+                <a href="Vacas/hembra.php"><button class="form-control btn-primary btn-options" >Alta de Hembras</button></a>
             </div>
             <div class="col-12 col-md-5">
-                <a href="Vacas/hembra-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de vacas</button></a>
+                <a href="Vacas/hembra-tabla.php"><button class="form-control btn-primary btn-options" >Ver registros de hembras</button></a>
             </div>            
         </div>
            
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
             <div class="col-12 col-md-5">
-                <a href="Machos/macho-form.php"><button class="form-control btn-dark btn-options" >Registrar macho</button></a>
+                <a href="Machos/macho-form.php"><button class="form-control btn-dark btn-options" >Alta de Machos</button></a>
             </div>
             <div class="col-12 col-md-5">
                 <a  href="Machos/macho-tabla.php"><button class="form-control btn-dark btn-options" >Ver registros de machos</button></a>
@@ -86,7 +86,7 @@
         
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
-                <a href="Crias/crias-form.php"><button class="form-control btn-success btn-options" >Registrar cría</button></a>
+                <a href="Crias/crias-form.php"><button class="form-control btn-success btn-options" >Alta de Crías</button></a>
             </div>
             <div class="col-12 col-md-5">
                 <a href="Crias/crias-tabla.php"><button class="form-control btn-success btn-options" >Ver registros de crías</button></a>

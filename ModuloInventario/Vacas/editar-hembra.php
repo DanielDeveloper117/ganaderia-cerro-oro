@@ -13,7 +13,7 @@ include("conexion.php");
         $id_vaca = $_POST['id_vaca'];
 
         try {
-            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, 
+            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza,  
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
@@ -37,7 +37,7 @@ include("conexion.php");
             //echo "Error: " . $e->getMessage();
             echo '
             <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                <h2 class="mb-3">Los datos no fueron enviados</h2>
+                <h2 class="mb-3">Ha ocurrido un error</h2>
                 <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
                 <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                     Regresar a la tabla
@@ -81,11 +81,11 @@ include("conexion.php");
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta value="<?php echo '' . $arreglo_sql['id_vaca'] . '';?>" name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
-
+    <script src="../../jquery-3.7.1.min.js"></script>
 
     <title>Editar hoja de vida</title>
 </head>
@@ -143,7 +143,7 @@ include("conexion.php");
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3">
     <div class="col-11 col-md-10">
         <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
-        <h2 class=" text-center mb-4">Editar hoja de vida de vaca: <?php echo '' . $arreglo_sql['vaca_numero'] . '';?></h2>
+        <h2 class=" text-center mb-4">Editar hoja de vida de hembra: <?php echo '' . $arreglo_sql['vaca_numero'] . '';?></h2>
 
         <div class="justify-content-end d-flex flex-row col-12 mb-2 div-imgs-container">
  
@@ -180,31 +180,52 @@ include("conexion.php");
 
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
-<form class="form-vaca d-flex flex-column col-11 col-md-10 justify-content-center align-items-center"  action="editar-hembra-script.php" method="POST" enctype="multipart/form-data">
+    <form class="form-vaca d-flex flex-column col-11 col-md-10 justify-content-center align-items-center"  action="editar-hembra-script.php" method="POST" enctype="multipart/form-data">
         <input type="hidden"  value="<?php echo '' . $arreglo_sql['id_vaca'] . '';?>" name="id_vaca">
 
-        <p class="p-form">Formulario de editar datos de la hoja de vida.</p>
-        <h3 class="mb-3">Vaca</h3> 
+        <p class="p-form">Formulario de editar datos de la hoja de vida de la hembra.</p>
+
+        <h3 class="mb-3">Información principal</h3> 
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_numero">Número de la vaca</label>
                 <input type="number" class="form-control" id="vaca_numero" placeholder="Número de la vaca"  value="<?php echo '' . $arreglo_sql['vaca_numero'] . '';?>" name="vaca_numero" required>
             </div>
-
             <div class=" col-md-3" >
                 <label class="label-form" for="vaca_arete">Arete de la vaca</label>
                 <input type="text" class="form-control" id="vaca_arete" placeholder="Número del arete de la vaca" value="<?php echo '' . $arreglo_sql['vaca_arete'] . '';?>" name="vaca_arete" >
-            </div>  
-            
+            </div>       
             <div class=" col-md-3" >
                 <label class="label-form" for="vaca_tatuaje">Tatuaje de la vaca</label>
                 <input type="text" class="form-control" id="vaca_tatuaje" placeholder="Tatuaje de la vaca" value="<?php echo '' . $arreglo_sql['vaca_tatuaje'] . '';?>" name="vaca_tatuaje" >
-            </div> 
-        
+            </div>     
             <div class=" col-md-3" >
                 <label class="label-form" for="vaca_raza">Raza de la vaca</label>
                 <input type="text" class="form-control" id="vaca_raza" placeholder="Raza de la vaca" value="<?php echo '' . $arreglo_sql['vaca_raza'] . '';?>" name="vaca_raza" >
+            </div>
+        </div>
+
+        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
+            <div class="col-md-3 " >
+                <label class="label-form" for="vaca_estado_re">Estado reproductivo</label>
+                <select class="form-select" style="cursor: pointer; " id="vaca_estado_re" name="vaca_estado_re">
+                    <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?></option>
+                    <option class="option-hover" value="Vaca horra">Vaca vacía/horra</option>
+                    <option class="option-hover" value="Vaca preñada">Vaca preñada</option>
+                    <option class="option-hover" value="Vaca parida">Vaca parida</option>
+                    <option class="option-hover" value="Vaca lactante">Vaca lactante</option>
+                    <option class="option-hover" value="Vaca seca">Vaca seca</option>
+                </select>             
+            </div>
+            <div class=" col-md-2" >
+                <label class="label-form" for="vaca_estatus">Estatus del arete</label>
+                <select class="form-select" style="cursor: pointer; " id="vaca_estatus" name="vaca_estatus">
+                        <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estatus'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estatus'] . '';?></option>
+                        <option class="option-hover" value="Vigente">Vigente</option>
+                        <option class="option-hover" value="Pendiente">Pendiente</option>
+                        <option class="option-hover" value="Baja">Baja</option>
+                </select>  
             </div>
         </div>
         
@@ -215,17 +236,14 @@ include("conexion.php");
                 <label class="label-form" for="madre_numero">Número de la madre</label>
                 <input type="number" class="form-control" id="madre_numero" placeholder="Número de la vaca" value="<?php echo '' . $arreglo_sql['madre_numero'] . '';?>" name="madre_numero" >
             </div>
-
             <div class=" col-md-3" >
                 <label class="label-form" for="madre_arete">Arete de la madre</label>
                 <input type="text" class="form-control" id="madre_arete" placeholder="Número del arete de la madre" value="<?php echo '' . $arreglo_sql['madre_arete'] . '';?>" name="madre_arete" >
             </div> 
-
             <div class=" col-md-3" >
                 <label class="label-form" for="madre_tatuaje">Tatuaje de la madre</label>
                 <input type="text" class="form-control" id="madre_tatuaje" placeholder="Tatuaje de la madre" value="<?php echo '' . $arreglo_sql['madre_tatuaje'] . '';?>" name="madre_tatuaje" >
             </div>
-
             <div class="col-md-3 " >
                 <label class="label-form" for="madre_raza">Raza de la madre</label>
                 <input type="text" class="form-control" id="madre_raza" placeholder="Raza de la madre" value="<?php echo '' . $arreglo_sql['madre_raza'] . '';?>" name="madre_raza" >
@@ -235,47 +253,39 @@ include("conexion.php");
         <h3 class="pt-4 mb-3">Padre</h3>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
-
             <div class=" col-md-2" >
                 <label class="label-form" for="padre_numero">Número del padre</label>
                 <input type="number" class="form-control" id="padre_numero" placeholder="Número del padre" value="<?php echo '' . $arreglo_sql['padre_numero'] . '';?>" name="padre_numero" >
             </div>
-
             <div class=" col-md-3" >
                 <label class="label-form" for="padre_arete">Arete del padre</label>
                 <input type="text" class="form-control" id="padre_arete" placeholder="Número del arete del padre" value="<?php echo '' . $arreglo_sql['padre_arete'] . '';?>" name="padre_arete" >
             </div> 
-
             <div class=" col-md-3" >
                 <label class="label-form" for="padre_tatuaje">Tatuaje del padre</label>
                 <input type="text" class="form-control" id="padre_tatuaje" placeholder="Tatuaje del padre" value="<?php echo '' . $arreglo_sql['padre_tatuaje'] . '';?>" name="padre_tatuaje" >
             </div>
-
             <div class=" col-md-3" >
                 <label class="label-form" for="padre_raza">Raza del padre</label>
                 <input type="text" class="form-control" id="padre_raza" placeholder="Raza del padre" value="<?php echo '' . $arreglo_sql['padre_raza'] . '';?>" name="padre_raza" >
             </div>
         </div>
 
-        <h3 class="pt-4 mb-3">Información de la vaca</h3>
+        <h3 class="pt-4 mb-3">Información adicional</h3>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
-
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_color">Color</label>
                 <input type="text" class="form-control" id="vaca_color" placeholder="Color de la vaca" value="<?php echo '' . $arreglo_sql['vaca_color'] . '';?>" name="vaca_color" >
             </div>
-
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_talla">Talla</label>
                 <input type="text" class="form-control" id="vaca_talla" placeholder="Talla de la vaca" value="<?php echo '' . $arreglo_sql['vaca_talla'] . '';?>" name="vaca_talla" >
             </div>
-
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_pelo">Pelo</label>
                 <input type="text" class="form-control" id="vaca_pelo" placeholder="Pelo de la vaca" value="<?php echo '' . $arreglo_sql['vaca_pelo'] . '';?>" name="vaca_pelo" >
             </div>
-
             <div class=" col-md-3" >
                 <label class="label-form" for="vaca_condicion">Condición corporal</label>
                 <input type="text" class="form-control" id="vaca_condicion" placeholder="Ingresar condicion corporal" value="<?php echo '' . $arreglo_sql['vaca_condicion'] . '';?>" name="vaca_condicion" >
@@ -284,48 +294,34 @@ include("conexion.php");
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
             <div class=" col-md-2" >
-                <label class="label-form" for="vaca_estatus">Estatus</label>
-                <input type="text" class="form-control" id="vaca_estatus" placeholder="Estatus de la vaca" value="<?php echo '' . $arreglo_sql['vaca_estatus'] . '';?>" name="vaca_estatus" >
-            </div>
-
-            <div class=" col-md-2" >
                 <label class="label-form" for="vaca_potrero">Potrero</label>
                 <input type="text" class="form-control" id="vaca_potrero" placeholder="Potrero actual" value="<?php echo '' . $arreglo_sql['vaca_potrero'] . '';?>" name="vaca_potrero" >
             </div>
-
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_lote">Lote</label>
                 <input type="text" class="form-control" id="vaca_lote" placeholder="Lote" value="<?php echo '' . $arreglo_sql['vaca_lote'] . '';?>" name="vaca_lote" >
             </div>
-
+            <!-- <div class=" col-md-2" >
+                <label class="label-form" for="vaca_celo">Celo</label>
+                <input type="text" class="form-control" id="vaca_celo" placeholder="Celo" value="<?php echo '' . $arreglo_sql['vaca_celo'] . '';?>" name="vaca_celo" >
+            </div> -->
             <div class="col-md-3 " >
-                <label class="label-form" for="vaca_estado_re">Estado reproductivo</label>
-                <input type="text" class="form-control" id="vaca_estado_re" placeholder="Estado reproductivo" value="<?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?>" name="vaca_estado_re" >
-            </div>        
+                <label class="label-form" for="vaca_estado_pal">Estado de palpación</label>
+                <input type="text" class="form-control" id="vaca_estado_pal" placeholder="Estado de palpación" value="<?php echo '' . $arreglo_sql['vaca_estado_pal'] . '';?>" name="vaca_estado_pal" >
+            </div>      
+            <div class=" col-md-2" >
+                <label class="label-form" for="vaca_partos">Partos totales</label>
+                <input type="number" class="form-control" id="vaca_partos" placeholder="Número de partos" value="<?php echo '' . $arreglo_sql['vaca_partos'] . '';?>" name="vaca_partos" >
+            </div>             
         </div>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
             <div class=" col-md-2" >
-                <label class="label-form" for="vaca_celo">Celo</label>
-                <input type="text" class="form-control" id="vaca_celo" placeholder="Celo" value="<?php echo '' . $arreglo_sql['vaca_celo'] . '';?>" name="vaca_celo" >
-            </div>
-
-            <div class=" col-md-2" >
-                <label class="label-form" for="vaca_partos">Partos totales</label>
-                <input type="number" class="form-control" id="vaca_partos" placeholder="Número de partos" value="<?php echo '' . $arreglo_sql['vaca_partos'] . '';?>" name="vaca_partos" >
-            </div>
-
-            <div class="col-md-3 " >
-                <label class="label-form" for="vaca_estado_pal">Estado de palpación</label>
-                <input type="text" class="form-control" id="vaca_estado_pal" placeholder="Estado de palpación" value="<?php echo '' . $arreglo_sql['vaca_estado_pal'] . '';?>" name="vaca_estado_pal" >
-            </div>    
-            
-            <div class=" col-md-2" >
-                <label class="label-form" for="vaca_finada">Finado</label>
+                <label class="label-form" for="vaca_finada">Finada</label>
                 <select class="form-select" style="cursor: pointer; " id="vaca_finada" name="vaca_finada">
                         <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_finada'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_finada'] . '';?></option>
-                        <option class="option-hover" value="si">Si</option>
-                        <option class="option-hover" value="no" selected>No</option>
+                        <option class="option-hover" value="Si">Si</option>
+                        <option class="option-hover" value="No" selected>No</option>
                 </select>
             </div>
         </div>
@@ -354,7 +350,6 @@ include("conexion.php");
                 <label class="label-form" for="vaca_peso_nacimiento">Peso de nacimiento</label>
                 <input type="number" class="form-control" id="vaca_peso_nacimiento" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 32.565" value="<?php echo '' . $arreglo_sql['vaca_peso_nacimiento'] . '';?>" name="vaca_peso_nacimiento" >
             </div>
-
             <div class="col-md-2 " >
                 <label class="label-form" for="vaca_peso_actual">Peso actual</label>
                 <input type="number" class="form-control" id="vaca_peso_actual" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 689.705" value="<?php echo '' . $arreglo_sql['vaca_peso_actual'] . '';?>" name="vaca_peso_actual" >
@@ -409,7 +404,6 @@ include("conexion.php");
         </div>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
-
             <div class="col-md-2 " >
                 <label class="label-form" for="vaca_fecha_fierro">Fecha de fierro</label>
                 <input type="date" class="form-control" id="vaca_fecha_fierro" placeholder="Fecha aretado" value="<?php echo '' . $arreglo_sql['vaca_fecha_fierro'] . '';?>" name="vaca_fecha_fierro" >
@@ -426,14 +420,13 @@ include("conexion.php");
             </div>
         </div>  
 
-        <h3 class="pt-4 mb-3">Producción - Partos</h3>
+        <!-- <h3 class="pt-4 mb-3">Producción - Partos</h3>
 
         <div class="d-flex justify-content-md-around d-md-flex flex-md-row flex-column col-12">
             <a href="../Crias/crias-form.php" class="mb-3 mb-md-0 mx-1 text-center py-2 btn-primary col-12 col-xl-6 rounded-3">Formulario de partos</a> 
-        </div>
+        </div> -->
 
-        <h3 class="pt-4 mb-4">Producción - Leche</h3>
-
+        <h3 class="pt-4 mb-4">Producción - Litros de leche</h3>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class=" col-md-3" >
@@ -450,24 +443,21 @@ include("conexion.php");
             </div>
         </div>
 
-        <h3 class="pt-4 mb-3">Información adicional</h3>
+        <h3 class="pt-4 mb-3">Fotografías y observaciones</h3>
 
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
- 
             <div class=" col-md-5" >
                 <label class="label-form" for="foto">Seleccionar nueva fotografía de la vaca</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto">
                 <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
                 <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
             </div>
-
             <div class=" col-md-5" >
                 <label class="label-form" for="foto">Seleccionar nueva fotografía del fierro</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto_fierro">
                 <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
                 <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>"  alt="Vacio">
             </div>
-
         </div>
         
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
@@ -481,7 +471,30 @@ include("conexion.php");
 
     </form>
 </section>
+<!-- ------------------scripts section----------------- -->
+<script>
+    $(document).ready(function() {
+        $('#vaca_leche_dia').on('input', function() {
+            var lecheDia = parseFloat($(this).val());
+            var lecheMes = lecheDia * 30;
+            $('#vaca_leche_mes').val(lecheMes.toFixed(3)); // Limita a 3 decimales
+        });
+    });
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    $(document).ready(function() {
+        // Detecta cambios en el input de ganancia de peso por día
+        $('#vaca_gan_peso_dia').on('input', function() {
+            // Obtiene el valor del input de ganancia de peso por día
+            var ganPesoDia = parseFloat($(this).val());
+            // Calcula la ganancia de peso por mes (multiplica por 30)
+            var ganPesoMes = ganPesoDia * 30;
+            // Calcula el peso en 3 meses (multiplica por 90)
+            var peso3Meses = ganPesoDia * 90; 
+            // Asigna los valores a los inputs correspondientes
+            $('#vaca_gan_peso_mes').val(ganPesoMes.toFixed(3)); // Limita a 3 decimales
+            $('#vaca_peso_3meses').val(peso3Meses.toFixed(3)); // Limita a 3 decimales
+        });
+    });
+</script>
 </body>
 </html>

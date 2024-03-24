@@ -29,7 +29,6 @@ include("conexion.php");
             && isset($_POST['vaca_potrero'])
             && isset($_POST['vaca_lote'])
             && isset($_POST['vaca_estado_re'])
-            && isset($_POST['vaca_celo'])
             && isset($_POST['vaca_partos'])
             && isset($_POST['vaca_estado_pal'])
             && isset($_POST['vaca_finada'])
@@ -104,7 +103,6 @@ include("conexion.php");
             $vaca_potrero= $_POST['vaca_potrero'];
             $vaca_lote= $_POST['vaca_lote'];
             $vaca_estado_re= $_POST['vaca_estado_re'];
-            $vaca_celo= $_POST['vaca_celo'];
             $vaca_partos= $_POST['vaca_partos'];
             $vaca_estado_pal= $_POST['vaca_estado_pal'];
             $vaca_finada= $_POST['vaca_finada'];
@@ -190,8 +188,7 @@ include("conexion.php");
                 vaca_estatus = :vaca_estatus,
                 vaca_potrero = :vaca_potrero,
                 vaca_lote = :vaca_lote,
-                vaca_estado_re = :vaca_estado_re,
-                vaca_celo = :vaca_celo,
+                vaca_estado_re = :vaca_estado_re, 
                 vaca_partos = :vaca_partos,
                 vaca_estado_pal = :vaca_estado_pal,
                 vaca_finada = :vaca_finada,
@@ -244,7 +241,7 @@ include("conexion.php");
                 $stmt->bindParam(':vaca_potrero', $vaca_potrero);
                 $stmt->bindParam(':vaca_lote', $vaca_lote);
                 $stmt->bindParam(':vaca_estado_re', $vaca_estado_re);
-                $stmt->bindParam(':vaca_celo', $vaca_celo);
+                //$stmt->bindParam(':vaca_celo', $vaca_celo);
                 $stmt->bindParam(':vaca_partos', $vaca_partos);
                 $stmt->bindParam(':vaca_estado_pal', $vaca_estado_pal);
                 $stmt->bindParam(':vaca_finada', $vaca_finada);

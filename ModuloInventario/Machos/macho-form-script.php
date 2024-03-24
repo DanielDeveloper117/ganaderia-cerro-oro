@@ -34,10 +34,7 @@ if (isset($_POST['macho_numero'])
     && isset($_POST['macho_estatus'])
     && isset($_POST['macho_potrero'])
     && isset($_POST['macho_lote'])
-    && isset($_POST['macho_estado_re'])
-    && isset($_POST['macho_celo'])
-
-    
+    && isset($_POST['macho_estado_re'])    
     && isset($_POST['macho_finado'])
     && isset($_POST['macho_edad_actual'])
     && isset($_POST['macho_edad_destete'])
@@ -54,11 +51,7 @@ if (isset($_POST['macho_numero'])
     && isset($_POST['macho_fecha_aretado'])
     && isset($_POST['macho_fecha_tatuaje'])
     && isset($_POST['macho_fecha_fierro'])
-  
     && isset($_POST['macho_fecha_venta'])
-
-
-
     && isset($_FILES['macho_foto'])
     && isset($_FILES['macho_foto_fierro'])
     && isset($_POST['macho_observaciones'])) {
@@ -82,17 +75,15 @@ if (isset($_POST['macho_numero'])
     } else {
         //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
     }
-       // Mueve la imagen al directorio deseado
+    // Mueve la imagen al directorio deseado
     if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
         echo '<p class="text-center mb-0 pb-0 text-secondary">Imagen guardada en la carpeta: ' . $fierro_directorioDestino . $fierro_nombreArchivo . '</p>';
     
-     } else {
+    } else {
          //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
-     }
-
+    }
 
     // Acceder y guardar en viariables los datos del formulario recibido
-    
     $macho_arete= $_POST['macho_arete'];
     $macho_tatuaje= $_POST['macho_tatuaje'];
     $macho_raza= $_POST['macho_raza'];
@@ -112,9 +103,6 @@ if (isset($_POST['macho_numero'])
     $macho_potrero= $_POST['macho_potrero'];
     $macho_lote= $_POST['macho_lote'];
     $macho_estado_re= $_POST['macho_estado_re'];
-    $macho_celo= $_POST['macho_celo'];
-
-
     $macho_finado= $_POST['macho_finado'];
     $macho_edad_actual= $_POST['macho_edad_actual'];
     $macho_edad_destete= $_POST['macho_edad_destete'];
@@ -131,11 +119,7 @@ if (isset($_POST['macho_numero'])
     $macho_fecha_aretado= $_POST['macho_fecha_aretado'];
     $macho_fecha_tatuaje= $_POST['macho_fecha_tatuaje'];
     $macho_fecha_fierro= $_POST['macho_fecha_fierro'];
-   
     $macho_fecha_venta= $_POST['macho_fecha_venta'];
-
-
-
 
     //si esta vacio el campo, llenar con ejemplo
     if (empty($_FILES['macho_foto']['name'])){
@@ -167,19 +151,18 @@ if (isset($_POST['macho_numero'])
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             macho_color, macho_talla, macho_pelo, macho_condicion, macho_estatus, macho_potrero, 
-            macho_lote, macho_estado_re, macho_celo,  macho_finado, 
+            macho_lote, macho_estado_re, macho_finado, 
             macho_edad_actual, macho_edad_destete, macho_edad_venta, 
             macho_peso_nacimiento, macho_peso_actual, macho_peso_destete, macho_peso_venta, 
             macho_gan_peso_dia, macho_gan_peso_mes, macho_peso_3meses, 
             macho_fecha_nacimiento, macho_fecha_destete, macho_fecha_aretado, 
             macho_fecha_tatuaje, macho_fecha_fierro, macho_fecha_venta, 
-            
             macho_foto, macho_foto_fierro, 
             macho_observaciones) VALUES (null, :macho_numero, :macho_arete, :macho_tatuaje, :macho_raza, 
             :madre_numero, :madre_arete, :madre_tatuaje, :madre_raza, 
             :padre_numero, :padre_arete, :padre_tatuaje, :padre_raza, 
             :macho_color, :macho_talla, :macho_pelo, :macho_condicion, :macho_estatus, :macho_potrero, 
-            :macho_lote, :macho_estado_re, :macho_celo, :macho_finado, 
+            :macho_lote, :macho_estado_re, :macho_finado, 
             :macho_edad_actual, :macho_edad_destete, :macho_edad_venta, 
             :macho_peso_nacimiento, :macho_peso_actual, :macho_peso_destete, :macho_peso_venta, 
             :macho_gan_peso_dia, :macho_gan_peso_mes, :macho_peso_3meses, 
@@ -212,9 +195,6 @@ if (isset($_POST['macho_numero'])
         $stmt->bindParam(':macho_potrero', $macho_potrero);
         $stmt->bindParam(':macho_lote', $macho_lote);
         $stmt->bindParam(':macho_estado_re', $macho_estado_re);
-        $stmt->bindParam(':macho_celo', $macho_celo);
-
-
         $stmt->bindParam(':macho_finado', $macho_finado);
         $stmt->bindParam(':macho_edad_actual', $macho_edad_actual);
         $stmt->bindParam(':macho_edad_destete', $macho_edad_destete);
@@ -231,11 +211,7 @@ if (isset($_POST['macho_numero'])
         $stmt->bindParam(':macho_fecha_aretado', $macho_fecha_aretado);
         $stmt->bindParam(':macho_fecha_tatuaje', $macho_fecha_tatuaje);
         $stmt->bindParam(':macho_fecha_fierro', $macho_fecha_fierro);
-
         $stmt->bindParam(':macho_fecha_venta', $macho_fecha_venta);
-
-
-
         $stmt->bindParam(':macho_foto', $macho_foto_ruta);
         $stmt->bindParam(':macho_foto_fierro', $fierro_foto_ruta);
         $stmt->bindParam(':macho_observaciones', $macho_observaciones);
@@ -248,7 +224,7 @@ if (isset($_POST['macho_numero'])
             <h2 class="mb-3 text-center">Los datos se han enviado correctamente.</h2>
             <i style="color:green;" class="col-8 col-xl-5 mb-3 text-center fa-solid fa-circle-check fa-3x"></i>
             <a href="macho-form.php" class="col-8 col-xl-5 mb-3 btn btn-success" >
-                Registrar otra hoja de vida
+                Registrar otro macho
             </a>
             <a href="macho-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
                 Ir a la tabla

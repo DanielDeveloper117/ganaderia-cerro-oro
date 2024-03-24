@@ -101,20 +101,16 @@ include("conexion.php");
                 <?php
                     if (isset($_POST['id_vaca'])) {
                         $id_vaca = $_POST['id_vaca'];
-                    
                         $sql = "SELECT id_vaca, vaca_numero FROM vacas WHERE id_vaca = :id_vaca";
                         $stmt = $conexion->prepare($sql);
                         $stmt->bindParam(':id_vaca', $id_vaca);
-
                         $stmt->execute();
                         $arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC);
                         echo '<input type="number" class="form-control" id="cria_numero" value="'.$arreglo_sql['vaca_numero'].'" name="madre_numero" required>';
                     } else{
                         echo '<input type="number" class="form-control" id="cria_numero" placeholder="Número de la madre" name="madre_numero" required>';
                     }
-
                 ?>
-                
             </div>
 
             <div class=" col-md-2" >
@@ -125,7 +121,7 @@ include("conexion.php");
             <div class=" col-md-2" >
                 <label class="label-form" for="cria_sexo">Sexo de la cría</label>
                 <select class="form-select" style="cursor: pointer; " id="cria_sexo" name="cria_sexo">
-                        <option class="option-hover" value="No Seleccionado" selected>Seleccionar</option>
+                        <option class="option-hover" value="No seleccionado" selected>Seleccionar</option>
                         <option class="option-hover" value="Hembra">Hembra</option>
                         <option class="option-hover" value="Macho">Macho</option>
                 </select>
