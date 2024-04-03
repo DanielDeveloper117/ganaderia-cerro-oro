@@ -8,6 +8,101 @@ include("conexion.php");
 // } else {
 //     echo 'Usuario autenticado con ID: '.$_SESSION['id_usuario'];
 // }
+
+// CODIGO PARA SUMAR 1 MES A LA EDAD AUTOMATICAMENTE CADA QUE TRANSCURRA 1 MES COMPARADO CON SU FECHA DE NACIMIENTO, ADEMAS EL CODIGO SE EJECUTA 1 VEZ AL DIA
+// Obtener la fecha actual
+$fechaActual = new DateTime();
+// Verificar si el script ya se ejecutó hoy
+$fechaInicioDia = new DateTime($fechaActual->format('Y-m-d') . ' 00:00:00');
+$fechaFinDia = new DateTime($fechaActual->format('Y-m-d') . ' 23:59:59');
+
+$sqlVerificarEjecucion = "SELECT COUNT(*) as conteo FROM crias WHERE ultima_ejecucion >= :fechaInicioDia AND ultima_ejecucion <= :fechaFinDia";
+$stmtVerificarEjecucion = $conexion->prepare($sqlVerificarEjecucion);
+$fechaInicioDiaFormatted = $fechaInicioDia->format('Y-m-d H:i:s');
+$fechaFinDiaFormatted = $fechaFinDia->format('Y-m-d H:i:s');
+
+$stmtVerificarEjecucion->bindParam(':fechaInicioDia', $fechaInicioDiaFormatted);
+$stmtVerificarEjecucion->bindParam(':fechaFinDia', $fechaFinDiaFormatted);
+$stmtVerificarEjecucion->execute();
+$resultadoVerificarEjecucion = $stmtVerificarEjecucion->fetch(PDO::FETCH_ASSOC);
+
+if ($resultadoVerificarEjecucion['conteo'] > 0) {
+    echo "Ya se ha ejecutado el script hoy.\n";
+} else {
+    // Actualizar la ultima_ejecucion
+    $sqlActualizarUltimaEjecucion = "UPDATE crias SET ultima_ejecucion = :fechaActual";
+    $stmtActualizarUltimaEjecucion = $conexion->prepare($sqlActualizarUltimaEjecucion);
+    $fechaActualFormatted = $fechaActual->format('Y-m-d H:i:s');
+    $stmtActualizarUltimaEjecucion->bindParam(':fechaActual', $fechaActualFormatted);
+    $stmtActualizarUltimaEjecucion->execute();
+    // Consultar las crias
+    $sqlConsultaCrias = "SELECT id_cria, cria_edad, cria_fecha_nacimiento FROM crias";
+    $stmtConsultaCrias = $conexion->prepare($sqlConsultaCrias);
+    $stmtConsultaCrias->execute();
+    $crias = $stmtConsultaCrias->fetchAll(PDO::FETCH_ASSOC);
+    // Iterar sobre las crias
+    foreach ($crias as $cria) {
+        $idCria = $cria['id_cria'];
+        $edadCria = $cria['cria_edad'];
+        $fechaNacimiento = new DateTime($cria['cria_fecha_nacimiento']);
+        // Verificar condiciones para sumar 1 a la edad de la cria
+        if ($fechaActual->format('m') !== $fechaNacimiento->format('m') && $fechaActual->format('d') === $fechaNacimiento->format('d')) {
+            $nuevaEdad = $edadCria + 1;
+        } elseif ($fechaActual->format('m') === $fechaNacimiento->format('m') && $fechaActual->format('d') === $fechaNacimiento->format('d') && $fechaActual->format('Y') !== $fechaNacimiento->format('Y')) {
+            $nuevaEdad = $edadCria + 1;
+        } else {
+            $nuevaEdad = $edadCria;
+        }
+        // Actualizar la edad de la cria en la base de datos
+        $sqlActualizarEdad = "UPDATE crias SET cria_edad = :nuevaEdad WHERE id_cria = :idCria";
+        $stmtActualizarEdad = $conexion->prepare($sqlActualizarEdad);
+        $stmtActualizarEdad->bindParam(':nuevaEdad', $nuevaEdad, PDO::PARAM_INT);
+        $stmtActualizarEdad->bindParam(':idCria', $idCria, PDO::PARAM_INT);
+        $stmtActualizarEdad->execute();
+    }
+    echo "Script ejecutado con éxito.\n";
+}
+
+// CODIGO PARA CAMBIAR ESTADO PRODUCTIVO DE ACUERDO A SU EDAD
+// Consulta SQL para actualizar el campo cria_sexo de cada registro
+$sql = "
+    UPDATE crias
+    SET cria_sexo = 
+        CASE 
+            WHEN cria_sexo = 'Ternera' AND cria_edad BETWEEN 7 AND 12 THEN 'Becerra'
+            WHEN cria_sexo = 'Becerra' AND cria_edad BETWEEN 13 AND 36 THEN 'Novillona'
+            WHEN cria_sexo = 'Ternero' AND cria_edad BETWEEN 7 AND 12 THEN 'Becerro'
+            WHEN cria_sexo = 'Becerro' AND cria_edad BETWEEN 13 AND 18 THEN 'Torete'
+            ELSE cria_sexo
+        END;
+";
+
+// Preparar y ejecutar la consulta SQL
+$stmt = $conexion->prepare($sql);
+$stmt->execute();
+
+// Verificar si hay Novillonas con más de 36 meses de edad
+$sqlNovillona = "SELECT COUNT(*) AS total_novillonas FROM crias WHERE cria_sexo = 'Novillona' AND cria_edad > 36";
+$stmtNovillona = $conexion->prepare($sqlNovillona);
+$stmtNovillona->execute();
+$resultadoNovillona = $stmtNovillona->fetch(PDO::FETCH_ASSOC);
+$totalNovillonas = $resultadoNovillona['total_novillonas'];
+
+// Verificar si hay Toretes con más de 18 meses de edad
+$sqlTorete = "SELECT COUNT(*) AS total_toretes FROM crias WHERE cria_sexo = 'Torete' AND cria_edad > 18";
+$stmtTorete = $conexion->prepare($sqlTorete);
+$stmtTorete->execute();
+$resultadoTorete = $stmtTorete->fetch(PDO::FETCH_ASSOC);
+$totalToretes = $resultadoTorete['total_toretes'];
+
+// Mostrar mensajes si hay Novillonas o Toretes con más de la edad especificada
+if ($totalNovillonas > 0) {
+    echo "<script>alert('Hay una o más Novillonas con más de 36 meses de edad.');</script>";
+}
+
+if ($totalToretes > 0) {
+    echo "<script>alert('Hay uno o más Toretes con más de 18 meses de edad.');</script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +167,7 @@ include("conexion.php");
 
                 <a class="mx-2 form-control btn-success d-flex flex-row justify-content-evenly align-items-center" href="crias-form.php">
                     <i class="fa-solid fa-circle-plus fa-2x"></i>
-                    <span>Registrar una cría</span>
+                    <span>Capturar una cría</span>
                 </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
                 <a class="h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
@@ -93,8 +188,8 @@ include("conexion.php");
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
             //$sql = "SELECT id_cria, padre_num, padre_raza, madre_num, madere_raza FROM hembra WHERE rol = 'agente'";
-            $sql = "SELECT id_cria, madre_numero, parto_numero, cria_sexo, 
-            cria_fecha_nacimiento, cria_numero, cria_arete, cria_tatuaje, cria_raza,  
+            $sql = "SELECT id_cria, madre_numero, cria_edad, cria_sexo, 
+            cria_fecha_nacimiento, cria_numero, cria_arete, cria_tatuaje, cria_estado_arete, cria_raza,  
             cria_peso_nacimiento, cria_peso_destete, cria_peso_venta, cria_finada, 
             cria_fecha_destete, cria_fecha_aretado, cria_fecha_tatuaje, 
             cria_fecha_fierro, cria_fecha_venta, cria_observaciones, fecha_registro  FROM crias";
@@ -108,12 +203,13 @@ include("conexion.php");
                         <th scope="col">Editar registro</th>
 
                         <th scope="col">Número de la madre</th>
-                        <th scope="col">Número del parto</th>
-                        <th scope="col">Sexo</th>
+                        <th scope="col">Edad de la cría</th>
+                        <th scope="col">Estado productivo</th>
                         <th scope="col">Fecha de nacimiento</th>
 
                         <th scope="col">Número de la cria</th>
                         <th scope="col">Número de arete</th>
+                        <th scope="col">Estado del arete</th>
                         <th scope="col">Tatuaje</th>
                         <th scope="col">Raza de la cria</th>
 
@@ -153,7 +249,7 @@ include("conexion.php");
                             </form>
                          </td>';
                     // $madre_num=$arreglo_sql['madre_numero'];
-                    // $sql2 = "SELECT * FROM vacas WHERE vaca_numero = ". $madre_num."";
+                    // $sql2 = "SELECT * FROM crias WHERE vaca_numero = ". $madre_num."";
                     // $stmt2 = $conexion->prepare($sql2);
                     // $stmt2->execute();
                     // $arreglo_sql2 = $stmt2->fetch(PDO::FETCH_ASSOC);
@@ -162,12 +258,13 @@ include("conexion.php");
                         // echo '<td><a href="editar-hembra.php?vaca_numero=' . $arreglo_sql2['vaca_numero'] . '">' . $arreglo_sql['madre_numero'] . '</a></td>';
 
                          echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['parto_numero'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_edad'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_sexo'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_fecha_nacimiento'] . '</td>';
    
                          echo '<td>' . $arreglo_sql['cria_numero'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_arete'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_estado_arete'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_tatuaje'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
 
@@ -196,11 +293,166 @@ include("conexion.php");
             // Manejar errores de conexión o consulta
             echo "Error: " . $e->getMessage();
         }
-        // Cerrar la conexión
-        $conexion = null;
+
     ?>
     </div>
 </section>
+
+<div class="d-flex col-12 justify-content-center" style="margin-bottom: 20px;">
+    <h5 class="col-11">Resumen de inventario de crías</h5>
+</div>
+
+<?php 
+    /// ESTADO PRODUCTIVO /////////////////////////////////////////////////////////////////////////
+    // Realizar la consulta para terneras
+    $sql_terneras = "SELECT COUNT(*) as total_terneras FROM crias WHERE cria_sexo = 'Ternera'";
+    $stmt_terneras = $conexion->prepare($sql_terneras);
+    $stmt_terneras->execute();
+    $result_terneras = $stmt_terneras->fetch(PDO::FETCH_ASSOC);
+    $terneras = $result_terneras['total_terneras'];
+
+    // Realizar la consulta para Ternero
+    $sql_ternero = "SELECT COUNT(*) as total_ternero FROM crias WHERE cria_sexo = 'Ternero'";
+    $stmt_ternero = $conexion->prepare($sql_ternero);
+    $stmt_ternero->execute();
+    $result_ternero = $stmt_ternero->fetch(PDO::FETCH_ASSOC);
+    $terneros = $result_ternero['total_ternero'];
+
+    // Realizar la consulta para Becerra
+    $sql_becerra = "SELECT COUNT(*) as total_becerra FROM crias WHERE cria_sexo = 'Becerra'";
+    $stmt_becerra = $conexion->prepare($sql_becerra);
+    $stmt_becerra->execute();
+    $result_becerra = $stmt_becerra->fetch(PDO::FETCH_ASSOC);
+    $becerras = $result_becerra['total_becerra'];
+
+    // Realizar la consulta para Becerro
+    $sql_becerro = "SELECT COUNT(*) as total_becerro FROM crias WHERE cria_sexo = 'Becerro'";
+    $stmt_becerro = $conexion->prepare($sql_becerro);
+    $stmt_becerro->execute();
+    $result_becerro = $stmt_becerro->fetch(PDO::FETCH_ASSOC);
+    $becerros = $result_becerro['total_becerro'];
+
+    // Realizar la consulta para Novillona
+    $sql_novillona = "SELECT COUNT(*) as total_novillona FROM crias WHERE cria_sexo = 'Novillona'";
+    $stmt_novillona = $conexion->prepare($sql_novillona);
+    $stmt_novillona->execute();
+    $result_novillona = $stmt_novillona->fetch(PDO::FETCH_ASSOC);
+    $novillonas = $result_novillona['total_novillona'];
+
+    // Realizar la consulta para Torete
+    $sql_torete = "SELECT COUNT(*) as total_torete FROM crias WHERE cria_sexo = 'Torete'";
+    $stmt_torete = $conexion->prepare($sql_torete);
+    $stmt_torete->execute();
+    $result_torete = $stmt_torete->fetch(PDO::FETCH_ASSOC);
+    $toretes = $result_torete['total_torete'];
+
+    // ARETADOS //////////////////////////////////////////////////////////////////////////////////////////
+    $sql_vigentes = "SELECT COUNT(*) as total_vigentes FROM crias WHERE cria_estado_arete = 'Vigente'";
+    $stmt_vigentes = $conexion->prepare($sql_vigentes);
+    $stmt_vigentes->execute();
+    $arreglo_vigentes = $stmt_vigentes->fetch(PDO::FETCH_ASSOC);
+    $aretes_vigentes = $arreglo_vigentes['total_vigentes'];
+
+    $sql_pendientes = "SELECT COUNT(*) as total_pendientes FROM crias WHERE cria_estado_arete = 'Pendiente'";
+    $stmt_pendientes = $conexion->prepare($sql_pendientes);
+    $stmt_pendientes->execute();
+    $arreglo_pendientes = $stmt_pendientes->fetch(PDO::FETCH_ASSOC);
+    $aretes_pendientes = $arreglo_pendientes['total_pendientes'];
+    
+    $sql_bajas = "SELECT COUNT(*) as total_bajas FROM crias WHERE cria_estado_arete = 'Baja'";
+    $stmt_bajas = $conexion->prepare($sql_bajas);
+    $stmt_bajas->execute();
+    $arreglo_bajas = $stmt_bajas->fetch(PDO::FETCH_ASSOC);
+    $aretes_bajas = $arreglo_bajas['total_bajas'];
+
+    // FINADAS ////////////////////////////////////////////////////////////////////////////
+    $sql_finadas = "SELECT COUNT(*) as total_finadas FROM crias WHERE cria_finada = 'Si'";
+    $stmt_finadas = $conexion->prepare($sql_finadas);
+    $stmt_finadas->execute();
+    $arreglo_finadas = $stmt_finadas->fetch(PDO::FETCH_ASSOC);
+    $finadas = $arreglo_finadas['total_finadas'];
+?>
+
+<section class="d-flex col-12 justify-content-center" style="margin-bottom: 200px;">
+    <div class="d-flex col-11 justify-content-md-around justify-content-center flex-md-row flex-column " style=" border: #000 solid 1px; padding: 20px; ">
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Estado productivo</th>
+                    <th>Cantidad</th>
+                </tr>
+                <tr>
+                    <td>Terneras</td>
+                    <td><?php echo $terneras; ?></td>
+                </tr>
+                <tr>
+                    <td>Terneros</td>
+                    <td><?php echo $terneros; ?></td>
+                </tr>
+                <tr>
+                    <td>Becerras</td>
+                    <td><?php echo $becerras; ?></td>
+                </tr>
+                <tr>
+                    <td>Becerros</td>
+                    <td><?php echo $becerros; ?></td>
+                </tr>
+                <tr>
+                    <td>Novillonas</td>
+                    <td><?php echo $novillonas; ?></td>
+                </tr>
+                <tr>
+                    <td>Toretes</td>
+                    <td><?php echo $toretes; ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="fw-bold"><?php echo ($terneras + $terneros + $becerras + $becerros + $novillonas + $toretes); ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Aretes</th>
+                    <th>Cantidad</th>
+                </tr>
+
+                <tr>
+                    <td>Vigente</td>
+                    <td><?php echo $aretes_vigentes; ?></td>
+                </tr>
+                <tr>
+                    <td>Pendiente</td>
+                    <td><?php echo $aretes_pendientes; ?></td>
+                </tr>
+                <tr>
+                    <td>Baja</td>
+                    <td><?php echo $aretes_bajas; ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td class="fw-bold"><?php echo ($aretes_vigentes + $aretes_pendientes + $aretes_bajas); ?></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-md-3">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Fallecidas</th>
+                </tr>
+
+                <tr>
+                    <td><?php echo $finadas; ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+
 
 <script>
     $(document).ready(function() {

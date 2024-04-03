@@ -92,6 +92,12 @@
                 <a href="Crias/crias-tabla.php"><button class="form-control btn-success btn-options" >Ver registros de crías</button></a>
             </div>
         </div>
+
+        <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
+            <div class="col-12 col-md-3">
+                <a href="calcular-cai.php"><button class="form-control btn-info btn-options" >Calcular CAI</button></a>
+            </div>
+        </div>
            
         <!-- <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
             <div class="col-12 col-md-5">

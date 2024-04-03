@@ -43,5 +43,6 @@ macho_fecha_venta VARCHAR(20),
 macho_foto VARCHAR(150),
 macho_foto_fierro  VARCHAR(150),
 macho_observaciones VARCHAR(200),
+ultima_ejecucion DATETIME NULL DEFAULT NULL,
 fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

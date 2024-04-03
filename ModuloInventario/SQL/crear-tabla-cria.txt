@@ -2,8 +2,9 @@
 CREATE TABLE crias (
 id_cria INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 madre_numero INT,
-parto_numero INT,
+cria_edad INT,
 cria_sexo VARCHAR(50),
+cria_estado_arete VARCHAR(30),
 cria_fecha_nacimiento VARCHAR(20),
 cria_numero INT,
 cria_arete VARCHAR(50),
@@ -20,5 +21,6 @@ cria_fecha_tatuaje VARCHAR(20),
 cria_fecha_fierro VARCHAR(20),
 cria_fecha_venta VARCHAR(20),
 cria_observaciones VARCHAR(200),
+ultima_ejecucion DATETIME NULL DEFAULT NULL,
 fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

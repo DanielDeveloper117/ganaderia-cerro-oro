@@ -228,7 +228,7 @@ include("conexion.php");
         <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
             <div class="col-md-3" >
                 <label class="label-form" for="macho_edad_actual">Edad actual</label>
-                <input type="text" class="form-control" id="macho_edad_actual" placeholder="Edad en meses" name="macho_edad_actual" >
+                <input type="number" class="form-control" id="macho_edad_actual" step="1" min="13" placeholder="Edad en meses" name="macho_edad_actual" >
             </div>
             <div class="col-md-3" >
                 <label class="label-form" for="macho_edad_destete">Edad de destete</label>
@@ -346,6 +346,7 @@ include("conexion.php");
 
 <!-- ------------------scripts section----------------- -->
 <script>
+    // OPERACION MATEMATICA MULTIPLICAR GANANCIAS DE PESO
     $(document).ready(function() {
         // Detecta cambios en el input de ganancia de peso por día
         $('#macho_gan_peso_dia').on('input', function() {
@@ -359,6 +360,46 @@ include("conexion.php");
             $('#macho_gan_peso_mes').val(ganPesoMes.toFixed(3)); // Limita a 3 decimales
             $('#macho_peso_3meses').val(peso3Meses.toFixed(3)); // Limita a 3 decimales
         });
+    });
+
+    //VALIDACION EDAD RELACION CON FECHA DE NACIMIENTO
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtener el input de Edad y el input de Fecha
+        var inputEdad = document.getElementById('macho_edad_actual');
+        var inputFecha = document.getElementById('macho_fecha_nacimiento');
+
+        // Función para actualizar la fecha según la edad ingresada
+        function actualizarFecha() {
+            // Obtener la fecha actual
+            var fechaActual = new Date();
+            // Obtener la edad ingresada en meses
+            var edadMeses = parseInt(inputEdad.value);
+            // Calcular la nueva fecha restando la edad en meses y estableciendo el día como 1
+            var nuevaFecha = new Date(fechaActual.getFullYear(), fechaActual.getMonth() - edadMeses, 1);
+            // Formatear la nueva fecha como YYYY-MM-DD
+            var nuevaFechaFormateada = nuevaFecha.toISOString().split('T')[0];
+            // Actualizar el valor del input de Fecha
+            inputFecha.value = nuevaFechaFormateada;
+        }
+
+        // Agregar un listener para detectar cambios en el input de Edad
+        inputEdad.addEventListener('input', actualizarFecha);
+
+        // Función para actualizar la edad según la fecha de nacimiento seleccionada
+        function actualizarEdad() {
+            // Obtener la fecha de nacimiento seleccionada
+            var fechaNacimiento = new Date(inputFecha.value);
+            // Obtener la fecha actual
+            var fechaActual = new Date();
+            // Calcular la diferencia en meses entre la fecha actual y la fecha de nacimiento
+            var edadMeses = (fechaActual.getFullYear() - fechaNacimiento.getFullYear()) * 12 + (fechaActual.getMonth() - fechaNacimiento.getMonth());
+
+            // Actualizar el valor del input de Edad
+            inputEdad.value = edadMeses;
+        }
+
+        // Agregar un listener para detectar cambios en el input de Fecha
+        inputFecha.addEventListener('input', actualizarEdad);
     });
 </script>
 </body>

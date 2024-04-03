@@ -8,6 +8,59 @@ include("conexion.php");
 // } else {
 //     echo 'Usuario autenticado con ID: '.$_SESSION['id_usuario'];
 // }
+// CODIGO PARA SUMAR 1 MES A LA EDAD AUTOMATICAMENTE CADA QUE TRANSCURRA 1 MES COMPARADO CON SU FECHA DE NACIMIENTO, ADEMAS EL CODIGO SE EJECUTA 1 VEZ AL DIA
+// Obtener la fecha actual
+$fechaActual = new DateTime();
+// Verificar si el script ya se ejecutó hoy
+$fechaInicioDia = new DateTime($fechaActual->format('Y-m-d') . ' 00:00:00');
+$fechaFinDia = new DateTime($fechaActual->format('Y-m-d') . ' 23:59:59');
+
+$sqlVerificarEjecucion = "SELECT COUNT(*) as conteo FROM vacas WHERE ultima_ejecucion >= :fechaInicioDia AND ultima_ejecucion <= :fechaFinDia";
+$stmtVerificarEjecucion = $conexion->prepare($sqlVerificarEjecucion);
+$fechaInicioDiaFormatted = $fechaInicioDia->format('Y-m-d H:i:s');
+$fechaFinDiaFormatted = $fechaFinDia->format('Y-m-d H:i:s');
+
+$stmtVerificarEjecucion->bindParam(':fechaInicioDia', $fechaInicioDiaFormatted);
+$stmtVerificarEjecucion->bindParam(':fechaFinDia', $fechaFinDiaFormatted);
+$stmtVerificarEjecucion->execute();
+$resultadoVerificarEjecucion = $stmtVerificarEjecucion->fetch(PDO::FETCH_ASSOC);
+
+if ($resultadoVerificarEjecucion['conteo'] > 0) {
+    echo "Ya se ha ejecutado el script hoy.\n";
+} else {
+    // Actualizar la ultima_ejecucion
+    $sqlActualizarUltimaEjecucion = "UPDATE vacas SET ultima_ejecucion = :fechaActual";
+    $stmtActualizarUltimaEjecucion = $conexion->prepare($sqlActualizarUltimaEjecucion);
+    $fechaActualFormatted = $fechaActual->format('Y-m-d H:i:s');
+    $stmtActualizarUltimaEjecucion->bindParam(':fechaActual', $fechaActualFormatted);
+    $stmtActualizarUltimaEjecucion->execute();
+    // Consultar las Vacas
+    $sqlConsultaVacas = "SELECT id_vaca, vaca_edad_actual, vaca_fecha_nacimiento FROM vacas";
+    $stmtConsultaVacas = $conexion->prepare($sqlConsultaVacas);
+    $stmtConsultaVacas->execute();
+    $Vacas = $stmtConsultaVacas->fetchAll(PDO::FETCH_ASSOC);
+    // Iterar sobre las Vacas
+    foreach ($Vacas as $Vaca) {
+        $idVaca = $Vaca['id_vaca'];
+        $edadVaca = $Vaca['vaca_edad_actual'];
+        $fechaNacimiento = new DateTime($Vaca['vaca_fecha_nacimiento']);
+        // Verificar condiciones para sumar 1 a la edad de la Vaca
+        if ($fechaActual->format('m') !== $fechaNacimiento->format('m') && $fechaActual->format('d') === $fechaNacimiento->format('d')) {
+            $nuevaEdad = $edadVaca + 1;
+        } elseif ($fechaActual->format('m') === $fechaNacimiento->format('m') && $fechaActual->format('d') === $fechaNacimiento->format('d') && $fechaActual->format('Y') !== $fechaNacimiento->format('Y')) {
+            $nuevaEdad = $edadVaca + 1;
+        } else {
+            $nuevaEdad = $edadVaca;
+        }
+        // Actualizar la edad de la Vaca en la base de datos
+        $sqlActualizarEdad = "UPDATE vacas SET vaca_edad_actual = :nuevaEdad WHERE id_vaca = :idVaca";
+        $stmtActualizarEdad = $conexion->prepare($sqlActualizarEdad);
+        $stmtActualizarEdad->bindParam(':nuevaEdad', $nuevaEdad, PDO::PARAM_INT);
+        $stmtActualizarEdad->bindParam(':idVaca', $idVaca, PDO::PARAM_INT);
+        $stmtActualizarEdad->execute();
+    }
+    echo "Script ejecutado con éxito.\n";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

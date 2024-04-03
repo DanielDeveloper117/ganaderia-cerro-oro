@@ -9,12 +9,13 @@ include("conexion.php");
 
 //------------------------------------------------------------------- si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
         if (isset($_POST['madre_numero'])
-            && isset($_POST['parto_numero'])
+            && isset($_POST['cria_edad'])
             && isset($_POST['cria_sexo'])
             && isset($_POST['cria_fecha_nacimiento'])
             && isset($_POST['cria_numero'])
             && isset($_POST['cria_arete'])
             && isset($_POST['cria_tatuaje'])
+            && isset($_POST['cria_estado_arete'])
             && isset($_POST['cria_raza'])
             && isset($_POST['cria_peso_nacimiento'])
             && isset($_POST['cria_peso_destete'])
@@ -57,13 +58,14 @@ include("conexion.php");
 
             // Acceder y guardar en VARIABLES los datos del formulario recibido
             $madre_numero= $_POST['madre_numero'];
-            $parto_numero= $_POST['parto_numero'];
+            $cria_edad= $_POST['cria_edad'];
             $cria_sexo= $_POST['cria_sexo'];
             $cria_fecha_nacimiento= $_POST['cria_fecha_nacimiento'];
             
             $cria_numero= $_POST['cria_numero'];
             $cria_arete= $_POST['cria_arete'];
             $cria_tatuaje= $_POST['cria_tatuaje'];
+            $cria_estado_arete= $_POST['cria_estado_arete'];
             $cria_raza= $_POST['cria_raza'];
 
             $cria_peso_nacimiento= $_POST['cria_peso_nacimiento'];            
@@ -117,13 +119,13 @@ include("conexion.php");
                 //instancia que indica que la conexion "$conexion" de conexion.php sera usada aqui con PDO
                 $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 // Consulta SQL con marcadores de posición
-                $sql = "INSERT INTO crias (id_cria, madre_numero, parto_numero, cria_sexo, 
-                    cria_fecha_nacimiento, cria_numero, cria_arete, cria_tatuaje, cria_raza,  
+                $sql = "INSERT INTO crias (id_cria, madre_numero, cria_edad, cria_sexo, 
+                    cria_fecha_nacimiento, cria_numero, cria_arete, cria_tatuaje, cria_estado_arete, cria_raza,  
                     cria_peso_nacimiento, cria_peso_destete, cria_peso_venta, cria_finada, 
                     cria_fecha_destete, cria_fecha_aretado, cria_fecha_tatuaje, 
                     cria_fecha_fierro, cria_fecha_venta, cria_observaciones) 
-                    VALUES (null, :madre_numero, :parto_numero, :cria_sexo, 
-                    :cria_fecha_nacimiento, :cria_numero, :cria_arete, :cria_tatuaje, :cria_raza, 
+                    VALUES (null, :madre_numero, :cria_edad, :cria_sexo, 
+                    :cria_fecha_nacimiento, :cria_numero, :cria_arete, :cria_tatuaje, :cria_estado_arete, :cria_raza, 
                     :cria_peso_nacimiento, :cria_peso_destete, :cria_peso_venta, :cria_finada, 
                     :cria_fecha_destete, :cria_fecha_aretado, :cria_fecha_tatuaje, 
                     :cria_fecha_fierro, :cria_fecha_venta, :cria_observaciones)";
@@ -132,13 +134,14 @@ include("conexion.php");
                 #$id_usuario=$_SESSION['id_usuario']; //insertar id del usuario actual en sesion para clave foranea
                 //$stmt->bindParam(':id_usuario', $id_usuario);
                 $stmt->bindParam(':madre_numero', $madre_numero);   
-                $stmt->bindParam(':parto_numero', $parto_numero);   
+                $stmt->bindParam(':cria_edad', $cria_edad);   
                 $stmt->bindParam(':cria_sexo', $cria_sexo);  
                 $stmt->bindParam(':cria_fecha_nacimiento', $cria_fecha_nacimiento);
 
                 $stmt->bindParam(':cria_numero', $cria_numero);
                 $stmt->bindParam(':cria_arete', $cria_arete);
                 $stmt->bindParam(':cria_tatuaje', $cria_tatuaje);
+                $stmt->bindParam(':cria_estado_arete', $cria_estado_arete);
                 $stmt->bindParam(':cria_raza', $cria_raza);
 
                 $stmt->bindParam(':cria_peso_nacimiento', $cria_peso_nacimiento);
@@ -156,7 +159,6 @@ include("conexion.php");
                 $stmt->bindParam(':cria_observaciones', $cria_observaciones);
                 
                 $stmt->execute();
-                $conexion = null;
                 echo "<script>alert('Registro guardado con éxito');</script>";
                 echo '
                 <div class="d-flex col-12 justify-content-center align-items-center flex-column mt-5" style="width:100%;">
@@ -217,6 +219,35 @@ include("conexion.php");
             </div> 
             ';
         }
-        
+        if (isset($_POST['madre_numero'])) {
+            try {
+                $madre_numero = $_POST['madre_numero'];
+                
+                // Obtener el valor actual de vaca_partos
+                $sql_select = "SELECT vaca_numero, vaca_partos FROM vacas WHERE vaca_numero = :madre_numero";
+                $stmt_select = $conexion->prepare($sql_select);
+                $stmt_select->bindParam(':madre_numero', $madre_numero);
+                $stmt_select->execute();
+                $arreglo_sql = $stmt_select->fetch(PDO::FETCH_ASSOC); 
+                
+                if ($arreglo_sql) {
+                    // Sumar 1 al valor actual de vaca_partos
+                    $vaca_partos_actualizado = $arreglo_sql['vaca_partos'] + 1;
+                    
+                    // Actualizar el registro en la base de datos
+                    $sql_update = "UPDATE vacas SET vaca_partos = :vaca_partos WHERE vaca_numero = :madre_numero";
+                    $stmt_update = $conexion->prepare($sql_update);
+                    $stmt_update->bindParam(':vaca_partos', $vaca_partos_actualizado);
+                    $stmt_update->bindParam(':madre_numero', $madre_numero);
+                    $stmt_update->execute();
+                } else {
+                    echo '<h5 class="mb-3 text-warning text-center">Aviso: Cría agregada con exito, pero no se encontró ninguna vaca con el número de madre especificado.</h5>';
+                }
+            } catch (PDOException $e) {
+                // Manejo de excepciones PDO
+                echo '<h5 class="mb-3 text-warning text-center">Aviso: Ocurrió un error al procesar la solicitud.</h5>';
+            }
+
+        }
 ?>
         

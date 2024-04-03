@@ -50,6 +50,7 @@ vaca_leche_comentario  VARCHAR(100),
 vaca_foto VARCHAR(150),
 vaca_foto_fierro  VARCHAR(150),
 vaca_observaciones VARCHAR(200),
+ultima_ejecucion DATETIME NULL DEFAULT NULL,
 fecha_registro DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

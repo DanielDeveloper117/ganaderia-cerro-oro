@@ -10,11 +10,12 @@ include("conexion.php");
 //------------------------------------------------------------------- si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
         if (isset($_POST['id_cria'])
             && isset($_POST['madre_numero'])
-            && isset($_POST['parto_numero'])
+            && isset($_POST['cria_edad'])
             && isset($_POST['cria_sexo'])
             && isset($_POST['cria_fecha_nacimiento'])
             && isset($_POST['cria_numero'])
             && isset($_POST['cria_arete'])
+            && isset($_POST['cria_estado_arete'])
             && isset($_POST['cria_tatuaje'])
             && isset($_POST['cria_raza'])
             && isset($_POST['cria_peso_nacimiento'])
@@ -59,12 +60,13 @@ include("conexion.php");
             // Acceder y guardar en VARIABLES los datos del formulario recibido
             $id_cria= $_POST['id_cria'];
             $madre_numero= $_POST['madre_numero'];
-            $parto_numero= $_POST['parto_numero'];
+            $cria_edad= $_POST['cria_edad'];
             $cria_sexo= $_POST['cria_sexo'];
             $cria_fecha_nacimiento= $_POST['cria_fecha_nacimiento'];
             
             $cria_numero= $_POST['cria_numero'];
             $cria_arete= $_POST['cria_arete'];
+            $cria_estado_arete=$_POST['cria_estado_arete'];
             $cria_tatuaje= $_POST['cria_tatuaje'];
             $cria_raza= $_POST['cria_raza'];
 
@@ -120,11 +122,12 @@ include("conexion.php");
                 // Construir la consulta de inserción con marcadores de posición
                 $sql = "UPDATE crias SET 
                 madre_numero = :madre_numero, 
-                parto_numero = :parto_numero, 
+                cria_edad = :cria_edad, 
                 cria_sexo = :cria_sexo, 
                 cria_fecha_nacimiento = :cria_fecha_nacimiento,
                 cria_numero = :cria_numero, 
                 cria_arete = :cria_arete, 
+                cria_estado_arete = :cria_estado_arete, 
                 cria_tatuaje = :cria_tatuaje, 
                 cria_raza = :cria_raza, 
                 cria_peso_nacimiento = :cria_peso_nacimiento, 
@@ -144,12 +147,13 @@ include("conexion.php");
                 //$stmt->bindParam(':id_usuario', $id_usuario);
                 $stmt->bindParam(':id_cria', $id_cria);
                 $stmt->bindParam(':madre_numero', $madre_numero);   
-                $stmt->bindParam(':parto_numero', $parto_numero);   
+                $stmt->bindParam(':cria_edad', $cria_edad);   
                 $stmt->bindParam(':cria_sexo', $cria_sexo);  
                 $stmt->bindParam(':cria_fecha_nacimiento', $cria_fecha_nacimiento);
 
                 $stmt->bindParam(':cria_numero', $cria_numero);
                 $stmt->bindParam(':cria_arete', $cria_arete);
+                $stmt->bindParam(':cria_estado_arete', $cria_estado_arete);
                 $stmt->bindParam(':cria_tatuaje', $cria_tatuaje);
                 $stmt->bindParam(':cria_raza', $cria_raza);
 
@@ -166,9 +170,8 @@ include("conexion.php");
                 // $stmt->bindParam(':cria_foto', $cria_foto_ruta);
                 // $stmt->bindParam(':cria_foto_fierro', $fierro_foto_ruta);
                 $stmt->bindParam(':cria_observaciones', $cria_observaciones);
-       
                 $stmt->execute();
-                $conexion = null;
+
                 echo "<script>alert('Registro actualizado con éxito');</script>";
                 echo '
                 <div class="d-flex col-12 justify-content-center align-items-center flex-column mt-5" style="width:100%;">
