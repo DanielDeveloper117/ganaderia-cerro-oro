@@ -1,5 +1,5 @@
 <?php
-include("conexion.php");
+include("../conexion.php");
 //session_start();
 //
 //if (!isset($_SESSION['id_usuario'])) {
@@ -36,40 +36,45 @@ include("conexion.php");
             echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
             //echo "Error: " . $e->getMessage();
             echo '
-            <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                <h2 class="mb-3">Ha ocurrido un error</h2>
-                <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
-                <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
-                    Regresar a la tabla
-                </a>
-                <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
-                    Ir al menú
-                </a>
-                <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
-            </div>
+            <div class="d-flex flex-row justify-content-center col-12" style="padding-bottom: 200px;">
+                <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >
+                    <h1 class="mb-4 text-center" style="font-size:3rem;">Los datos no fueron enviados</h1>
+                    <i style="color:red;" class="col-8 col-xl-5 mb-5 text-center fa-regular fa-circle-xmark fa-3x"></i>
 
+                    <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-4 btn-script-vacas" >
+                        Ir a la tabla
+                    </a>
+                    <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-4 btn-script-vacas" >
+                        Ir al menú
+                    </a>
+                    <p class="mb-3" style="font-size:1.5rem;">Si el problema persiste, contactar a los desarrolladores.</p>
+                </div> 
+            </div>
             '."            
             <script>
                 var bodyElement = document.querySelector('body');
                 bodyElement.style.overflowY = 'hidden';
+
             </script> ";
         }
     }else {
         echo "<script>alert('Hubo un error al recibir el id de la vaca.');</script>";
         //echo "Error: " . $e->getMessage();
         echo '
-        <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-            <h2 class="mb-3">Los datos no fueron enviados</h2>
-            <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
+        <div class="d-flex flex-row justify-content-center col-12" style="padding-bottom: 200px;">
+            <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >
+                <h1 class="mb-4 text-center" style="font-size:3rem;">Los datos no fueron enviados</h1>
+                <i style="color:red;" class="col-8 col-xl-5 mb-5 text-center fa-regular fa-circle-xmark fa-3x"></i>
 
-            <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
-                Regresar a la tabla
-            </a>
-            <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
-                Ir al menú
-            </a>
-            <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
-        </div> 
+                <a href="hembra-tabla.php" class="col-8 col-xl-5 mb-4 btn-script-vacas" >
+                    Ir a la tabla
+                </a>
+                <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-4 btn-script-vacas" >
+                    Ir al menú
+                </a>
+                <p class="mb-3" style="font-size:1.5rem;">Si el problema persiste, contactar a los desarrolladores.</p>
+            </div> 
+        </div>
         '."            
         <script>
             var bodyElement = document.querySelector('body');
@@ -85,62 +90,17 @@ include("conexion.php");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <script src="../../jquery-3.7.1.min.js"></script>
+    <link rel="stylesheet" href="../styles/styles.css">
 
     <title>Editar hoja de vida</title>
 </head>
 <body>
 
-<style>
-    section form div{
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .label-form{
-        margin-bottom: 10px;
-        font-weight: 400;
-    }
-    .option-hover{
-        color: black !important;
-        
-    }
-    .option-hover:hover{
-        color: black !important;
-        cursor:pointer !important;
-    }
-
-    section a{
-        text-decoration: none;
-    }
-    .form-vaca{
-        border: 1px solid #ccc;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        background-color: #f9f9f9;
-        padding: 3%;
-        border-radius:10px
-    }
-    .img-fotos-perfil{
-        width: auto;
-        height: -webkit-fill-available;
-    }
-    .div-imgs{
-        height:auto;
-        width:max-content;
-    }
-    .div-imgs-container{
-        height:200px;
-    }
-    @media (min-width: 1px) and (max-width: 992px) {
-        .div-imgs-container{
-            height:120px;
-        }
-
-    }
-   
-</style>
-
-
-<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3">
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-vacas-buttons">
     <div class="col-11 col-md-10">
         <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
         <h2 class=" text-center mb-4">Editar hoja de vida de hembra: <?php echo '' . $arreglo_sql['vaca_numero'] . '';?></h2>
@@ -148,24 +108,27 @@ include("conexion.php");
         <div class="justify-content-end d-flex flex-row col-12 mb-2 div-imgs-container">
  
             <div class="div-imgs justify-content-end d-flex px-1" >
-                <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>"  alt="Vacio">
+                <a data-fancybox="gallery" href="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>" >
+                    <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>"  alt="Vacio">
+                </a>
             </div>
 
             <div class="div-imgs justify-content-end d-flex  px-1" >
-                <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
+                <a data-fancybox="gallery" href="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>" >
+                    <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
+                </a>    
             </div>
 
         </div>
 
-        <div class="d-flex flex-row justify-content-between mb-1 mb-0">
+        <div class="d-flex flex-row justify-content-end mb-1 mb-0">
 
-            <div class="col-0 col-xl-8"></div>
 
-            <div class="d-flex flex-row justify-content-around align-items-center col-6 col-md-4">
+            <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
 
-                <a class="mx-2  h-100 form-control btn btn-warning d-flex flex-row justify-content-evenly align-items-center" href="hembra-tabla.php">
+                <a class="  h-100 w-100 d-flex flex-row justify-content-evenly align-items-center" href="hembra-tabla.php">
                     <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
-                    <span>Cancelar y regresar</span>
+                    <button class="btn-f-vacas" >Cancelar y regresar</button>
                 </a>
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
                 <!-- <a class=" h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
@@ -180,14 +143,14 @@ include("conexion.php");
 
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
-    <form class="form-vaca d-flex flex-column col-11 col-md-10 justify-content-center align-items-center"  action="editar-hembra-script.php" method="POST" enctype="multipart/form-data">
+    <form class=" d-flex flex-column col-11 col-md-10 justify-content-center align-items-center form-vacas"  action="editar-hembra-script.php" method="POST" enctype="multipart/form-data">
         <input type="hidden"  value="<?php echo '' . $arreglo_sql['id_vaca'] . '';?>" name="id_vaca">
 
         <p class="p-form">Formulario de editar datos de la hoja de vida de la hembra.</p>
 
-        <h3 class="mb-3">Información principal</h3> 
+        <h3 class="mb-4">Información principal</h3> 
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">        
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_numero">Número de la vaca</label>
                 <input type="number" class="form-control" id="vaca_numero" placeholder="Número de la vaca"  value="<?php echo '' . $arreglo_sql['vaca_numero'] . '';?>" name="vaca_numero" required>
@@ -206,7 +169,7 @@ include("conexion.php");
             </div>
         </div>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-3 " >
                 <label class="label-form" for="vaca_estado_re">Estado reproductivo</label>
                 <select class="form-select" style="cursor: pointer; " id="vaca_estado_re" name="vaca_estado_re">
@@ -231,7 +194,7 @@ include("conexion.php");
         
         <h3 class="pt-4 mb-3">Madre</h3>  
         
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-2 " >
                 <label class="label-form" for="madre_numero">Número de la madre</label>
                 <input type="number" class="form-control" id="madre_numero" placeholder="Número de la vaca" value="<?php echo '' . $arreglo_sql['madre_numero'] . '';?>" name="madre_numero" >
@@ -252,7 +215,7 @@ include("conexion.php");
 
         <h3 class="pt-4 mb-3">Padre</h3>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="padre_numero">Número del padre</label>
                 <input type="number" class="form-control" id="padre_numero" placeholder="Número del padre" value="<?php echo '' . $arreglo_sql['padre_numero'] . '';?>" name="padre_numero" >
@@ -273,7 +236,7 @@ include("conexion.php");
 
         <h3 class="pt-4 mb-3">Información adicional</h3>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_color">Color</label>
                 <input type="text" class="form-control" id="vaca_color" placeholder="Color de la vaca" value="<?php echo '' . $arreglo_sql['vaca_color'] . '';?>" name="vaca_color" >
@@ -292,7 +255,7 @@ include("conexion.php");
             </div>
         </div>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_potrero">Potrero</label>
                 <input type="text" class="form-control" id="vaca_potrero" placeholder="Potrero actual" value="<?php echo '' . $arreglo_sql['vaca_potrero'] . '';?>" name="vaca_potrero" >
@@ -315,7 +278,7 @@ include("conexion.php");
             </div>             
         </div>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_finada">Finada</label>
                 <select class="form-select" style="cursor: pointer; " id="vaca_finada" name="vaca_finada">
@@ -328,7 +291,7 @@ include("conexion.php");
 
         <h3 class="pt-4 mb-3">Edades</h3>
     
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-3" >
                 <label class="label-form" for="vaca_edad_actual">Edad actual</label>
                 <input type="number" class="form-control" id="vaca_edad_actual" placeholder="Edad en meses" step="1" min="25" value="<?php echo '' . $arreglo_sql['vaca_edad_actual'] . '';?>" name="vaca_edad_actual" >
@@ -345,7 +308,7 @@ include("conexion.php");
 
         <h3 class="pt-4 mb-3">Pesos</h3>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-2 " >
                 <label class="label-form" for="vaca_peso_nacimiento">Peso de nacimiento</label>
                 <input type="number" class="form-control" id="vaca_peso_nacimiento" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 32.565" value="<?php echo '' . $arreglo_sql['vaca_peso_nacimiento'] . '';?>" name="vaca_peso_nacimiento" >
@@ -364,7 +327,7 @@ include("conexion.php");
             </div>              
         </div>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_gan_peso_dia">Ganancia de peso por día</label>
                 <input type="number" class="form-control" id="vaca_gan_peso_dia" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 0.453" value="<?php echo '' . $arreglo_sql['vaca_gan_peso_dia'] . '';?>" name="vaca_gan_peso_dia" >
@@ -383,7 +346,7 @@ include("conexion.php");
 
         <h3 class="pt-4 mb-3">Fechas</h3>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-2" >
                 <label class="label-form" for="vaca_fecha_nacimiento">Fecha de nacimiento</label>
                 <input type="date" class="form-control" id="vaca_fecha_nacimiento" placeholder="Seleccionar fecha" value="<?php echo '' . $arreglo_sql['vaca_fecha_nacimiento'] . '';?>" name="vaca_fecha_nacimiento" >
@@ -403,7 +366,7 @@ include("conexion.php");
             </div>
         </div>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-2 " >
                 <label class="label-form" for="vaca_fecha_fierro">Fecha de fierro</label>
                 <input type="date" class="form-control" id="vaca_fecha_fierro" placeholder="Fecha aretado" value="<?php echo '' . $arreglo_sql['vaca_fecha_fierro'] . '';?>" name="vaca_fecha_fierro" >
@@ -428,7 +391,7 @@ include("conexion.php");
 
         <h3 class="pt-4 mb-4">Producción - Litros de leche</h3>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-3" >
                 <label class="label-form" for="vaca_leche_dia">Promedio de leche al día</label>
                 <input type="number" class="form-control" id="vaca_leche_dia" step="0.001" min="0" max="9999.999" value="<?php echo '' . $arreglo_sql['vaca_leche_dia'] . '';?>"  name="vaca_leche_dia" >
@@ -445,7 +408,7 @@ include("conexion.php");
 
         <h3 class="pt-4 mb-3">Fotografías y observaciones</h3>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-5" >
                 <label class="label-form" for="foto">Seleccionar nueva fotografía de la vaca</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto">
@@ -460,14 +423,14 @@ include("conexion.php");
             </div>
         </div>
         
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-12" > 
                 <label class="label-form" for="vaca_observaciones">Observaciones</label>
                 <textarea class="form-control" id="vaca_observaciones"  rows="4" cols="50" value="<?php echo '' . $arreglo_sql['vaca_observaciones'] . '';?>" name="vaca_observaciones"><?php echo '' . $arreglo_sql['vaca_observaciones'] . '';?></textarea> 
             </div>           
         </div>
 
-        <input type="submit" class="btn btn-success col-12 col-md-6 py-3" value="Actualizar datos" >
+        <button type="submit" class=" col-12 col-xl-6 py-3 btn-f-vacas" >Actualizar datos</button>
 
     </form>
 </section>
@@ -534,6 +497,16 @@ include("conexion.php");
 
         // Agregar un listener para detectar cambios en el input de Fecha
         inputFecha.addEventListener('input', actualizarEdad);
+
+    });
+</script>
+<!-- codigo de fancybox -->
+<script>
+    $(document).ready(function() {
+        // Inicializar FancyBox
+        $('[data-fancybox="gallery"]').fancybox({
+          // Opciones adicionales aquí
+        });
     });
 </script>
 </body>

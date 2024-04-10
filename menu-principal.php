@@ -16,31 +16,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
 
     <title>Menu principal</title>
 </head>
 <body>
 
 <style>
-    section a{
-        text-decoration: none;
-    }
-    .btn-options{
-        /*background-color: #003c7e !important;*/
-        margin-bottom: 30px;
-        height: 80px;
-   
-    }
-    div button{
-    background-color: #ED7D31 !important;
-    color: #fff !important;
-    transition: background-color 0.3s, color 0.3s; /* Agregar transiciones suaves */
-}
 
-div button:hover  {
-    background-color: #ff9225 !important; /* Cambio de color en hover */
-    color: #000 !important; /* Cambio de color del texto en hover */
-}
 
 </style>
 
@@ -59,19 +42,19 @@ div button:hover  {
 
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
              <div class="col-12 col-md-5" >
-                <a href="ModuloInventario/menu-inventario.php"><button class="form-control btn btn-options" >Módulo de inventario</button></a>
+                <a href="ModuloInventario/menu-inventario.php"><button class="btn-m-principal" >Módulo de inventario</button></a>
             </div>
             <div class="col-12 col-md-5">
-                <a href=""><button class="form-control btn btn-options" >Opcion</button></a>
+                <a href=""><button class="btn-m-principal" >Opcion</button></a>
             </div>
         </div>
            
         <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
             <div class="col-12 col-md-5">
-                <a href=""><button class="form-control btn btn-options" >Opcion</button></a>
+                <a href=""><button class="btn-m-principal" >Opcion</button></a>
             </div>
             <div class="col-12 col-md-5">
-                <a  href=""><button class="form-control btn btn-options" >Opcion</button></a>
+                <a  href=""><button class="btn-m-principal" >Opcion</button></a>
             </div>
         </div>
 

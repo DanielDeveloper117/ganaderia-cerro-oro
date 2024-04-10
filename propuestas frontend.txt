@@ -1,0 +1,18 @@
+Propuestas
+Azules
+#F3F9FB body
+#87C0CD hover
+#226597 button
+#5EA3A6 titles
+label-form fw 500
+
+azul marino y verde marino
+#E4EDDB body
+#307672 hover
+#144D53 button/border
+input 
+-border-color: #307672;
+-focus box-shadow: 0 0 0 0.25rem rgb(228 237 219);
+#1f5a61ba titles, labels
+label-form fw 500
+border tabla 
