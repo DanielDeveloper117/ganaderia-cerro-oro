@@ -1,5 +1,5 @@
 <?php
-include("../conexion.php");
+include("../../conexion.php");
 //session_start();
 //
 //if (!isset($_SESSION['id_usuario'])) {
@@ -94,7 +94,7 @@ include("../conexion.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <script src="../../jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles-vacas.css">
 
     <title>Editar hoja de vida</title>
 </head>

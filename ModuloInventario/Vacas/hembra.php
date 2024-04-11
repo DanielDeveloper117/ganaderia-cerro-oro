@@ -1,5 +1,5 @@
 <?php
-include("../conexion.php");
+include("../../conexion.php");
 //session_start();
 //
 //if (!isset($_SESSION['id_usuario'])) {
@@ -18,7 +18,7 @@ include("../conexion.php");
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../../jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles-vacas.css">
 
     <title>Alta de hembra</title>
 </head>
@@ -32,24 +32,15 @@ include("../conexion.php");
 
         <div class="d-flex flex-row justify-content-end mb-1 mb-0">
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
-                <a class="mx-2  h-100 w-100 d-flex flex-row justify-content-evenly align-items-center" href="hembra-tabla.php">
-                    <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
+                <a class="mx-lg-2  h-100 w-100 d-flex flex-row justify-content-evenly align-items-center" href="hembra-tabla.php">
                     <button class="btn-f-vacas" >Ver registros</button>
                 </a>
-                <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
+
                 <a class=" h-100  d-flex w-100 flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
                     <button class="btn-f-vacas" >Regresar al menú</button>
                 </a> 
             </div>
         </div>
-            <!--<div class="d-flex flex-row mb-2">
-            <div class="col-3 col-xl-9"></div>
-            <div class="d-flex flex-row justify-content-around align-items-center col-9 col-xl-3">
-                <a href="menu-inventario.php"><button class="form-control btn btn-warning" style="" ><i class="bi bi-arrow-left"></i>Regresar </button></a>
-                <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> 
-                <a href="hembra-tabla.php"><button class="form-control btn-primary" style="" >Ver registros</button></a>  
-            </div>
-        </div> -->
     </div> 
 </section>
 
@@ -334,7 +325,7 @@ include("../conexion.php");
             </div>           
         </div>
 
-        <button type="submit" class=" col-12 col-xl-6 py-3 btn-f-vacas" >Enviar datos</button>
+        <button type="submit" class=" col-12 col-xl-6 py-3 btn-submit" >Enviar datos</button>
 
     </form>
 </section>

@@ -1,5 +1,5 @@
 <?php
-include("../conexion.php");
+include("../../conexion.php");
 // session_start();
 
 // if (!isset($_SESSION['id_usuario'])) {
@@ -75,7 +75,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../styles/styles-vacas.css">
 
 
     <title>Tabla de inventario - Hembras</title>
@@ -83,24 +83,24 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 <body>
 
 
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-vacas-buttons2">
+    <div class="col-11">
+        <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
+        <h1 class=" text-center mb-4">Alta de Hembras</h1>
 
+        <div class="d-flex flex-row justify-content-center justify-content-md-end mb-1 mb-0">
+            <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
+                <a class="h-100 mx-lg-2 d-flex flex-row justify-content-evenly align-items-center btn-f-vacas a-icon-span" href="hembra.php">     
+                    <i class="fa-solid fa-circle-plus fa-2x"></i>
+                    <span>Capturar una hembra</span>
+                </a>
 
-<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-1 mt-2">
-    <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
-    <h1 class=" text-center mb-4">Inventario de registros de hembras</h1>
-    <div class="d-flex flex-row justify-content-end col-11">
-        <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-5">
-            <a class="mx-2 d-flex flex-row justify-content-evenly align-items-center btn-f-vacas" href="hembra.php">     
-                <i class="fa-solid fa-circle-plus fa-2x"></i>
-                <span style="color:#fff; margin-left:4px;">Capturar una hembra</span>
-            </a>
-            <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-            <a class=" h-100  d-flex flex-row justify-content-evenly align-items-center btn-f-vacas" href="../menu-inventario.php">
-                Regresar al menú
-            </a> 
+                <a class=" h-100  d-flex flex-row justify-content-evenly align-items-center btn-f-vacas" href="../menu-inventario.php">
+                    Regresar al menú
+                </a> 
+            </div>
         </div>
     </div>
-   
 </section>
     
 <section class="mb-5 mt-4" style=" padding-right: 3%; padding-left: 3%;">

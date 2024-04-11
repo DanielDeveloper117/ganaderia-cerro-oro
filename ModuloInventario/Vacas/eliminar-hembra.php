@@ -3,7 +3,7 @@
 <script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
 
 <?php
-include("conexion.php");
+include("../../conexion.php");
 
 
 if (isset($_POST['id_vaca'])) {

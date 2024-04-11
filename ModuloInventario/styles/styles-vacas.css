@@ -1,5 +1,4 @@
-
- /* -m- ES MENU -f- ES FORM lbl ES LABEL */
+/* -m- ES MENU -f- ES FORM lbl ES LABEL */
 body{
     background-color: #E4EDDB;
 }
@@ -9,30 +8,6 @@ a{
 h1,h2,h3,h4,h5,p, span{
     color: #1f5a61ba;
 }
-/* MENU DE INVENTARIO */
-.btn-m-inv{
-    width: 100%;
-    margin-bottom: 30px;
-    height: 80px;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #ffffff;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    background-color: #144D53 !important;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    border-radius: .25rem;
-}
-.btn-m-inv:hover{
-    color: #ffffff;
-    background-color: #307672 !important;
-}
-
 /* FORMULARIO DE DAR DE ALTA HEMBRAS */
 .btn-f-vacas{
     width: 100%;
@@ -92,8 +67,8 @@ h1,h2,h3,h4,h5,p, span{
     border-color: #307672;
     box-shadow: 0 0 0 0.25rem rgb(228 237 219);
 }
-.input-submit{
-    width: 100%;
+.btn-submit{
+    width: 90%;
     display: inline-block;
     font-weight: 400;
     line-height: 1.5;
@@ -110,6 +85,7 @@ h1,h2,h3,h4,h5,p, span{
 }
 @media (max-width: 1024px) {
     .section-vacas-buttons a{
+        padding: 4px;
         width: 100%;
     }
     .div-vacas-conteiner-inputs-group{
@@ -171,6 +147,10 @@ h1,h2,h3,h4,h5,p, span{
     margin-right:10px;
     font-weight:600;
 }
+.section-vacas-buttons2 span{
+    color:#fff; 
+    margin-left:4px;
+}
 .table-container{
     background-color: #fff;
     border: 1px solid #307672; 
@@ -183,4 +163,15 @@ h1,h2,h3,h4,h5,p, span{
 }
 .resumen-container th{
     color: #1f5a61ba;
+}
+@media (max-width: 1024px) {
+    .section-vacas-buttons2 .a-icon-span{
+        padding-left: 12px;
+
+    }
+    .section-vacas-buttons2 a{
+        margin: 4px;
+        padding: 4px;
+        width: 100%;
+    }
 }

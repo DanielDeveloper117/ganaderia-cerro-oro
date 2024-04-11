@@ -1,10 +1,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="../styles/styles.css">
+<link rel="stylesheet" href="../styles/styles-vacas.css">
 
 <?php
-include("../conexion.php");
+include("../../conexion.php");
     //si el campo foto esta vacio
 
 //------------------------------------------------------------------- si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
