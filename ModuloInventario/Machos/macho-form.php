@@ -26,7 +26,7 @@ include("../../conexion.php");
 
 
 
-<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-machos-buttons">
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-buttons">
     <div class="col-11 col-md-10">
         <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
         <h1 class=" text-center mb-4">Alta de machos</h1>
@@ -34,11 +34,11 @@ include("../../conexion.php");
         <div class="d-flex flex-row justify-content-end mb-1 mb-0">
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
                 <a class="mx-lg-2  h-100 w-100 d-flex flex-row justify-content-evenly align-items-center" href="macho-tabla.php">
-                    <button class="btn-f-machos" >Ver registros</button>
+                    <button class="btn-principal" >Ver registros</button>
                 </a>
                 
                 <a class=" h-100  d-flex w-100 flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
-                    <button class="btn-f-machos" >Regresar al menú</button>
+                    <button class="btn-principal" >Regresar al menú</button>
                 </a> 
             </div>
         </div>
@@ -47,11 +47,11 @@ include("../../conexion.php");
 
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
-    <form class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center form-machos"  action="macho-form-script.php" method="POST" enctype="multipart/form-data">
+    <form class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  action="macho-form-script.php" method="POST" enctype="multipart/form-data">
         <p class="p-form">Formulario para dar de alta un macho.</p>
         <h3 class="mb-4">Información principal</h3> 
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">        
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_numero">Número del macho</label>
                 <input type="number" class="form-control" id="macho_numero" placeholder="Número del macho" name="macho_numero" required>
@@ -70,7 +70,7 @@ include("../../conexion.php");
             </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group"> 
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group"> 
             <div class="col-md-3 " >
                 <label class="label-form" for="macho_estado_re">Estado reproductivo</label>
                 <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re">
@@ -92,7 +92,7 @@ include("../../conexion.php");
         
         <h3 class="">Madre</h3>  
         
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-2 " >
                 <label class="label-form" for="madre_numero">Número de la madre</label>
                 <input type="number" class="form-control" id="madre_numero" placeholder="Número del macho" name="madre_numero" >
@@ -113,7 +113,7 @@ include("../../conexion.php");
 
         <h3 class="">Padre</h3>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-2" >
                 <label class="label-form" for="padre_numero">Número del padre</label>
                 <input type="number" class="form-control" id="padre_numero" placeholder="Número del padre" name="padre_numero" >
@@ -135,7 +135,7 @@ include("../../conexion.php");
 
         <h3 class="">Información adicional</h3>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_color">Color</label>
                 <input type="text" class="form-control" id="macho_color" placeholder="Color del macho" name="macho_color" >
@@ -154,7 +154,7 @@ include("../../conexion.php");
             </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group"> 
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group"> 
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_potrero">Potrero</label>
                 <input type="text" class="form-control" id="macho_potrero" placeholder="Potrero actual" name="macho_potrero" >
@@ -175,7 +175,7 @@ include("../../conexion.php");
 
         <h3 class="">Edades</h3>
     
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-3" >
                 <label class="label-form" for="macho_edad_actual">Edad actual</label>
                 <input type="number" class="form-control" id="macho_edad_actual" step="1" min="13" placeholder="Edad en meses" name="macho_edad_actual" >
@@ -192,7 +192,7 @@ include("../../conexion.php");
 
         <h3 class="">Pesos</h3>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-2 " >
                 <label class="label-form" for="macho_peso_nacimiento">Peso de nacimiento</label>
                 <input type="number" class="form-control" id="macho_peso_nacimiento" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 32.565" name="macho_peso_nacimiento" >
@@ -212,7 +212,7 @@ include("../../conexion.php");
             </div>              
         </div>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_gan_peso_dia">Ganancia de peso por día</label>
                 <input type="number" class="form-control" id="macho_gan_peso_dia" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 0.453" name="macho_gan_peso_dia" >
@@ -231,7 +231,7 @@ include("../../conexion.php");
 
         <h3 class="">Fechas</h3>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-2" >
                 <label class="label-form" for="macho_fecha_nacimiento">Fecha de nacimiento</label>
                 <input type="date" class="form-control" id="macho_fecha_nacimiento" placeholder="Seleccionar fecha" name="macho_fecha_nacimiento" >
@@ -251,7 +251,7 @@ include("../../conexion.php");
             </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             
             <div class="col-md-2 " >
                 <label class="label-form" for="macho_fecha_fierro">Fecha de fierro</label>
@@ -271,7 +271,7 @@ include("../../conexion.php");
 
         <h3 class="">Fotografías y observaciones</h3>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-5" >
                 <label class="label-form" for="macho_foto">Fotografía del macho</label>
                 <input class="form-control" type="file" id="macho_foto"  accept="image/*" name="macho_foto">
@@ -282,7 +282,7 @@ include("../../conexion.php");
             </div>
         </div>
         
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-machos-conteiner-inputs-group">
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-12" > 
                 <label class="label-form" for="macho_observaciones">Observaciones</label>
                 <textarea class="form-control" id="macho_observaciones"  rows="4" cols="50" name="macho_observaciones"></textarea> 

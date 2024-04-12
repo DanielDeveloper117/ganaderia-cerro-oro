@@ -113,7 +113,7 @@ include("../../conexion.php");
                 </a>
             </div>
 
-            <div class="div-imgs justify-content-end d-flex  px-1" >
+            <div class="div-imgs justify-content-end d-flex px-1" >
                 <a data-fancybox="gallery" href="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>" >
                     <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
                 </a>    
@@ -122,21 +122,11 @@ include("../../conexion.php");
         </div>
 
         <div class="d-flex flex-row justify-content-end mb-1 mb-0">
-
-
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
-
-                <a class="  h-100 w-100 d-flex flex-row justify-content-evenly align-items-center" href="hembra-tabla.php">
-                    <!-- <i class="fa-solid fa-circle-plus fa-2x"></i> -->
-                    <button class="btn-f-vacas" >Cancelar y regresar</button>
+                <a class=" h-100 w-100 d-flex flex-row justify-content-evenly align-items-center" href="hembra-tabla.php">
+                    <button class="btn-principal" >Cancelar y regresar</button>
                 </a>
-                <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-                <!-- <a class=" h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
-                    <span>Regresar al menú</span>
-                </a>  -->
-
             </div>
-
         </div>
     </div>
 </section>
@@ -430,7 +420,7 @@ include("../../conexion.php");
             </div>           
         </div>
 
-        <button type="submit" class=" col-12 col-xl-6 py-3 btn-f-vacas" >Actualizar datos</button>
+        <button type="submit" class=" col-12 col-xl-6 py-3 btn-principal" >Actualizar datos</button>
 
     </form>
 </section>

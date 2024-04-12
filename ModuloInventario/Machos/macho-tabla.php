@@ -1,5 +1,5 @@
 <?php
-include("conexion.php");
+include("../../conexion.php");
 // session_start();
 
 // if (!isset($_SESSION['id_usuario'])) {
@@ -74,74 +74,35 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <link rel="stylesheet" href="../styles/styles-machos.css">
 
-    <title>Tabla de inventario - machos</title>
+    <title>Tabla de inventario - Machos</title>
 </head>
 <body>
 
-<style>
-    section form div{
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .label-form{
-        margin-bottom: 10px;
-        font-weight: 400;
-    }
-    .option-hover{
-        color: black !important;
-        
-    }
-    .option-hover:hover{
-        color: black !important;
-        cursor:pointer !important;
-    }
 
-    section a{
-        text-decoration: none;
-    }
-    .dt-layout-row{
-        padding:10px;
-    }
-    .dt-search{
-        margin-right:40px;
-    }
-    .dt-search label{
-        margin-right:10px;
-        font-weight:600;
-    }
-</style>
-
-
-<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-1 mt-2">
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-buttons2">
     <div class="col-11 col-md-11">
           <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
-        <h1 class=" text-center mb-4">Inventario de registros de machos</h1>
+        <h1 class=" text-center mb-4">Inventario de machos</h1>
 
-        <div class="d-flex flex-row justify-content-between mb-1 mb-0">
-
-            <div class="col-0 col-xl-8"></div>
-
+        <div class="d-flex flex-row justify-content-center justify-content-md-end mb-1 mb-0">
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
-
-                <a class="mx-2 form-control btn btn-dark d-flex flex-row justify-content-evenly align-items-center" href="macho-form.php">
+                <a class="h-100 mx-lg-2 d-flex flex-row justify-content-evenly align-items-center btn-principal a-icon-span" href="macho-form.php">
                     <i class="fa-solid fa-circle-plus fa-2x"></i>
                     <span>Capturar un macho</span>
                 </a>
-                <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-                <a class="h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
-                    <span>Regresar al menú</span>
-                </a> 
 
+                <a class=" h-100 d-flex flex-row justify-content-evenly align-items-center btn-principal" href="../menu-inventario.php">
+                    Regresar al menú
+                </a>
             </div>
-
         </div>
-
     </div> 
 </section>
     
 <section class="mb-5 mt-4" style=" padding-right: 3%; padding-left: 3%;">
-    <div style=" border: 1px solid #000; overflow-x:auto;">
+    <div class="table-container">
     <?php
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
@@ -218,8 +179,9 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     echo '<td> 
                             <form action="eliminar-macho.php" method="POST">
                                 <input type="hidden" name="id_macho"  value="'. $arreglo_sql['id_macho'].'" >
-                                <button type="submit" id="botonEliminar" class="form-control btn-danger" style="font-size:12px; " ><i style="margin-right:5px;" class="bi bi-trash"></i>
-                                     Eliminar
+                                <button type="submit" class="btn-eliminar" >
+                                    <i class="bi bi-trash"></i>
+                                    Eliminar
                                 </button>
                             </form>
                          </td>';
@@ -227,8 +189,10 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     echo '<td> 
                             <form action="editar-macho.php" method="POST">
                                 <input type="hidden" name="id_macho" value="'. $arreglo_sql['id_macho'].'">
-                                <button type="submit" class="form-control btn-info"><i style="margin-right:5px;" class="bi bi-pencil-square"></i>Editar</button>
-                            </form>
+                                <button type="submit" class="btn-principal">
+                                    <i  class="bi bi-pencil-square"></i>
+                                    Editar
+                                </button>                            </form>
                          </td>';
                    
                         echo '<td>' . $arreglo_sql['macho_numero'] . '</td>';
@@ -280,10 +244,20 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             echo '</tbody></table>';
         
         } catch (PDOException $e) {
+            echo "<script>alert('Hubo un error al mostrar la tabla.');</script>";
+            //echo "Error: " . $e->getMessage();
+            echo '
+            <div class="d-flex flex-row justify-content-center col-12">
+                <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >
+                    <h4 class="mb-1 text-center">Los datos no puedieron ser mostrados.</h4>
+                    <i style="color:red;" class="col-8 col-xl-5 mb-1 text-center fa-regular fa-circle-xmark fa-3x"></i>
+                    <p class="mb-3">Si el problema persiste, contactar a los desarrolladores.</p>
+                </div> 
+            </div> 
+            ';
             // Manejar errores de conexión o consulta
-            echo "Error: " . $e->getMessage();
+            //echo "Error: " . $e->getMessage();
         }
-        // Cerrar la conexión
     ?>
     </div>
 </section>
@@ -338,7 +312,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 ?>
 
 <section class="d-flex col-12 justify-content-center" style="margin-bottom: 200px;">
-    <div class="d-flex col-11 justify-content-md-around justify-content-center flex-md-row flex-column " style=" border: #000 solid 1px; padding: 20px; ">
+    <div class="d-flex col-11 justify-content-md-around justify-content-center flex-md-row flex-column resumen-container">
         <div class="col-md-3">
             <table class="table table-bordered">
                 <tr>

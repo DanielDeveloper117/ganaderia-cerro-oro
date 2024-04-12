@@ -9,7 +9,7 @@ h1,h2,h3,h4,h5,p, span{
     color: #1f5a61ba;
 }
 /* FORMULARIO DE DAR DE ALTA HEMBRAS */
-.btn-f-vacas{
+.btn-principal{
     width: 100%;
     display: inline-block;
     font-weight: 400;
@@ -25,7 +25,7 @@ h1,h2,h3,h4,h5,p, span{
     font-size: 1rem;
     border-radius: .25rem;
 }
-.btn-f-vacas:hover{
+.btn-principal:hover{
     color: #ffffff;
     background-color: #307672 !important;
 }
@@ -68,7 +68,7 @@ h1,h2,h3,h4,h5,p, span{
     box-shadow: 0 0 0 0.25rem rgb(228 237 219);
 }
 .btn-submit{
-    width: 90%;
+    width: 100%;
     display: inline-block;
     font-weight: 400;
     line-height: 1.5;
@@ -89,6 +89,9 @@ h1,h2,h3,h4,h5,p, span{
         width: 100%;
     }
     .div-vacas-conteiner-inputs-group{
+        width: 90%;
+    }
+    .btn-submit{
         width: 90%;
     }
 }
@@ -137,6 +140,26 @@ h1,h2,h3,h4,h5,p, span{
 }
 
 /* TABLA HEMBRAS */
+.btn-eliminar{
+    width: 100%;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #ca4747 !important;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+}
+.btn-eliminar:hover{
+    background-color: #f24242f0 !important;
+
+}
 .dt-layout-row{
     padding:10px;
 }

@@ -33,11 +33,11 @@ include("../../conexion.php");
         <div class="d-flex flex-row justify-content-end mb-1 mb-0">
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
                 <a class="mx-lg-2  h-100 w-100 d-flex flex-row justify-content-evenly align-items-center" href="hembra-tabla.php">
-                    <button class="btn-f-vacas" >Ver registros</button>
+                    <button class="btn-principal" >Ver registros</button>
                 </a>
 
                 <a class=" h-100  d-flex w-100 flex-row justify-content-evenly align-items-center" href="../menu-inventario.php">
-                    <button class="btn-f-vacas" >Regresar al menú</button>
+                    <button class="btn-principal" >Regresar al menú</button>
                 </a> 
             </div>
         </div>

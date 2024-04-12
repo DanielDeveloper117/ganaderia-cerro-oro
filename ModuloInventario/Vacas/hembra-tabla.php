@@ -77,7 +77,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <link rel="stylesheet" href="../styles/styles-vacas.css">
 
-
     <title>Tabla de inventario - Hembras</title>
 </head>
 <body>
@@ -86,16 +85,16 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-vacas-buttons2">
     <div class="col-11">
         <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
-        <h1 class=" text-center mb-4">Alta de Hembras</h1>
+        <h1 class=" text-center mb-4">Inventario de Hembras</h1>
 
         <div class="d-flex flex-row justify-content-center justify-content-md-end mb-1 mb-0">
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
-                <a class="h-100 mx-lg-2 d-flex flex-row justify-content-evenly align-items-center btn-f-vacas a-icon-span" href="hembra.php">     
+                <a class="h-100 mx-lg-2 d-flex flex-row justify-content-evenly align-items-center btn-principal a-icon-span" href="hembra.php">     
                     <i class="fa-solid fa-circle-plus fa-2x"></i>
                     <span>Capturar una hembra</span>
                 </a>
 
-                <a class=" h-100  d-flex flex-row justify-content-evenly align-items-center btn-f-vacas" href="../menu-inventario.php">
+                <a class=" h-100  d-flex flex-row justify-content-evenly align-items-center btn-principal" href="../menu-inventario.php">
                     Regresar al menú
                 </a> 
             </div>
@@ -188,8 +187,9 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     echo '<td> 
                             <form action="eliminar-hembra.php" method="POST">
                                 <input type="hidden" name="id_vaca"  value="'. $arreglo_sql['id_vaca'].'" >
-                                <button type="submit" id="botonEliminar" class="form-control btn-danger" style="font-size:12px; " ><i style="margin-right:5px;" class="bi bi-trash"></i>
-                                     Eliminar
+                                <button type="submit" class="btn-eliminar" >
+                                    <i class="bi bi-trash"></i>
+                                    Eliminar
                                 </button>
                             </form>
                          </td>';
@@ -197,14 +197,20 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     echo '<td> 
                             <form action="editar-hembra.php" method="POST">
                                 <input type="hidden" name="id_vaca" value="'. $arreglo_sql['id_vaca'].'">
-                                <button type="submit" class="form-control btn-info"><i style="margin-right:5px;" class="bi bi-pencil-square"></i>Editar</button>
+                                <button type="submit" class="btn-principal">
+                                    <i  class="bi bi-pencil-square"></i>
+                                    Editar
+                                </button>
                             </form>
                          </td>';
                         
                     echo '<td> 
                             <form action="../Crias/crias-form.php" method="POST">
                                 <input type="hidden" name="id_vaca" value="'. $arreglo_sql['id_vaca'].'">
-                                <button type="submit" class="form-control btn-info"><i style="color:white;" class="fa-solid fa-circle-plus"></i>Agregar</button>
+                                <button type="submit" class="btn-principal">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Agregar
+                                </button>
                             </form>
                         </td>';
                    
@@ -263,11 +269,20 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             echo '</tbody></table>';
         
         } catch (PDOException $e) {
+            echo "<script>alert('Hubo un error al mostrar la tabla.');</script>";
+            //echo "Error: " . $e->getMessage();
+            echo '
+            <div class="d-flex flex-row justify-content-center col-12">
+                <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >
+                    <h4 class="mb-1 text-center">Los datos no puedieron ser mostrados.</h4>
+                    <i style="color:red;" class="col-8 col-xl-5 mb-1 text-center fa-regular fa-circle-xmark fa-3x"></i>
+                    <p class="mb-3">Si el problema persiste, contactar a los desarrolladores.</p>
+                </div> 
+            </div> 
+            ';
             // Manejar errores de conexión o consulta
-            echo "Error: " . $e->getMessage();
+            //echo "Error: " . $e->getMessage();
         }
-        // Cerrar la conexión
-       
     ?>
     </div>
 </section>
