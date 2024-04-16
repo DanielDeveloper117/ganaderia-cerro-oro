@@ -30,7 +30,7 @@ if (isset($_POST['id_macho'])) {
         echo '
         <div class="d-flex flex-row justify-content-center col-12">
             <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >
-                <h1 class="mb-4 text-center" style="font-size:3rem;">Los datos no fueron enviados</h1>
+                <h1 class="mb-4 text-center" style="font-size:3rem;">No fue posible eliminar el registro</h1>
                 <i style="color:red;" class="col-8 col-xl-5 mb-5 text-center fa-regular fa-circle-xmark fa-3x"></i>
 
                 <a href="macho-tabla.php" class="col-8 col-xl-5 mb-4 btn-script" >

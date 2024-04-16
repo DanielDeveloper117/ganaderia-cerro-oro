@@ -179,6 +179,9 @@ h1,h2,h3,h4,h5,p, span{
     border: 1px solid #307672; 
     overflow-x:auto;
 }
+.tabla-registros th span{
+    color: #1f5a61 !important;
+}
 .resumen-container{
     background-color: #fff;
     border: 1px solid #307672; 

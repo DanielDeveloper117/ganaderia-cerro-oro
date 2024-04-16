@@ -1,11 +1,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 <script src="https://kit.fontawesome.com/f7e7d9df55.js" crossorigin="anonymous"></script>
-
+<link rel="stylesheet" href="../styles/styles-crias.css">
 
 <?php
-include("conexion.php");
-    //si el campo foto esta vacio
+include("../../conexion.php");
 
 //------------------------------------------------------------------- si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
         if (isset($_POST['madre_numero'])
@@ -114,6 +113,33 @@ include("conexion.php");
             // }
             $cria_observaciones= $_POST['cria_observaciones'];
             //intentar la consulta de actualizar todos los campos
+            try {
+                $madre_numero = $_POST['madre_numero'];
+                
+                // Obtener el valor actual de vaca_partos
+                $sql_select = "SELECT vaca_numero, vaca_partos FROM vacas WHERE vaca_numero = :madre_numero";
+                $stmt_select = $conexion->prepare($sql_select);
+                $stmt_select->bindParam(':madre_numero', $madre_numero);
+                $stmt_select->execute();
+                $arreglo_sql = $stmt_select->fetch(PDO::FETCH_ASSOC); 
+                
+                if ($arreglo_sql) {
+                    // Sumar 1 al valor actual de vaca_partos
+                    $vaca_partos_actualizado = $arreglo_sql['vaca_partos'] + 1;
+                    
+                    // Actualizar el registro en la base de datos
+                    $sql_update = "UPDATE vacas SET vaca_partos = :vaca_partos WHERE vaca_numero = :madre_numero";
+                    $stmt_update = $conexion->prepare($sql_update);
+                    $stmt_update->bindParam(':vaca_partos', $vaca_partos_actualizado);
+                    $stmt_update->bindParam(':madre_numero', $madre_numero);
+                    $stmt_update->execute();
+                } else {
+                    echo '<h4 class="mt-4 mb-2 text-warning text-center">Aviso: Cría agregada con exito, pero no se encontró ninguna vaca con el número de madre especificado.</h4>';
+                }
+            } catch (PDOException $e) {
+                // Manejo de excepciones PDO
+                echo '<h5 class="mb-3 text-warning text-center">Aviso: Ocurrió un error al procesar la solicitud.</h5>';
+            }
 
             try {  
                 //instancia que indica que la conexion "$conexion" de conexion.php sera usada aqui con PDO
@@ -161,41 +187,44 @@ include("conexion.php");
                 $stmt->execute();
                 echo "<script>alert('Registro guardado con éxito');</script>";
                 echo '
-                <div class="d-flex col-12 justify-content-center align-items-center flex-column mt-5" style="width:100%;">
-                    <h2 class="mb-3 text-center">Los datos se han enviado correctamente.</h2>
-                    <i style="color:green;" class="col-8 col-xl-5 mb-3 text-center fa-solid fa-circle-check fa-3x"></i>
-                    <a href="crias-form.php" class="col-8 col-xl-5 mb-3 btn btn-success" >
-                        Registrar otra cría
-                    </a>
-                    <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
-                        Ir a la tabla
-                    </a>
-                    <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-3 btn btn-secondary" >
-                        Ir al menú
-                    </a>
-                </div> 
+                <div class="d-flex flex-row justify-content-center col-12">
+                    <div class="d-flex justify-content-center align-items-center flex-column mt-3 col-8" >
+                        <h1 class="mb-4 text-center" style="font-size:3rem;">Los datos se han enviado correctamente.</h1>
+                        <i style="color:green;" class="col-8 col-xl-5 mb-5 text-center fa-solid fa-circle-check fa-3x"></i>
+                        <a href="crias-form.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                            Dar de alta otra cría
+                        </a>
+                        <a href="crias-tabla.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                            Ir a la tabla de crías
+                        </a>
+                        <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                            Ir al menú
+                        </a>
+                    </div> 
+                </div>
                 ';
-        
 
             } catch (PDOException $e) {
                 // Error cuando no se ejecuta la consulta SQL
                 echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
                 //echo "Error: " . $e->getMessage();
                 echo '
-                <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                    <h2 class="mb-3">Los datos no fueron enviados</h2>
-                    <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
-                    <a href="crias-form.php" class="col-8 col-xl-5 mb-3 btn btn-warning" >
-                        Regresar al formulario
-                    </a>
-                    <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
-                        Ir a la tabla
-                    </a>
-                    <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
-                        Ir al menú
-                    </a>
-                    <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
-                </div> 
+                <div class="d-flex flex-row justify-content-center col-12">
+                    <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >
+                        <h1 class="mb-4 text-center" style="font-size:3rem;">Los datos no fueron enviados</h1>
+                        <i style="color:red;" class="col-8 col-xl-5 mb-5 text-center fa-regular fa-circle-xmark fa-3x"></i>
+                        <a href="crias-form.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                            Regresar al formulario
+                        </a>
+                        <a href="crias-tabla.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                            Ir a la tabla
+                        </a>
+                        <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                            Ir al menú
+                        </a>
+                        <p class="mb-3" style="font-size:1.5rem;">Si el problema persiste, contactar a los desarrolladores.</p>
+                    </div> 
+                </div>
                 ';
             }  
             
@@ -203,51 +232,24 @@ include("conexion.php");
             echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
             //echo "Error: " . $e->getMessage();
             echo '
-            <div class="d-flex col-12 justify-content-center align-items-center flex-column" style="width:100%; margin-top:100px;">
-                <h2 class="mb-3">Los datos no fueron enviados</h2>
-                <i style="color:red;" class="col-8 col-xl-5 mb-3 text-center fa-regular fa-circle-xmark fa-3x"></i>
-                <a href="crias-form.php" class="col-8 col-xl-5 mb-3 btn btn-warning" >
-                    Regresar al formulario
-                </a>
-                <a href="crias-tabla.php" class="col-8 col-xl-5 mb-3 btn btn-primary" >
-                    Ir a la tabla
-                </a>
-                <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-5 btn btn-secondary" >
-                    Ir al menú
-                </a>
-                <p class="mb-3">Si el problema persiste, contactar a los desarrolladores</p>
-            </div> 
+            <div class="d-flex flex-row justify-content-center col-12">
+                <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >
+                    <h1 class="mb-4 text-center" style="font-size:3rem;">Los datos no fueron enviados</h1>
+                    <i style="color:red;" class="col-8 col-xl-5 mb-5 text-center fa-regular fa-circle-xmark fa-3x"></i>
+                    <a href="cria-form.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                        Regresar al formulario
+                    </a>
+                    <a href="crias-tabla.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                        Ir a la tabla
+                    </a>
+                    <a href="../menu-inventario.php" class="col-8 col-xl-5 mb-4 btn-script" >
+                        Ir al menú
+                    </a>
+                    <p class="mb-3" style="font-size:1.5rem;">Si el problema persiste, contactar a los desarrolladores.</p>
+                </div> 
+            </div>
             ';
         }
-        if (isset($_POST['madre_numero'])) {
-            try {
-                $madre_numero = $_POST['madre_numero'];
-                
-                // Obtener el valor actual de vaca_partos
-                $sql_select = "SELECT vaca_numero, vaca_partos FROM vacas WHERE vaca_numero = :madre_numero";
-                $stmt_select = $conexion->prepare($sql_select);
-                $stmt_select->bindParam(':madre_numero', $madre_numero);
-                $stmt_select->execute();
-                $arreglo_sql = $stmt_select->fetch(PDO::FETCH_ASSOC); 
-                
-                if ($arreglo_sql) {
-                    // Sumar 1 al valor actual de vaca_partos
-                    $vaca_partos_actualizado = $arreglo_sql['vaca_partos'] + 1;
-                    
-                    // Actualizar el registro en la base de datos
-                    $sql_update = "UPDATE vacas SET vaca_partos = :vaca_partos WHERE vaca_numero = :madre_numero";
-                    $stmt_update = $conexion->prepare($sql_update);
-                    $stmt_update->bindParam(':vaca_partos', $vaca_partos_actualizado);
-                    $stmt_update->bindParam(':madre_numero', $madre_numero);
-                    $stmt_update->execute();
-                } else {
-                    echo '<h5 class="mb-3 text-warning text-center">Aviso: Cría agregada con exito, pero no se encontró ninguna vaca con el número de madre especificado.</h5>';
-                }
-            } catch (PDOException $e) {
-                // Manejo de excepciones PDO
-                echo '<h5 class="mb-3 text-warning text-center">Aviso: Ocurrió un error al procesar la solicitud.</h5>';
-            }
 
-        }
 ?>
         

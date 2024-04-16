@@ -76,14 +76,14 @@ if (isset($_POST['vaca_numero'])
     
     // Mueve la imagen al directorio deseado
     if (move_uploaded_file($vaca_ubicacionTemporal, $vaca_directorioDestino . $vaca_nombreArchivo)) {
-       echo '<p class="text-center mt-4 mb-2 text-secondary">Imagen guardada en la carpeta: ' . $vaca_directorioDestino . $vaca_nombreArchivo . '</p>';
+    //    echo '<p class="text-center mt-4 mb-2 text-secondary">Imagen guardada en la carpeta: ' . $vaca_directorioDestino . $vaca_nombreArchivo . '</p>';
      
     } else {
         //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";
     }
        // Mueve la imagen al directorio deseado
     if (move_uploaded_file($fierro_ubicacionTemporal, $fierro_directorioDestino . $fierro_nombreArchivo)) {
-        echo '<p class="text-center mb-0 pb-0 text-secondary">Imagen guardada en la carpeta: ' . $fierro_directorioDestino . $fierro_nombreArchivo . '</p>';
+        // echo '<p class="text-center mb-0 pb-0 text-secondary">Imagen guardada en la carpeta: ' . $fierro_directorioDestino . $fierro_nombreArchivo . '</p>';
     
      } else {
          //echo "<script>alert('Informacion: No se seleccionó ninguna imagen.');</script>";

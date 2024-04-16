@@ -105,19 +105,16 @@ include("../../conexion.php");
         <h2 class=" text-center mb-4">Editar hoja de vida de macho: <?php echo '' . $arreglo_sql['macho_numero'] . '';?></h2>
 
         <div class="justify-content-end d-flex flex-row col-12 mb-2 div-imgs-container">
- 
             <div class="div-imgs justify-content-end d-flex px-1" >
                 <a data-fancybox="gallery" href="<?php echo '' . $arreglo_sql['macho_foto_fierro'] . '';?>" >
                     <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['macho_foto_fierro'] . '';?>"  alt="Vacio">
                 </a>
             </div>
-
             <div class="div-imgs justify-content-end d-flex  px-1" >
                 <a data-fancybox="gallery" href="<?php echo '' . $arreglo_sql['macho_foto'] . '';?>" >
                     <img  class="img-fotos-perfil img-thumbnail" src="<?php echo '' . $arreglo_sql['macho_foto'] . '';?>"  alt="Vacio">
                 </a>    
             </div>
-
         </div>
 
         <div class="d-flex flex-row justify-content-end mb-1 mb-0">
@@ -126,7 +123,6 @@ include("../../conexion.php");
                     <button class="btn-principal" >Cancelar y regresar</button>
                 </a>
             </div>
-
         </div>
     </div>
 </section>
@@ -165,7 +161,7 @@ include("../../conexion.php");
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class="col-md-3 " >
                 <label class="label-form" for="macho_estado_re">Estado reproductivo</label>
-                <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re">
+                <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re" required>
                     <option class="option-hover" value="<?php echo '' . $arreglo_sql['macho_estado_re'] . '';?>" selected><?php echo '' . $arreglo_sql['macho_estado_re'] . '';?></option>
                     <option class="option-hover" value="Torete">Torete</option>
                     <option class="option-hover" value="Toro semental">Toro semental</option>
@@ -173,7 +169,7 @@ include("../../conexion.php");
             </div>
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_estatus">Estatus del arete</label>
-                <select class="form-select" style="cursor: pointer; " id="macho_estatus" name="macho_estatus">
+                <select class="form-select" style="cursor: pointer; " id="macho_estatus" name="macho_estatus" required>
                         <option class="option-hover" value="<?php echo '' . $arreglo_sql['macho_estatus'] . '';?>" selected><?php echo '' . $arreglo_sql['macho_estatus'] . '';?></option>
                         <option class="option-hover" value="Vigente">Vigente</option>
                         <option class="option-hover" value="Pendiente">Pendiente</option>
@@ -374,19 +370,18 @@ include("../../conexion.php");
 
         <h3 class="">Información adicional</h3>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
-            <div class=" col-md-5" >
-                <label class="label-form" for="foto">Seleccionar nueva fotografía del macho</label>
-                <input class="form-control" type="file" id="macho_foto"  accept="image/*" value="" name="macho_foto">
-                <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
-                <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['macho_foto'] . '';?>"  alt="Vacio">
-            </div>
-
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">   
             <div class=" col-md-5" >
                 <label class="label-form" for="foto">Seleccionar nueva fotografía del fierro</label>
                 <input class="form-control" type="file" id="macho_foto"  accept="image/*" value="" name="macho_foto_fierro">
                 <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
                 <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['macho_foto_fierro'] . '';?>"  alt="Vacio">
+            </div>                 
+            <div class=" col-md-5" >
+                <label class="label-form" for="foto">Seleccionar nueva fotografía del macho</label>
+                <input class="form-control" type="file" id="macho_foto"  accept="image/*" value="" name="macho_foto">
+                <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
+                <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['macho_foto'] . '';?>"  alt="Vacio">
             </div>
         </div>
         

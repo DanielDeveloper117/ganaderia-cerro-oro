@@ -25,7 +25,6 @@ include("../../conexion.php");
 <body>
 
 
-
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-buttons">
     <div class="col-11 col-md-10">
         <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
@@ -73,16 +72,16 @@ include("../../conexion.php");
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group"> 
             <div class="col-md-3 " >
                 <label class="label-form" for="macho_estado_re">Estado reproductivo</label>
-                <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re">
-                    <option class="option-hover" value="No seleccionado" selected>Seleccionar</option>
+                <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re" required>
+                    <option class="option-hover" value="" selected>Seleccionar</option>
                     <option class="option-hover" value="Torete">Torete</option>
                     <option class="option-hover" value="Toro semental">Toro semental</option>
                 </select>             
             </div>
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_estatus">Estatus del arete</label>
-                <select class="form-select" style="cursor: pointer; " id="macho_estatus" name="macho_estatus">
-                        <option class="option-hover" value="No seleccionado" selected>Seleccionar</option>
+                <select class="form-select" style="cursor: pointer; " id="macho_estatus" name="macho_estatus" required>
+                        <option class="option-hover" value="" selected>Seleccionar</option>
                         <option class="option-hover" value="Vigente">Vigente</option>
                         <option class="option-hover" value="Pendiente">Pendiente</option>
                         <option class="option-hover" value="Baja">Baja</option>
@@ -178,7 +177,7 @@ include("../../conexion.php");
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-3" >
                 <label class="label-form" for="macho_edad_actual">Edad actual</label>
-                <input type="number" class="form-control" id="macho_edad_actual" step="1" min="13" placeholder="Edad en meses" name="macho_edad_actual" >
+                <input type="number" class="form-control" id="macho_edad_actual" step="1" min="13" placeholder="Edad en meses" name="macho_edad_actual" required>
             </div>
             <div class="col-md-3" >
                 <label class="label-form" for="macho_edad_destete">Edad de destete</label>
@@ -197,7 +196,6 @@ include("../../conexion.php");
                 <label class="label-form" for="macho_peso_nacimiento">Peso de nacimiento</label>
                 <input type="number" class="form-control" id="macho_peso_nacimiento" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 32.565" name="macho_peso_nacimiento" >
             </div>
-
             <div class="col-md-2 " >
                 <label class="label-form" for="macho_peso_actual">Peso actual</label>
                 <input type="number" class="form-control" id="macho_peso_actual" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 689.705" name="macho_peso_actual" >
@@ -252,17 +250,14 @@ include("../../conexion.php");
         </div>
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
-            
             <div class="col-md-2 " >
                 <label class="label-form" for="macho_fecha_fierro">Fecha de fierro</label>
                 <input type="date" class="form-control" id="macho_fecha_fierro" placeholder="Fecha aretado" name="macho_fecha_fierro" >
             </div>                               
-
             <div class="col-md-2" >
                 <label class="label-form" for="macho_fecha_venta">Fecha de venta</label>
                 <input type="date" class="form-control" id="macho_fecha_venta" placeholder="Seleccionar fecha" name="macho_fecha_venta" >
             </div>
-
             <div class=" col-md-2" >
             </div>
             <div class=" col-md-2" >
@@ -273,13 +268,13 @@ include("../../conexion.php");
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-5" >
+                <label class="label-form" for="macho_foto_fierro">Fotografía fierro</label>
+                <input class="form-control" type="file" id="macho_foto_fierro"  accept="image/*" name="macho_foto_fierro">
+            </div>            
+            <div class=" col-md-5" >
                 <label class="label-form" for="macho_foto">Fotografía del macho</label>
                 <input class="form-control" type="file" id="macho_foto"  accept="image/*" name="macho_foto">
             </div>   
-            <div class=" col-md-5" >
-                <label class="label-form" for="macho_foto_fierro">Fotografía fierro</label>
-                <input class="form-control" type="file" id="macho_foto_fierro"  accept="image/*" name="macho_foto_fierro">
-            </div>
         </div>
         
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">

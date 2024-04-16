@@ -124,7 +124,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             // Mostrar los resultados en una tabla HTML
-            echo '<table id="tabla_vacas" class="table table-bordered table-striped border border-2 " >
+            echo '<table id="tabla_vacas" class="tabla-registros table table-bordered table-striped border border-2 " >
                     <thead>
                     <tr>
                         <th scope="col">Eliminar</th>

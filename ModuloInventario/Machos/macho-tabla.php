@@ -80,7 +80,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 </head>
 <body>
 
-
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-buttons2">
     <div class="col-11 col-md-11">
           <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
@@ -122,7 +121,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             // Mostrar los resultados en una tabla HTML
-            echo '<table id="tabla_machos" class="table table-bordered table-striped border border-2 " >
+            echo '<table id="tabla_machos" class="tabla-registros table table-bordered table-striped border border-2 " >
                     <thead>
                     <tr>
                         <th scope="col">Eliminar</th>
@@ -192,7 +191,8 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                                 <button type="submit" class="btn-principal">
                                     <i  class="bi bi-pencil-square"></i>
                                     Editar
-                                </button>                            </form>
+                                </button>                            
+                            </form>
                          </td>';
                    
                         echo '<td>' . $arreglo_sql['macho_numero'] . '</td>';
@@ -255,8 +255,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                 </div> 
             </div> 
             ';
-            // Manejar errores de conexión o consulta
-            //echo "Error: " . $e->getMessage();
         }
     ?>
     </div>

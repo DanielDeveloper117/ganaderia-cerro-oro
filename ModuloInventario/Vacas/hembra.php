@@ -73,7 +73,7 @@ include("../../conexion.php");
             <div class="col-md-3 mb-3" >
                 <label class="label-vacas" for="vaca_estado_re">Estado reproductivo</label>
                 <select class="form-select" style="cursor: pointer; " id="vaca_estado_re" name="vaca_estado_re" required>
-                    <option class="option-hover" value="No seleccionado" selected>Seleccionar</option>
+                    <option class="option-hover" value="" selected>Seleccionar</option>
                     <option class="option-hover" value="Vaca horra">Vaca vacía/horra</option>
                     <option class="option-hover" value="Vaca preñada">Vaca preñada</option>
                     <option class="option-hover" value="Vaca parida">Vaca parida</option>
@@ -83,8 +83,8 @@ include("../../conexion.php");
             </div>
             <div class=" col-md-2 mb-3" >
                 <label class="label-vacas" for="vaca_estatus">Estatus del arete</label>
-                <select class="form-select" style="cursor: pointer; " id="vaca_estatus" name="vaca_estatus">
-                        <option class="option-hover" value="No seleccionado" selected>Seleccionar</option>
+                <select class="form-select" style="cursor: pointer; " id="vaca_estatus" name="vaca_estatus" required>
+                        <option class="option-hover" value="" selected>Seleccionar</option>
                         <option class="option-hover" value="Vigente">Vigente</option>
                         <option class="option-hover" value="Pendiente">Pendiente</option>
                         <option class="option-hover" value="Baja">Baja</option>
@@ -193,7 +193,7 @@ include("../../conexion.php");
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">
             <div class="col-md-3 mb-3" >
                 <label class="label-form" for="vaca_edad_actual">Edad actual</label>
-                <input type="number" class="form-control" id="vaca_edad_actual" step="1" min="25" placeholder="Edad en meses" name="vaca_edad_actual" >
+                <input type="number" class="form-control" id="vaca_edad_actual" step="1" min="25" placeholder="Edad en meses" name="vaca_edad_actual" required>
             </div>
             <div class="col-md-3 mb-3" >
                 <label class="label-form" for="vaca_edad_destete">Edad de destete</label>
@@ -309,13 +309,13 @@ include("../../conexion.php");
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">
             <div class=" col-md-5 mb-3" >
+                <label class="label-form" for="vaca_foto_fierro">Fotografía fierro</label>
+                <input class="form-control" type="file" id="vaca_foto_fierro"  accept="image/*" name="vaca_foto_fierro">
+            </div>            
+            <div class=" col-md-5 mb-3" >
                 <label class="label-form" for="vaca_foto">Fotografía de la vaca</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" name="vaca_foto">
             </div>   
-            <div class=" col-md-5 mb-3" >
-                <label class="label-form" for="vaca_foto_fierro">Fotografía fierro</label>
-                <input class="form-control" type="file" id="vaca_foto_fierro"  accept="image/*" name="vaca_foto_fierro">
-            </div>
         </div>
         
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">

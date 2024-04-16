@@ -1,0 +1,100 @@
+body{
+    background-color: #E4EDDB;
+}
+a{
+    text-decoration: none;
+}
+h1,h2,h3,h4,h5,p, span{
+    color: #1f5a61ba;
+}
+
+/* FORMULARIO DE DAR DE ALTA CRIA */
+.btn-principal{
+    width: 100%;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #144D53 !important;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+}
+.btn-principal:hover{
+    color: #ffffff;
+    background-color: #307672 !important;
+}
+.formulario{
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    background-color: #f9f9f9;
+    padding: 3%;
+    border-radius:10px;
+    margin-bottom:6rem;
+}
+.formulario h3{
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+.p-form{
+    text-align: center;
+}
+.formulario label{
+    color: #1f5a61ba;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.formulario input, .formulario select{
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #1f5a61ba;;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+.formulario select option:hover{
+    color: #fff;
+    background-color: #144D53;
+}
+.formulario input:focus, .formulario select:focus, .formulario textarea:focus{
+    border-color: #307672;
+    box-shadow: 0 0 0 0.25rem rgb(228 237 219);
+}
+.btn-submit{
+    width: 100%;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #ffffff;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #144D53 !important;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+}
+@media (max-width: 1024px) {
+    .section-buttons a{
+        padding: 4px;
+        width: 100%;
+    }
+    .div-conteiner-inputs-group{
+        width: 90%;
+    }
+    .btn-submit{
+        width: 90%;
+    }
+}

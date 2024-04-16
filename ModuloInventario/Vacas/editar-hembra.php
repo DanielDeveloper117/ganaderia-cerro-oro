@@ -162,7 +162,7 @@ include("../../conexion.php");
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-3 " >
                 <label class="label-form" for="vaca_estado_re">Estado reproductivo</label>
-                <select class="form-select" style="cursor: pointer; " id="vaca_estado_re" name="vaca_estado_re">
+                <select class="form-select" style="cursor: pointer; " id="vaca_estado_re" name="vaca_estado_re" required>
                     <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?></option>
                     <option class="option-hover" value="Vaca horra">Vaca vacía/horra</option>
                     <option class="option-hover" value="Vaca preñada">Vaca preñada</option>
@@ -173,7 +173,7 @@ include("../../conexion.php");
             </div>
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_estatus">Estatus del arete</label>
-                <select class="form-select" style="cursor: pointer; " id="vaca_estatus" name="vaca_estatus">
+                <select class="form-select" style="cursor: pointer; " id="vaca_estatus" name="vaca_estatus" required>
                         <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estatus'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estatus'] . '';?></option>
                         <option class="option-hover" value="Vigente">Vigente</option>
                         <option class="option-hover" value="Pendiente">Pendiente</option>
@@ -400,16 +400,16 @@ include("../../conexion.php");
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-5" >
-                <label class="label-form" for="foto">Seleccionar nueva fotografía de la vaca</label>
-                <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto">
-                <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
-                <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
-            </div>
-            <div class=" col-md-5" >
                 <label class="label-form" for="foto">Seleccionar nueva fotografía del fierro</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto_fierro">
                 <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
                 <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>"  alt="Vacio">
+            </div>            
+            <div class=" col-md-5" >
+                <label class="label-form" for="foto">Seleccionar nueva fotografía de la vaca</label>
+                <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto">
+                <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
+                <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
             </div>
         </div>
         

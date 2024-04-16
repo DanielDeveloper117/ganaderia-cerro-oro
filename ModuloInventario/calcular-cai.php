@@ -18,53 +18,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../jquery-3.7.1.min.js"></script>
-
+    <link rel="stylesheet" href="styles/styles-cai.css">
 
     <title>Calcular CAI</title>
 </head>
 <body>
-
-<style>
-    section form div{
-        width: 100%;
-       margin-bottom: 15px;
-    }
-    .label-form{
-        margin-bottom: 10px;
-        font-weight: 400;
-    }
-    .option-hover{
-        color: black !important;
-        
-    }
-    .option-hover:hover{
-        color: black !important;
-        cursor:pointer !important;
-    }
-
-    section a{
-        text-decoration: none;
-    }
-    .form{
-        border: 1px solid #ccc;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        background-color: #f9f9f9;
-        padding: 3%;
-        border-radius:10px
-    }
-    form h3{
-        text-align:left;
-        padding-bottom:15px;
-    }
-   .btn-prod{
-        text-align:center;
-   }
-   .p-form{
-        text-align:center;
-        margin-bottom: 20px;
-   }
-</style>
-
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5">
     <div class="col-11 col-md-10">
@@ -78,8 +36,8 @@
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
 
                 <!-- <a href="logout.php"><button class="form-control btn-danger" style="margin-bottom: 20px;" >Cerrar sesión </button></a> -->
-                <a class=" h-100 form-control btn btn-secondary d-flex flex-row justify-content-evenly align-items-center" href="menu-inventario.php">
-                    <span>Regresar al menú</span>
+                <a class=" h-100 btn-principal d-flex flex-row justify-content-evenly align-items-center " href="menu-inventario.php">
+                    Regresar al menú
                 </a> 
 
             </div>
@@ -90,20 +48,17 @@
 
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
-
-    <div class="form d-flex flex-column col-11 col-md-10 justify-content-center align-items-center"  >
+    <div class="form d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  >
         <p class="p-form">Formulario para calcular Carga Animal Instantánea.</p>
 
-
-
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">        
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="ugm">UGM</label>
-                <input type="number" class="form-control" id="ugm" placeholder="Digitar el UGM" >
+                <input type="number" class="form-control mb-3" id="ugm" placeholder="Digitar el UGM" >
             </div>
             <div class=" col-md-2" >
                 <label class="label-form" for="cg">Cantidad de ganado</label>
-                <input type="number" class="form-control" id="cg" placeholder="Digitar cantidad" >
+                <input type="number" class="form-control mb-3" id="cg" placeholder="Digitar cantidad" >
             </div>
             <div class=" col-md-2" >
             </div>
@@ -115,15 +70,15 @@
 
         </br>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">        
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="pvt">Peso Vivo Total</label>
-                <input type="number" class="form-control" id="pvt" placeholder="Digitar el PVT" >
+                <input type="number" class="form-control mb-3" id="pvt" placeholder="Digitar el PVT" >
             </div>
             <div class=" col-md-2" >
                 <label class="label-form" for="po">Periodo de Ocupación</label>
                 <div class="d-flex text-center flex-row justify-content-center align-items-center">
-                    <input type="number" class="form-control" id="po" placeholder="Digitar PO" value="1">
+                    <input type="number" class="form-control mb-3" id="po" placeholder="Digitar PO" value="1">
                     <p style="margin-bottom:0px;">día(s)</p>
                 </div>
                 
@@ -131,7 +86,7 @@
             <div class=" col-md-2" >
                 <label class="label-form" for="ua">UA</label>
                 <div class="d-flex text-center flex-row justify-content-center align-items-center">
-                    <input type="number" class="form-control" id="ua" placeholder="Digitar UA" >
+                    <input type="number" class="form-control mb-3" id="ua" placeholder="Digitar UA" >
                     <p style="margin-bottom:0px;">Kg.</p>
                 </div>
                 
@@ -139,7 +94,7 @@
             <div class=" col-md-2" >
                 <label class="label-form" for="s">Superficie</label>
                 <div class="d-flex text-center flex-row justify-content-center align-items-center">
-                    <input type="number" class="form-control" id="s" placeholder="Digitar Superficie" >
+                    <input type="number" class="form-control mb-3" id="s" placeholder="Digitar Superficie" >
                     <p style="margin-bottom:0px;">ha</p>
 
                 </div>
@@ -150,7 +105,7 @@
         
         </br>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" " >
                 <h5 class="">Total = <span class="text-success" id="r"></span> día/ha</h5>
             </div>
@@ -158,9 +113,9 @@
 
         </br>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12"> 
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" " >
-                <h5 class="">Eso representa <span class="" id="i"></span></h5>
+                <h5 class="">Eso representa: <span class="" id="i" style="background-color:#7e7e7e33;"></span></h5>
             </div>
         </div>
 
@@ -203,7 +158,7 @@ $(document).ready(function(){
         } else if (resultado > 600){
             texto = "Carga animal de ultra alta densidad";
         }else{
-            texto = ""
+            texto = "..."
         }
         $("#i").text(texto);
     }
