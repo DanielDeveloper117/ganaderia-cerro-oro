@@ -25,7 +25,7 @@ $stmtVerificarEjecucion->execute();
 $resultadoVerificarEjecucion = $stmtVerificarEjecucion->fetch(PDO::FETCH_ASSOC);
 
 if ($resultadoVerificarEjecucion['conteo'] > 0) {
-    echo "Ya se ha ejecutado el script hoy.\n";
+    echo "Ya se han actualizado las edades hoy.\n";
 } else {
     // Actualizar la ultima_ejecucion
     $sqlActualizarUltimaEjecucion = "UPDATE machos SET ultima_ejecucion = :fechaActual";
@@ -58,7 +58,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         $stmtActualizarEdad->bindParam(':idMacho', $idMacho, PDO::PARAM_INT);
         $stmtActualizarEdad->execute();
     }
-    echo "Script ejecutado con éxito.\n";
+    echo "Edades actualizadas con éxito.\n";
 }
 ?>
 <!DOCTYPE html>

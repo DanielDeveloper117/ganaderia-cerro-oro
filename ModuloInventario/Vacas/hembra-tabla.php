@@ -26,7 +26,7 @@ $stmtVerificarEjecucion->execute();
 $resultadoVerificarEjecucion = $stmtVerificarEjecucion->fetch(PDO::FETCH_ASSOC);
 
 if ($resultadoVerificarEjecucion['conteo'] > 0) {
-    echo "Ya se ha ejecutado el script hoy.\n";
+    //echo "Ya se han actualizado las edades hoy.\n";
 } else {
     // Actualizar la ultima_ejecucion
     $sqlActualizarUltimaEjecucion = "UPDATE vacas SET ultima_ejecucion = :fechaActual";
@@ -59,7 +59,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         $stmtActualizarEdad->bindParam(':idVaca', $idVaca, PDO::PARAM_INT);
         $stmtActualizarEdad->execute();
     }
-    echo "Script ejecutado con éxito.\n";
+    //echo "Edades actualizadas con éxito.\n";
 }
 ?>
 <!DOCTYPE html>
@@ -78,14 +78,54 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     <link rel="stylesheet" href="../styles/styles-vacas.css">
 
     <title>Tabla de inventario - Hembras</title>
+
+    <style>
+        table.dataTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        table.dataTable td, table.dataTable th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #spanNumberNoti{
+            color: #fff;
+            background-color: #000;
+            border-radius: 100px;
+            
+        }
+        .renglon-parto{
+            background-color: #ffe500a1 !important;
+        }
+        .renglon-parto1-td{
+            color: #ff1100 !important;
+            font-weight: 700;
+        }
+        .renglon-parto2-td{
+            color: #ff1100 !important;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
 
 
-<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-vacas-buttons2">
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3 section-vacas-buttons2">
     <div class="col-11">
         <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="Logo" width="110" height="100">  -->
         <h1 class=" text-center mb-4">Inventario de Hembras</h1>
+
+        <!-- <div class="d-flex flex-row justify-content-center justify-content-md-start mb-1 mb-0">
+            <div class="d-flex flex-row justify-content-start align-items-center col-12 col-xl-2">
+                <button type="button" class="h-100 d-flex flex-row justify-content-start align-items-center btn-principal a-icon-span">     
+                    <span>Notificaciones</span>
+                    <i class="fa-regular fa-bell fa-1x mx-2"></i>
+                    <span id="spanNumberNoti" class="px-2">3</span>
+                </button>
+            </div>
+        </div> -->
 
         <div class="d-flex flex-row justify-content-center justify-content-md-end mb-1 mb-0">
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
@@ -108,7 +148,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
             //$sql = "SELECT id_vaca, padre_num, padre_raza, madre_num, madere_raza FROM hembra WHERE rol = 'agente'";
-            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza,  
+            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, vaca_edad_parto1, vaca_edad_parto2, 
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
@@ -136,15 +176,18 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col">Raza de la vaca</th>
                         <th scope="col">Estado reproductivo</th>
                         <th scope="col">Estatus del arete</th>
-                        <th scope="col">Número de la madre</th>
+                        <th scope="col">Edad actual</th>
+                        <th scope="col">Edad 1er parto</th>
+                        <th scope="col">Edad 2do parto</th>
+                        <th scope="col" style="border-left:solid #0006;">Número de la madre</th>
                         <th scope="col">Número de arete de la madre</th>
                         <th scope="col">Tatuaje de la madre</th>
                         <th scope="col">Raza de la madre</th>
-                        <th scope="col">Número del padre</th>
+                        <th scope="col" style="border-left:solid #0006;">Número del padre</th>
                         <th scope="col">Número de arete del padre</th>
                         <th scope="col">Tatuaje del padre</th>
                         <th scope="col">Raza del padre</th>
-                        <th scope="col">Color</th>
+                        <th scope="col" style="border-left:solid #0006;">Color</th>
                         <th scope="col">Talla</th>
                         <th scope="col">Pelo</th>
                         <th scope="col">Condición</th>
@@ -153,24 +196,23 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col">Partos totales</th>
                         <th scope="col">Estado de palpación</th>
                         <th scope="col">Finada</th>
-                        <th scope="col">Edad actual</th>
                         <th scope="col">Edad destete</th>
                         <th scope="col">Edad de venta</th>
-                        <th scope="col">Peso de nacimiento</th>
+                        <th scope="col" style="border-left:solid #0006;">Peso de nacimiento</th>
                         <th scope="col">Peso actual</th>
                         <th scope="col">Peso destete</th>
                         <th scope="col">Peso de venta</th>
                         <th scope="col">Ganancia de peso por día</th>
-                        <th scope="col">Ganancia de peso por mes</th>
-                        <th scope="col">Peso en 3 meses</th>
-                        <th scope="col">Fecha de nacimiento</th>
+                        <th scope="col">Ganancia por mes</th>
+                        <th scope="col">Ganancia en 3 meses</th>
+                        <th scope="col" style="border-left:solid #0006;">Fecha de nacimiento</th>
                         <th scope="col">Fecha de destete</th>
                         <th scope="col">Fecha de aretado</th>
                         <th scope="col">Fecha de tatuaje</th>
                         <th scope="col">Fecha de fierro</th>
                         <th scope="col">Fecha probable</th>
                         <th scope="col">Fecha de venta</th>
-                        <th scope="col">Leche al día</th>
+                        <th scope="col" style="border-left:solid #0006;">Leche al día</th>
                         <th scope="col">Leche al mes</th>
                         <th scope="col">Comentario de leche</th>
                         <th scope="col">Fotografía</th>
@@ -182,7 +224,22 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     <tbody>';
         
             while ($arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<tr>';
+                // ------------ DETERMINAR MAS DE 36 SIN PRIMER PARTO
+                if($arreglo_sql["vaca_edad_actual"]>=36 && $arreglo_sql["vaca_edad_parto1"]==null && $arreglo_sql["vaca_edad_actual"]!="Fallecida"){
+                    $class='renglon-parto';
+                    $classtd1='renglon-parto1-td';
+                }else{
+                    $class='';
+                    $classtd1='';
+                }
+                if($arreglo_sql["vaca_edad_actual"]>=48 && $arreglo_sql["vaca_edad_parto2"]==null && $arreglo_sql["vaca_edad_actual"]!="Fallecida"){
+                    $class='renglon-parto';
+                    $classtd2='renglon-parto2-td';
+                }else{
+                    $classtd2='';
+                }
+                
+                echo '<tr class="'.$class.'" data-id="'. $arreglo_sql['id_vaca'].'" >';
 
                     echo '<td> 
                             <form action="eliminar-hembra.php" method="POST">
@@ -220,15 +277,39 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         echo '<td>' . $arreglo_sql['vaca_raza'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_estado_re'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_estatus'] . '</td>';
-                        echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
+
+                        if($arreglo_sql['vaca_edad_actual']==null){ 
+                            echo '<td>-</td>';
+                        }else if($arreglo_sql['vaca_edad_actual']=="Fallecida"){ 
+                            echo '<td>Fallecida</td>';
+                        }else{
+                            $total_months = intval($arreglo_sql['vaca_edad_actual']);
+                            $years = floor($total_months / 12);
+                            $months = $total_months % 12;
+                            if($months==1){
+                                $mesMeses = "mes";
+                            }else{
+                                $mesMeses="meses";
+                            }
+                            echo '<td class="'.$classtd1.' '.$classtd2.' ">' . $arreglo_sql['vaca_edad_actual'] .' meses</br>
+                            ('.$years.' años, '.$months.' '.$mesMeses .')
+                            </td>';
+                        }
+
+                        if($arreglo_sql['vaca_edad_parto1']==null){ $mx='Aun no';}else{$mx=' meses';}
+                        echo '<td class="'.$classtd1.'">' . $arreglo_sql['vaca_edad_parto1'] . $mx.'</td>';
+                        if($arreglo_sql['vaca_edad_parto2']==null){ $mx='Aun no';}else{$mx=' meses';}
+                        echo '<td class="'.$classtd2.'">' . $arreglo_sql['vaca_edad_parto2'] . $mx.'</td>';
+
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['madre_numero'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_tatuaje'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_raza'] . '</td>';
-                        echo '<td>' . $arreglo_sql['padre_numero'] . '</td>';
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['padre_numero'] . '</td>';
                         echo '<td>' . $arreglo_sql['padre_arete'] . '</td>';
                         echo '<td>' . $arreglo_sql['padre_tatuaje'] . '</td>';
                         echo '<td>' . $arreglo_sql['padre_raza'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_color'] . '</td>';
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['vaca_color'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_talla'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_pelo'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_condicion'] . '</td>';
@@ -237,25 +318,38 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         echo '<td>' . $arreglo_sql['vaca_partos'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_estado_pal'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_finada'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_edad_actual'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_edad_destete'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_edad_venta'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_peso_nacimiento'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_peso_actual'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_peso_destete'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_peso_venta'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_gan_peso_dia'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_gan_peso_mes'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_peso_3meses'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_fecha_nacimiento'] . '</td>';
+
+                        if($arreglo_sql['vaca_edad_destete']==null){ $mx='-';}else{$mx=' meses';}
+                        echo '<td>' . $arreglo_sql['vaca_edad_destete'] . $mx.'</td>';
+                        if($arreglo_sql['vaca_edad_venta']==null){ $mx='-';}else{$mx=' meses';}
+                        echo '<td>' . $arreglo_sql['vaca_edad_venta'] .  $mx.'</td>';
+
+                        if($arreglo_sql['vaca_peso_nacimiento']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['vaca_peso_nacimiento'] . $kg.'</td>';
+                        if($arreglo_sql['vaca_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['vaca_peso_actual'] . $kg.'</td>';
+                        if($arreglo_sql['vaca_peso_destete']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['vaca_peso_destete'] .  $kg.'</td>';
+                        if($arreglo_sql['vaca_peso_venta']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['vaca_peso_venta'] .  $kg.'</td>';
+                        if($arreglo_sql['vaca_gan_peso_dia']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['vaca_gan_peso_dia'] .  $kg.'</td>';
+                        if($arreglo_sql['vaca_gan_peso_mes']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['vaca_gan_peso_mes'] .  $kg.'</td>';
+                        if($arreglo_sql['vaca_peso_3meses']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['vaca_peso_3meses'] .  $kg.'</td>';
+
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['vaca_fecha_nacimiento'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_fecha_destete'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_fecha_aretado'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_fecha_tatuaje'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_fecha_fierro'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_fecha_probable'] . '</td>';
                         echo '<td>' . $arreglo_sql['vaca_fecha_venta'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_leche_dia'] . '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_leche_mes'] . '</td>';
+                        if($arreglo_sql['vaca_leche_dia']==null){ $lts='-';}else{$lts=' Lts';}
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['vaca_leche_dia'] . $lts.'</td>';
+                        if($arreglo_sql['vaca_leche_mes']==null){ $lts='-';}else{$lts=' Lts';}
+                        echo '<td>' . $arreglo_sql['vaca_leche_mes'] . $lts. '</td>';
                         echo '<td>' . $arreglo_sql['vaca_leche_comentario'] . '</td>';
                         echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['vaca_foto'] .'"><img src="' . $arreglo_sql['vaca_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
                         echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['vaca_foto_fierro'] .'"><img src="' . $arreglo_sql['vaca_foto_fierro'] .'" width="50" height="40" alt="Vacio"></a></td>';
@@ -451,6 +545,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             search: {
                return: false
             },
+            "autoWidth": true,
             "language": { 
               "decimal" : "",
               "emptyTable":"No hay registros",
@@ -473,6 +568,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             },
             "lengthMenu": [ [10, 20, 30, 40, 50, 100, 1000], [10, 20, 30, 40, 50, 100, 1000] ],
             "scrollY": "500px", // Altura del área de desplazamiento vertical
+            "scrollX": true,
             "scrollCollapse": true // Colapso del scroll cuando no es necesario
         });
     });

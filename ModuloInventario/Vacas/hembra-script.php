@@ -19,6 +19,8 @@ if (isset($_POST['vaca_numero'])
     && isset($_POST['vaca_arete'])
     && isset($_POST['vaca_tatuaje'])
     && isset($_POST['vaca_raza'])
+    && isset($_POST['vaca_edad_parto1'])
+    && isset($_POST['vaca_edad_parto2'])
     && isset($_POST['madre_numero'])
     && isset($_POST['madre_arete'])
     && isset($_POST['madre_tatuaje'])
@@ -94,6 +96,9 @@ if (isset($_POST['vaca_numero'])
     $vaca_arete= $_POST['vaca_arete'];
     $vaca_tatuaje= $_POST['vaca_tatuaje'];
     $vaca_raza= $_POST['vaca_raza'];
+    $vaca_edad_parto1= $_POST['vaca_edad_parto1'];
+    $vaca_edad_parto2= $_POST['vaca_edad_parto2'];
+
     $madre_numero= $_POST['madre_numero'];
     $madre_arete= $_POST['madre_arete'];
     $madre_tatuaje= $_POST['madre_tatuaje'];
@@ -161,7 +166,7 @@ if (isset($_POST['vaca_numero'])
         //instancia que indica que la conexion "$conexion" de conexion.php sera usada aqui con PDO
         $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         // Consulta SQL con marcadores de posición
-        $sql = "INSERT INTO vacas (id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, 
+        $sql = "INSERT INTO vacas (id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, vaca_edad_parto1, vaca_edad_parto2, 
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
@@ -173,7 +178,7 @@ if (isset($_POST['vaca_numero'])
             vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
             vaca_leche_dia, vaca_leche_mes, vaca_leche_comentario,
             vaca_foto, vaca_foto_fierro, 
-            vaca_observaciones) VALUES (null, :vaca_numero, :vaca_arete, :vaca_tatuaje, :vaca_raza,  
+            vaca_observaciones) VALUES (null, :vaca_numero, :vaca_arete, :vaca_tatuaje, :vaca_raza, :vaca_edad_parto1, :vaca_edad_parto2, 
             :madre_numero, :madre_arete, :madre_tatuaje, :madre_raza, 
             :padre_numero, :padre_arete, :padre_tatuaje, :padre_raza, 
             :vaca_color, :vaca_talla, :vaca_pelo, :vaca_condicion, :vaca_estatus, :vaca_potrero, 
@@ -194,6 +199,9 @@ if (isset($_POST['vaca_numero'])
         $stmt->bindParam(':vaca_arete', $vaca_arete);
         $stmt->bindParam(':vaca_tatuaje', $vaca_tatuaje);
         $stmt->bindParam(':vaca_raza', $vaca_raza);
+        $stmt->bindParam(':vaca_edad_parto1', $vaca_edad_parto1);
+        $stmt->bindParam(':vaca_edad_parto2', $vaca_edad_parto2);
+
         $stmt->bindParam(':madre_numero', $madre_numero);
         $stmt->bindParam(':madre_arete', $madre_arete);
         $stmt->bindParam(':madre_tatuaje', $madre_tatuaje);

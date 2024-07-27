@@ -274,7 +274,7 @@ include("../../conexion.php");
                 <select class="form-select" style="cursor: pointer; " id="vaca_finada" name="vaca_finada">
                         <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_finada'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_finada'] . '';?></option>
                         <option class="option-hover" value="Si">Si</option>
-                        <option class="option-hover" value="No" selected>No</option>
+                        <option class="option-hover" value="No">No</option>
                 </select>
             </div>
         </div>
