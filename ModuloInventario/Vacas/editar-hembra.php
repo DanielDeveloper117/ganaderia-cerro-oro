@@ -13,7 +13,7 @@ include("../../conexion.php");
         $id_vaca = $_POST['id_vaca'];
 
         try {
-            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza,  
+            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, vaca_edad_parto1, vaca_edad_parto2,  
             madre_numero, madre_arete, madre_tatuaje, madre_raza, 
             padre_numero, padre_arete, padre_tatuaje, padre_raza, 
             vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
@@ -133,19 +133,18 @@ include("../../conexion.php");
 
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
-    <form class=" d-flex flex-column col-11 col-md-10 justify-content-center align-items-center form-vacas"  action="editar-hembra-script.php" method="POST" enctype="multipart/form-data">
+    <form id="formHembra" class=" d-flex flex-column col-11 col-md-10 justify-content-center align-items-center form-vacas"  action="editar-hembra-script.php" method="POST" enctype="multipart/form-data">
         <input type="hidden"  value="<?php echo '' . $arreglo_sql['id_vaca'] . '';?>" name="id_vaca">
 
         <p class="p-form">Formulario de editar datos de la hoja de vida de la hembra.</p>
-
         <h3 class="mb-4">Información principal</h3> 
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
-                <label class="label-form" for="vaca_numero">Número de la vaca</label>
+                <label class="label-form" for="vaca_numero">Número de la vaca *</label>
                 <input type="number" class="form-control" id="vaca_numero" placeholder="Número de la vaca"  value="<?php echo '' . $arreglo_sql['vaca_numero'] . '';?>" name="vaca_numero" required>
             </div>
-            <div class=" col-md-3" >
+            <div class=" col-md-2" >
                 <label class="label-form" for="vaca_arete">Arete de la vaca</label>
                 <input type="text" class="form-control" id="vaca_arete" placeholder="Número del arete de la vaca" value="<?php echo '' . $arreglo_sql['vaca_arete'] . '';?>" name="vaca_arete" >
             </div>       
@@ -160,8 +159,16 @@ include("../../conexion.php");
         </div>
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
+            <div class="col-md-2" >
+                <label class="label-form" for="parto1">Edad 1er parto</label>
+                <input type="number" class="form-control" id="parto1" step="1"  placeholder="Edad en meses" value="<?php echo '' . $arreglo_sql['vaca_edad_parto1'] . '';?>" name="vaca_edad_parto1" >
+            </div>
+            <div class="col-md-2" >
+                <label class="label-form" for="parto2">Edad 2do parto</label>
+                <input type="number" class="form-control" id="parto2" step="1" placeholder="Edad en meses" value="<?php echo '' . $arreglo_sql['vaca_edad_parto2'] . '';?>" name="vaca_edad_parto2">
+            </div>
             <div class="col-md-3 " >
-                <label class="label-form" for="vaca_estado_re">Estado reproductivo</label>
+                <label class="label-form" for="vaca_estado_re">Estado reproductivo *</label>
                 <select class="form-select" style="cursor: pointer; " id="vaca_estado_re" name="vaca_estado_re" required>
                     <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?></option>
                     <option class="option-hover" value="Vaca horra">Vaca vacía/horra</option>
@@ -171,15 +178,39 @@ include("../../conexion.php");
                     <option class="option-hover" value="Vaca seca">Vaca seca</option>
                 </select>             
             </div>
-            <div class=" col-md-2" >
-                <label class="label-form" for="vaca_estatus">Estatus del arete</label>
+            <div class=" col-md-3" >
+                <label class="label-form" for="vaca_estatus">Estatus del arete *</label>
                 <select class="form-select" style="cursor: pointer; " id="vaca_estatus" name="vaca_estatus" required>
-                        <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estatus'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estatus'] . '';?></option>
-                        <option class="option-hover" value="Vigente">Vigente</option>
-                        <option class="option-hover" value="Pendiente">Pendiente</option>
-                        <option class="option-hover" value="Baja">Baja</option>
+                    <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estatus'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estatus'] . '';?></option>
+                    <option class="option-hover" value="Vigente">Vigente</option>
+                    <option class="option-hover" value="Pendiente">Pendiente</option>
+                    <option class="option-hover" value="Baja">Baja</option>
                 </select>  
             </div>
+        </div>
+        
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
+            <div class="col-md-2" >
+                <label class="label-form" for="edadActual" id="lblEdadActual">Edad actual *</label>
+                <input type="number" class="form-control" id="edadActual" placeholder="Edad en meses" step="1" min="25" value="<?php echo '' . $arreglo_sql['vaca_edad_actual'] . '';?>" name="vaca_edad_actual" >
+            </div>
+            <div class="col-md-2" >
+                <label class="label-form" for="fechaNacimiento">Fecha de nacimiento</label>
+                <input type="date" class="form-control" id="fechaNacimiento" placeholder="Seleccionar fecha" value="<?php echo '' . $arreglo_sql['vaca_fecha_nacimiento'] . '';?>" name="vaca_fecha_nacimiento" >
+            </div>      
+            <div class="col-md-3 " >
+                <label class="label-form" for="vaca_peso_actual">Peso actual</label>
+                <input type="number" class="form-control" id="vaca_peso_actual" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 689.705" value="<?php echo '' . $arreglo_sql['vaca_peso_actual'] . '';?>" name="vaca_peso_actual" >
+            </div>
+            <div class=" col-md-3" >
+                <label class="label-form" for="vacaFinada">Finada/Fallecida</label>
+                <select class="form-select" style="cursor: pointer; " id="vacaFinada" name="vaca_finada">
+                        <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_finada'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_finada'] . '';?></option>
+                        <option class="option-hover" value="Si">Si</option>
+                        <option class="option-hover" value="No">No</option>
+                </select>
+            </div>
+            
         </div>
         
         <h3 class="pt-4 mb-3">Madre</h3>  
@@ -235,13 +266,13 @@ include("../../conexion.php");
                 <label class="label-form" for="vaca_talla">Talla</label>
                 <input type="text" class="form-control" id="vaca_talla" placeholder="Talla de la vaca" value="<?php echo '' . $arreglo_sql['vaca_talla'] . '';?>" name="vaca_talla" >
             </div>
-            <div class=" col-md-2" >
-                <label class="label-form" for="vaca_pelo">Pelo</label>
-                <input type="text" class="form-control" id="vaca_pelo" placeholder="Pelo de la vaca" value="<?php echo '' . $arreglo_sql['vaca_pelo'] . '';?>" name="vaca_pelo" >
-            </div>
             <div class=" col-md-3" >
                 <label class="label-form" for="vaca_condicion">Condición corporal</label>
                 <input type="text" class="form-control" id="vaca_condicion" placeholder="Ingresar condicion corporal" value="<?php echo '' . $arreglo_sql['vaca_condicion'] . '';?>" name="vaca_condicion" >
+            </div>
+            <div class=" col-md-2" >
+                <label class="label-form" for="vaca_pelo">Pelo</label>
+                <input type="text" class="form-control" id="vaca_pelo" placeholder="Pelo de la vaca" value="<?php echo '' . $arreglo_sql['vaca_pelo'] . '';?>" name="vaca_pelo" >
             </div>
         </div>
 
@@ -268,32 +299,21 @@ include("../../conexion.php");
             </div>             
         </div>
 
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
-            <div class=" col-md-2" >
-                <label class="label-form" for="vaca_finada">Finada</label>
-                <select class="form-select" style="cursor: pointer; " id="vaca_finada" name="vaca_finada">
-                        <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_finada'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_finada'] . '';?></option>
-                        <option class="option-hover" value="Si">Si</option>
-                        <option class="option-hover" value="No">No</option>
-                </select>
-            </div>
-        </div>
 
-        <h3 class="pt-4 mb-3">Edades</h3>
+
+        <h3 class="pt-4 mb-3">Otras edades</h3>
     
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
-            <div class="col-md-3" >
-                <label class="label-form" for="vaca_edad_actual">Edad actual</label>
-                <input type="number" class="form-control" id="vaca_edad_actual" placeholder="Edad en meses" step="1" min="25" value="<?php echo '' . $arreglo_sql['vaca_edad_actual'] . '';?>" name="vaca_edad_actual" >
-            </div>
-            <div class="col-md-3" >
+            <div class="col-md-2" >
                 <label class="label-form" for="vaca_edad_destete">Edad de destete</label>
                 <input type="text" class="form-control" id="vaca_edad_destete" placeholder="Edad en meses" value="<?php echo '' . $arreglo_sql['vaca_edad_destete'] . '';?>" name="vaca_edad_destete" >
             </div>
-            <div class="col-md-3" >
+            <div class="col-md-2" >
                 <label class="label-form" for="vaca_edad_venta">Edad de venta</label>
                 <input type="text" class="form-control" id="vaca_edad_venta" placeholder="Edad en meses" value="<?php echo '' . $arreglo_sql['vaca_edad_venta'] . '';?>" name="vaca_edad_venta" >
             </div>
+            <div class="col-md-2 mb-3"></div>
+            <div class="col-md-2 mb-3"></div>
         </div>
 
         <h3 class="pt-4 mb-3">Pesos</h3>
@@ -304,10 +324,6 @@ include("../../conexion.php");
                 <input type="number" class="form-control" id="vaca_peso_nacimiento" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 32.565" value="<?php echo '' . $arreglo_sql['vaca_peso_nacimiento'] . '';?>" name="vaca_peso_nacimiento" >
             </div>
             <div class="col-md-2 " >
-                <label class="label-form" for="vaca_peso_actual">Peso actual</label>
-                <input type="number" class="form-control" id="vaca_peso_actual" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 689.705" value="<?php echo '' . $arreglo_sql['vaca_peso_actual'] . '';?>" name="vaca_peso_actual" >
-            </div>
-            <div class="col-md-2 " >
                 <label class="label-form" for="vaca_peso_destete">Peso destete</label>
                 <input type="number" class="form-control" id="vaca_peso_destete" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 125.345" value="<?php echo '' . $arreglo_sql['vaca_peso_destete'] . '';?>" name="vaca_peso_destete" >
             </div>
@@ -315,13 +331,13 @@ include("../../conexion.php");
                 <label class="label-form" for="vaca_peso_venta">Peso de venta</label>
                 <input type="number" class="form-control" id="vaca_peso_venta" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 813.552" value="<?php echo '' . $arreglo_sql['vaca_peso_venta'] . '';?>" name="vaca_peso_venta" >
             </div>              
-        </div>
-
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_gan_peso_dia">Ganancia de peso por día</label>
                 <input type="number" class="form-control" id="vaca_gan_peso_dia" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 0.453" value="<?php echo '' . $arreglo_sql['vaca_gan_peso_dia'] . '';?>" name="vaca_gan_peso_dia" >
             </div>
+        </div>
+
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_gan_peso_mes">Ganancia de peso por mes</label>
                 <input type="number" class="form-control" id="vaca_gan_peso_mes" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 15.453" value="<?php echo '' . $arreglo_sql['vaca_gan_peso_mes'] . '';?>" name="vaca_gan_peso_mes" >
@@ -330,17 +346,15 @@ include("../../conexion.php");
                 <label class="label-form" for="vaca_peso_3meses">Peso en 3 meses</label>
                 <input type="number" class="form-control" id="vaca_peso_3meses" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 93.604" value="<?php echo '' . $arreglo_sql['vaca_peso_3meses'] . '';?>" name="vaca_peso_3meses" >
             </div>
-            <div class=" col-md-2" >
+            <div class=" col-md-2 mb-3" >
+            </div>
+            <div class=" col-md-2 mb-3" >
             </div>
         </div>
 
         <h3 class="pt-4 mb-3">Fechas</h3>
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
-            <div class="col-md-2" >
-                <label class="label-form" for="vaca_fecha_nacimiento">Fecha de nacimiento</label>
-                <input type="date" class="form-control" id="vaca_fecha_nacimiento" placeholder="Seleccionar fecha" value="<?php echo '' . $arreglo_sql['vaca_fecha_nacimiento'] . '';?>" name="vaca_fecha_nacimiento" >
-            </div>      
             <div class="col-md-2" >
                 <label class="label-form" for="vaca_fecha_destete">Fecha de destete</label>
                 <input type="date" class="form-control" id="vaca_fecha_destete" placeholder="Seleccionar fecha" value="<?php echo '' . $arreglo_sql['vaca_fecha_destete'] . '';?>" name="vaca_fecha_destete" >
@@ -349,18 +363,17 @@ include("../../conexion.php");
                 <label class="label-form" for="vaca_fecha_aretado">Fecha aretado</label>
                 <input type="date" class="form-control" id="vaca_fecha_aretado" placeholder="Fecha aretado" value="<?php echo '' . $arreglo_sql['vaca_fecha_aretado'] . '';?>" name="vaca_fecha_aretado" >
             </div>
-
             <div class="col-md-2" >
                 <label class="label-form" for="vaca_fecha_tatuaje">Fecha de tatuaje</label>
                 <input type="date" class="form-control" id="vaca_fecha_tatuaje" placeholder="Fecha aretado" value="<?php echo '' . $arreglo_sql['vaca_fecha_tatuaje'] . '';?>" name="vaca_fecha_tatuaje" >
             </div>
-        </div>
-
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-2 " >
                 <label class="label-form" for="vaca_fecha_fierro">Fecha de fierro</label>
                 <input type="date" class="form-control" id="vaca_fecha_fierro" placeholder="Fecha aretado" value="<?php echo '' . $arreglo_sql['vaca_fecha_fierro'] . '';?>" name="vaca_fecha_fierro" >
             </div>                               
+        </div>
+
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class="col-md-2 " >
                 <label class="label-form" for="vaca_fecha_probable">Fecha probable</label>
                 <input type="date" class="form-control" id="vaca_fecha_probable" placeholder="Fecha probable" value="<?php echo '' . $arreglo_sql['vaca_fecha_probable'] . '';?>" name="vaca_fecha_probable" >
@@ -368,6 +381,8 @@ include("../../conexion.php");
             <div class="col-md-2" >
                 <label class="label-form" for="vaca_fecha_venta">Fecha de venta</label>
                 <input type="date" class="form-control" id="vaca_fecha_venta" placeholder="Seleccionar fecha" value="<?php echo '' . $arreglo_sql['vaca_fecha_venta'] . '';?>" name="vaca_fecha_venta" >
+            </div>
+            <div class=" col-md-2" >
             </div>
             <div class=" col-md-2" >
             </div>
@@ -382,11 +397,11 @@ include("../../conexion.php");
         <h3 class="pt-4 mb-4">Producción - Litros de leche</h3>
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
-            <div class=" col-md-3" >
+            <div class=" col-md-2" >
                 <label class="label-form" for="vaca_leche_dia">Promedio de leche al día</label>
                 <input type="number" class="form-control" id="vaca_leche_dia" step="0.001" min="0" max="9999.999" value="<?php echo '' . $arreglo_sql['vaca_leche_dia'] . '';?>"  name="vaca_leche_dia" >
             </div>
-            <div class=" col-md-3" >
+            <div class=" col-md-2" >
                 <label class="label-form" for="vaca_leche_mes">Promedio de leche al mes</label>
                 <input type="number" class="form-control" id="vaca_leche_mes" step="0.001" min="0" max="9999.999" value="<?php echo '' . $arreglo_sql['vaca_leche_mes'] . '';?>"  name="vaca_leche_mes" >
             </div>
@@ -394,6 +409,8 @@ include("../../conexion.php");
                 <label class="label-form" for="vaca_leche_comentario">Comentario</label>
                 <input type="text" class="form-control" id="vaca_leche_comentario" value="<?php echo '' . $arreglo_sql['vaca_leche_comentario'] . '';?>" name="vaca_leche_comentario" >
             </div>
+            <div class="col-md-1 mb-3"></div>
+
         </div>
 
         <h3 class="pt-4 mb-3">Fotografías y observaciones</h3>
@@ -420,22 +437,107 @@ include("../../conexion.php");
             </div>           
         </div>
 
-        <button type="submit" class=" col-12 col-xl-6 py-3 btn-principal" >Actualizar datos</button>
+        <button type="submit" class=" col-12 col-xl-6 py-3 btn-principal" id="btnSubmit">Actualizar datos</button>
 
     </form>
 </section>
 <!-- ------------------scripts section----------------- -->
 <script>
     $(document).ready(function() {
+
+        //---------------------SI ES FALLECIDA EDAD ACTUAL NO REQUERIDA
+        $("#vacaFinada").on('change', function(){
+            let finada = $("#vacaFinada").val();
+            if(finada == "Si"){
+                $("#lblEdadActual").text("Edad actual");
+                $("#edadActual").attr('required', false);
+                $("#edadActual").attr('readonly', true);
+                $("#edadActual").attr('type', "text");
+                $("#edadActual").attr('placeholder', "Fallecida");
+                $("#edadActual").val('Fallecida');
+                $("#edadActual").removeAttr('step');
+                $("#edadActual").css('background-color', '#e9ecef');
+
+            }else if(finada == "No") {
+                $("#lblEdadActual").text("Edad actual *");
+                $("#edadActual").attr('required', true);
+                $("#edadActual").attr('readonly', false);
+                $("#edadActual").attr('type', "number");
+                $("#edadActual").attr('placeholder', "Edad actual");
+                $("#fechaNacimiento").val('');
+                $("#edadActual").css('background-color', '#fff');
+
+            }
+        });
+
+        $("#fechaNacimiento").on('input', function(){
+            let finada = $("#vacaFinada").val();
+
+            if(finada == "Si"){
+                $("#edadActual").val('Fallecida');
+            }else if(finada == "No") {
+
+            }
+        });
+
+
+        // --------------------VALIDACIONES EVENTO SUBMIT DEL FORMULARIO
+        $("#btnSubmit").on('click', function(e){
+            e.preventDefault();
+            let estadoReproductivo = $("#estadoReproductivo").val();
+            let parto1 =$("#parto1").val();
+            let NumberParto1 = Number($("#parto1").val());
+            let parto2 = $("#parto2").val();
+            let NumberParto2 = Number($("#parto2").val());
+            let edadActual = $("#edadActual").val();
+            let NumberEdadActual = Number($("#edadActual").val());
+
+            let finada = $("#vacaFinada").val();
+
+            let gestacion = 9;
+
+            if((estadoReproductivo=="Vaca horra" && parto1 != "") || (estadoReproductivo=="Vaca horra" && parto2 != "")){
+                alert("No puede ser vaca horra si ya ha tenido algun parto.");
+                console.log(parto1+gestacion);
+                console.log(parto2+gestacion);
+
+            }else if(NumberEdadActual < 24 && finada == "No"){
+                alert("Una edad menor a 24 meses no es valida.");
+
+            }else if(estadoReproductivo != "Vaca horra" && NumberEdadActual <= NumberParto1 && NumberParto1 != 0){
+                alert("La edad de 1er parto no puede ser mayor o igual a la edad actual.");
+                console.log(NumberEdadActual);
+                console.log(NumberParto1);
+                console.log(NumberParto2);
+                console.log(NumberParto1-9);
+                console.log(NumberParto2-9);
+
+            }
+            else if(estadoReproductivo != "Vaca horra" && NumberParto1 >= NumberParto2 && NumberParto2 != 0){
+                alert("La edad del 1er parto no puede ser mayor o igual a la del 2do parto");
+                console.log(NumberEdadActual);
+                console.log(NumberParto1);
+                console.log(NumberParto2);
+                console.log(NumberParto1-9);
+                console.log(NumberParto2-9);
+
+            }else if(estadoReproductivo != "Vaca horra" && (NumberParto2 != 0 || parto2 != "") && (NumberParto1 == 0 || parto1 == "")){
+                alert("No puede haber un segundo parto si no hay un primer parto.");
+            }
+            else{
+                //alert("Ya se puede enviar el formulario");
+                $("#formHembra").submit();
+            }
+        });
+
+        // -------------------CALCULO DE LECHES
         $('#vaca_leche_dia').on('input', function() {
             var lecheDia = parseFloat($(this).val());
             var lecheMes = lecheDia * 30;
             $('#vaca_leche_mes').val(lecheMes.toFixed(3)); // Limita a 3 decimales
         });
-    });
-
-    $(document).ready(function() {
-        // Detecta cambios en el input de ganancia de peso por día
+    
+        // -------------------CALCULO DE LAS GANANCIAS DE PESO
         $('#vaca_gan_peso_dia').on('input', function() {
             // Obtiene el valor del input de ganancia de peso por día
             var ganPesoDia = parseFloat($(this).val());
@@ -449,11 +551,11 @@ include("../../conexion.php");
         });
     });
 
-        //VALIDACION EDAD RELACION CON FECHA DE NACIMIENTO
-        document.addEventListener('DOMContentLoaded', function() {
+    //------------------------VALIDACION EDAD RELACION CON FECHA DE NACIMIENTO
+    document.addEventListener('DOMContentLoaded', function() {
         // Obtener el input de Edad y el input de Fecha
-        var inputEdad = document.getElementById('vaca_edad_actual');
-        var inputFecha = document.getElementById('vaca_fecha_nacimiento');
+        var inputEdad = document.getElementById('edadActual');
+        var inputFecha = document.getElementById('fechaNacimiento');
 
         // Función para actualizar la fecha según la edad ingresada
         function actualizarFecha() {
@@ -487,7 +589,6 @@ include("../../conexion.php");
 
         // Agregar un listener para detectar cambios en el input de Fecha
         inputFecha.addEventListener('input', actualizarEdad);
-
     });
 </script>
 <!-- codigo de fancybox -->

@@ -13,6 +13,8 @@ include("../../conexion.php");
             && isset($_POST['vaca_arete'])
             && isset($_POST['vaca_tatuaje'])
             && isset($_POST['vaca_raza'])
+            && isset($_POST['vaca_edad_parto1'])
+            && isset($_POST['vaca_edad_parto2'])
             && isset($_POST['madre_numero'])
             && isset($_POST['madre_arete'])
             && isset($_POST['madre_tatuaje'])
@@ -87,6 +89,9 @@ include("../../conexion.php");
             $vaca_arete= $_POST['vaca_arete'];
             $vaca_tatuaje= $_POST['vaca_tatuaje'];
             $vaca_raza= $_POST['vaca_raza'];
+            $vaca_edad_parto1= $_POST['vaca_edad_parto1'];
+            $vaca_edad_parto2= $_POST['vaca_edad_parto2'];
+
             $madre_numero= $_POST['madre_numero'];
             $madre_arete= $_POST['madre_arete'];
             $madre_tatuaje= $_POST['madre_tatuaje'];
@@ -173,6 +178,8 @@ include("../../conexion.php");
                 vaca_arete = :vaca_arete,
                 vaca_tatuaje = :vaca_tatuaje,
                 vaca_raza = :vaca_raza,
+                vaca_edad_parto1 = :vaca_edad_parto1, 
+                vaca_edad_parto2 = :vaca_edad_parto2,
                 madre_numero = :madre_numero,
                 madre_arete = :madre_arete,
                 madre_tatuaje = :madre_tatuaje,
@@ -225,6 +232,9 @@ include("../../conexion.php");
                 $stmt->bindParam(':vaca_arete', $vaca_arete);
                 $stmt->bindParam(':vaca_tatuaje', $vaca_tatuaje);
                 $stmt->bindParam(':vaca_raza', $vaca_raza);
+                $stmt->bindParam(':vaca_edad_parto1', $vaca_edad_parto1);
+                $stmt->bindParam(':vaca_edad_parto2', $vaca_edad_parto2);
+                
                 $stmt->bindParam(':madre_numero', $madre_numero);
                 $stmt->bindParam(':madre_arete', $madre_arete);
                 $stmt->bindParam(':madre_tatuaje', $madre_tatuaje);

@@ -175,13 +175,13 @@ include("../../conexion.php");
                 <label class="label-form" for="vaca_talla">Talla</label>
                 <input type="text" class="form-control" id="vaca_talla" placeholder="Talla de la vaca" name="vaca_talla" >
             </div>
-            <div class=" col-md-2 mb-3" >
-                <label class="label-form" for="vaca_pelo">Pelo</label>
-                <input type="text" class="form-control" id="vaca_pelo" placeholder="Pelo de la vaca" name="vaca_pelo" >
-            </div>
             <div class=" col-md-3 mb-3" >
                 <label class="label-form" for="vaca_condicion">Condición corporal</label>
                 <input type="text" class="form-control" id="vaca_condicion" placeholder="Ingresar condicion corporal" name="vaca_condicion" >
+            </div>
+            <div class=" col-md-2 mb-3" >
+                <label class="label-form" for="vaca_pelo">Pelo</label>
+                <input type="text" class="form-control" id="vaca_pelo" placeholder="Pelo de la vaca" name="vaca_pelo" >
             </div>
         </div>
 
