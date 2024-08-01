@@ -46,18 +46,18 @@ include("../../conexion.php");
 
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
-    <form class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  action="macho-form-script.php" method="POST" enctype="multipart/form-data">
+    <form id="formMacho" class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  action="macho-form-script.php" method="POST" enctype="multipart/form-data">
         <p class="p-form">Formulario para dar de alta un macho.</p>
         <h3 class="mb-4">Información principal</h3> 
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-2" >
-                <label class="label-form" for="macho_numero">Número del macho</label>
+                <label class="label-form" for="macho_numero">Número del macho *</label>
                 <input type="number" class="form-control" id="macho_numero" placeholder="Número del macho" name="macho_numero" required>
             </div>
-            <div class=" col-md-3" >
+            <div class=" col-md-2" >
                 <label class="label-form" for="macho_arete">Arete del macho</label>
-                <input type="text" class="form-control" id="macho_arete" placeholder="Número del arete del macho" name="macho_arete" >
+                <input type="text" class="form-control" id="macho_arete" placeholder="Número del arete" name="macho_arete" >
             </div>  
             <div class=" col-md-3" >
                 <label class="label-form" for="macho_tatuaje">Tatuaje del macho</label>
@@ -68,25 +68,50 @@ include("../../conexion.php");
                 <input type="text" class="form-control" id="macho_raza" placeholder="Raza del macho" name="macho_raza" >
             </div>
         </div>
-
+        
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group"> 
+            <div class="col-md-2" >
+                <label class="label-form" for="edadActual" id="lblEdadActual">Edad actual</label>
+                <input type="number" class="form-control" id="edadActual" step="1" min="13" placeholder="Edad en meses" name="macho_edad_actual" required>
+            </div>
+            <div class="col-md-2" >
+                <label class="label-form" for="fechaNacimiento">Fecha de nacimiento</label>
+                <input type="date" class="form-control" id="fechaNacimiento" placeholder="Seleccionar fecha" name="macho_fecha_nacimiento" >
+            </div>      
+            
             <div class="col-md-3 " >
-                <label class="label-form" for="macho_estado_re">Estado reproductivo</label>
+                <label class="label-form" for="macho_estado_re">Estado reproductivo *</label>
                 <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re" required>
                     <option class="option-hover" value="" selected>Seleccionar</option>
-                    <option class="option-hover" value="Torete">Torete</option>
+                    <option class="option-hover" value="Toro adulto">Toro adulto</option>
                     <option class="option-hover" value="Toro semental">Toro semental</option>
                 </select>             
             </div>
-            <div class=" col-md-2" >
-                <label class="label-form" for="macho_estatus">Estatus del arete</label>
+            <div class=" col-md-3" >
+                <label class="label-form" for="macho_estatus">Estatus del arete *</label>
                 <select class="form-select" style="cursor: pointer; " id="macho_estatus" name="macho_estatus" required>
-                        <option class="option-hover" value="" selected>Seleccionar</option>
-                        <option class="option-hover" value="Vigente">Vigente</option>
-                        <option class="option-hover" value="Pendiente">Pendiente</option>
-                        <option class="option-hover" value="Baja">Baja</option>
+                    <option class="option-hover" value="" selected>Seleccionar</option>
+                    <option class="option-hover" value="Vigente">Vigente</option>
+                    <option class="option-hover" value="Pendiente">Pendiente</option>
+                    <option class="option-hover" value="Baja">Baja</option>
                 </select>  
             </div>
+        </div>
+        
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group"> 
+            <div class="col-md-2 " >
+                <label class="label-form" for="macho_peso_actual">Peso actual</label>
+                <input type="number" class="form-control" id="macho_peso_actual" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 689.705" name="macho_peso_actual" >
+            </div>
+            <div class=" col-md-2" >
+                <label class="label-form" for="machoFinado">Finado/Fallecido</label>
+                <select class="form-select" style="cursor: pointer; " id="machoFinado" name="macho_finado">
+                        <option class="option-hover" value="Si">Si</option>
+                        <option class="option-hover" value="No" selected>No</option>
+                </select>
+            </div> 
+            <div class="col-md-3 mb-3"></div>
+            <div class="col-md-3 mb-3"></div>
         </div>
         
         <h3 class="">Madre</h3>  
@@ -143,11 +168,11 @@ include("../../conexion.php");
                 <label class="label-form" for="macho_talla">Talla</label>
                 <input type="text" class="form-control" id="macho_talla" placeholder="Talla del macho" name="macho_talla" >
             </div>
-            <div class=" col-md-2" >
+            <div class=" col-md-3" >
                 <label class="label-form" for="macho_pelo">Pelo</label>
                 <input type="text" class="form-control" id="macho_pelo" placeholder="Pelo del macho" name="macho_pelo" >
             </div>
-            <div class=" col-md-3" >
+            <div class=" col-md-2" >
                 <label class="label-form" for="macho_condicion">Condición corporal</label>
                 <input type="text" class="form-control" id="macho_condicion" placeholder="Ingresar condicion corporal" name="macho_condicion" >
             </div>
@@ -162,31 +187,23 @@ include("../../conexion.php");
                 <label class="label-form" for="macho_lote">Lote</label>
                 <input type="text" class="form-control" id="macho_lote" placeholder="Lote" name="macho_lote" >
             </div>
-            <div class=" col-md-2" >
-                <label class="label-form" for="macho_finado">Finado</label>
-                <select class="form-select" style="cursor: pointer; " id="macho_finado" name="macho_finado">
-                        <option class="option-hover" value="Si">Si</option>
-                        <option class="option-hover" value="No" selected>No</option>
-                </select>
-            </div>
-            <div class="col-md-3"></div>
+            <div class="col-md-3 mb-3"></div>
+            <div class="col-md-2 mb-3"></div>
         </div>
 
-        <h3 class="">Edades</h3>
+        <h3 class="">Otras edades</h3>
     
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
-            <div class="col-md-3" >
-                <label class="label-form" for="macho_edad_actual">Edad actual</label>
-                <input type="number" class="form-control" id="macho_edad_actual" step="1" min="13" placeholder="Edad en meses" name="macho_edad_actual" required>
-            </div>
-            <div class="col-md-3" >
+            <div class="col-md-2" >
                 <label class="label-form" for="macho_edad_destete">Edad de destete</label>
                 <input type="text" class="form-control" id="macho_edad_destete" placeholder="Edad en meses" name="macho_edad_destete" >
             </div>
-            <div class="col-md-3" >
+            <div class="col-md-2" >
                 <label class="label-form" for="macho_edad_venta">Edad de venta</label>
                 <input type="text" class="form-control" id="macho_edad_venta" placeholder="Edad en meses" name="macho_edad_venta" >
             </div>
+            <div class="col-md-2 mb-3"></div>
+            <div class="col-md-2 mb-3"></div>
         </div>
 
         <h3 class="">Pesos</h3>
@@ -197,10 +214,6 @@ include("../../conexion.php");
                 <input type="number" class="form-control" id="macho_peso_nacimiento" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 32.565" name="macho_peso_nacimiento" >
             </div>
             <div class="col-md-2 " >
-                <label class="label-form" for="macho_peso_actual">Peso actual</label>
-                <input type="number" class="form-control" id="macho_peso_actual" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 689.705" name="macho_peso_actual" >
-            </div>
-            <div class="col-md-2 " >
                 <label class="label-form" for="macho_peso_destete">Peso destete</label>
                 <input type="number" class="form-control" id="macho_peso_destete" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 125.345" name="macho_peso_destete" >
             </div>
@@ -208,32 +221,30 @@ include("../../conexion.php");
                 <label class="label-form" for="macho_peso_venta">Peso de venta</label>
                 <input type="number" class="form-control" id="macho_peso_venta" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 813.552" name="macho_peso_venta" >
             </div>              
-        </div>
-
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_gan_peso_dia">Ganancia de peso por día</label>
                 <input type="number" class="form-control" id="macho_gan_peso_dia" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 0.453" name="macho_gan_peso_dia" >
             </div>
+        </div>
+
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-2" >
                 <label class="label-form" for="macho_gan_peso_mes">Ganancia de peso por mes</label>
                 <input type="number" class="form-control" id="macho_gan_peso_mes" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 15.453" name="macho_gan_peso_mes" >
             </div>
             <div class=" col-md-2" >
-                <label class="label-form" for="macho_peso_3meses">Peso en 3 meses</label>
+                <label class="label-form" for="macho_peso_3meses">Ganancia en 3 meses</label>
                 <input type="number" class="form-control" id="macho_peso_3meses" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 93.604" name="macho_peso_3meses" >
             </div>
-            <div class=" col-md-2" >
+            <div class=" col-md-2 mb-3" >
+            </div>
+            <div class=" col-md-2 mb-3" >
             </div>
         </div>
 
         <h3 class="">Fechas</h3>
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
-            <div class="col-md-2" >
-                <label class="label-form" for="macho_fecha_nacimiento">Fecha de nacimiento</label>
-                <input type="date" class="form-control" id="macho_fecha_nacimiento" placeholder="Seleccionar fecha" name="macho_fecha_nacimiento" >
-            </div>      
             <div class="col-md-2" >
                 <label class="label-form" for="macho_fecha_destete">Fecha de destete</label>
                 <input type="date" class="form-control" id="macho_fecha_destete" placeholder="Seleccionar fecha" name="macho_fecha_destete" >
@@ -247,16 +258,18 @@ include("../../conexion.php");
                 <label class="label-form" for="macho_fecha_tatuaje">Fecha de tatuaje</label>
                 <input type="date" class="form-control" id="macho_fecha_tatuaje" placeholder="Fecha aretado" name="macho_fecha_tatuaje" >
             </div>
-        </div>
-
-        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-2 " >
                 <label class="label-form" for="macho_fecha_fierro">Fecha de fierro</label>
                 <input type="date" class="form-control" id="macho_fecha_fierro" placeholder="Fecha aretado" name="macho_fecha_fierro" >
             </div>                               
+        </div>
+
+        <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class="col-md-2" >
                 <label class="label-form" for="macho_fecha_venta">Fecha de venta</label>
                 <input type="date" class="form-control" id="macho_fecha_venta" placeholder="Seleccionar fecha" name="macho_fecha_venta" >
+            </div>
+            <div class=" col-md-2" >
             </div>
             <div class=" col-md-2" >
             </div>
@@ -284,13 +297,70 @@ include("../../conexion.php");
             </div>           
         </div>
 
-        <button type="submit" class=" col-12 col-xl-6 py-3 btn-submit" >Enviar datos</button>
+        <button id="btnSubmit" type="submit" class=" col-12 col-xl-6 py-3 btn-submit" >Enviar datos</button>
 
     </form>
 </section>
 
 <!-- ------------------scripts section----------------- -->
 <script>
+    $(document).ready(function() {
+
+        //---------------------SI ES FALLECIDA EDAD ACTUAL NO REQUERIDA
+        $("#machoFinado").on('change', function(){
+            let finada = $("#machoFinado").val();
+            if(finada == "Si"){
+                $("#lblEdadActual").text("Edad actual");
+                $("#edadActual").attr('required', false);
+                $("#edadActual").attr('readonly', true);
+                $("#edadActual").attr('type', "text");
+                $("#edadActual").attr('placeholder', "Fallecido");
+                $("#edadActual").val('Fallecido');
+                $("#edadActual").removeAttr('step');
+                $("#edadActual").css('background-color', '#e9ecef');
+
+            }else if(finada == "No") {
+                $("#lblEdadActual").text("Edad actual *");
+                $("#edadActual").attr('required', true);
+                $("#edadActual").attr('readonly', false);
+                $("#edadActual").attr('type', "number");
+                $("#edadActual").attr('placeholder', "Edad actual");
+                $("#fechaNacimiento").val('');
+                $("#edadActual").css('background-color', '#fff');
+            }
+        });
+
+        $("#fechaNacimiento").on('input', function(){
+            let finada = $("#machoFinado").val();
+
+            if(finada == "Si"){
+                $("#edadActual").val('Fallecido');
+            }else if(finada == "No") {
+
+            }
+        });
+
+
+        // --------------------VALIDACIONES EVENTO SUBMIT DEL FORMULARIO
+        $("#btnSubmit").on('click', function(e){
+            e.preventDefault();
+            let estadoReproductivo = $("#estadoReproductivo").val();
+            let edadActual = $("#edadActual").val();
+            let NumberEdadActual = Number($("#edadActual").val());
+
+            let finado = $("#machoFinado").val();
+
+
+            if(NumberEdadActual < 24 && finado == "No"){
+                alert("Una edad menor a 24 meses no es valida.");
+
+            }else{
+                //alert("Ya se puede enviar el formulario");
+                $("#formMacho").submit();
+            }
+        });
+    });
+
     // OPERACION MATEMATICA MULTIPLICAR GANANCIAS DE PESO
     $(document).ready(function() {
         // Detecta cambios en el input de ganancia de peso por día
@@ -310,8 +380,8 @@ include("../../conexion.php");
     //VALIDACION EDAD RELACION CON FECHA DE NACIMIENTO
     document.addEventListener('DOMContentLoaded', function() {
         // Obtener el input de Edad y el input de Fecha
-        var inputEdad = document.getElementById('macho_edad_actual');
-        var inputFecha = document.getElementById('macho_fecha_nacimiento');
+        var inputEdad = document.getElementById('edadActual');
+        var inputFecha = document.getElementById('fechaNacimiento');
 
         // Función para actualizar la fecha según la edad ingresada
         function actualizarFecha() {

@@ -25,7 +25,7 @@ $stmtVerificarEjecucion->execute();
 $resultadoVerificarEjecucion = $stmtVerificarEjecucion->fetch(PDO::FETCH_ASSOC);
 
 if ($resultadoVerificarEjecucion['conteo'] > 0) {
-    echo "Ya se han actualizado las edades hoy.\n";
+    //echo "Ya se han actualizado las edades hoy.\n";
 } else {
     // Actualizar la ultima_ejecucion
     $sqlActualizarUltimaEjecucion = "UPDATE machos SET ultima_ejecucion = :fechaActual";
@@ -58,7 +58,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         $stmtActualizarEdad->bindParam(':idMacho', $idMacho, PDO::PARAM_INT);
         $stmtActualizarEdad->execute();
     }
-    echo "Edades actualizadas con éxito.\n";
+    //echo "Edades actualizadas con éxito.\n";
 }
 ?>
 <!DOCTYPE html>
@@ -77,10 +77,39 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     <link rel="stylesheet" href="../styles/styles-machos.css">
 
     <title>Tabla de inventario - Machos</title>
+    <style>
+        table.dataTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        table.dataTable td, table.dataTable th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #spanNumberNoti{
+            color: #fff;
+            background-color: #000;
+            border-radius: 100px;
+            
+        }
+        .renglon-parto{
+            background-color: #ffe500a1 !important;
+        }
+        .renglon-parto1-td{
+            color: #ff1100 !important;
+            font-weight: 700;
+        }
+        .renglon-parto2-td{
+            color: #ff1100 !important;
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
 
-<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-buttons2">
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3 section-buttons2">
     <div class="col-11 col-md-11">
           <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
         <h1 class=" text-center mb-4">Inventario de machos</h1>
@@ -133,38 +162,38 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col">Raza de la macho</th>
                         <th scope="col">Estado reproductivo</th>
                         <th scope="col">Estatus del arete</th>
-                        <th scope="col">Número de la madre</th>
+                        <th scope="col">Edad actual</th>
+                        <th scope="col">Fallecido</th>
+                        <th scope="col" style="border-left:solid #0006;">Número de la madre</th>
                         <th scope="col">Número de arete de la madre</th>
                         <th scope="col">Tatuaje de la madre</th>
                         <th scope="col">Raza de la madre</th>
-                        <th scope="col">Número del padre</th>
+                        <th scope="col" style="border-left:solid #0006;">Número del padre</th>
                         <th scope="col">Número de arete del padre</th>
                         <th scope="col">Tatuaje del padre</th>
                         <th scope="col">Raza del padre</th>
-                        <th scope="col">Color</th>
+                        <th scope="col" style="border-left:solid #0006;">Color</th>
                         <th scope="col">Talla</th>
                         <th scope="col">Pelo</th>
                         <th scope="col">Condición</th>
                         <th scope="col">Potrero</th>
                         <th scope="col">Lote</th>                        
-                        <th scope="col">Finado</th>
-                        <th scope="col">Edad actual</th>
-                        <th scope="col">Edad destete</th>
+                        <th scope="col" style="border-left:solid #0006;">Edad destete</th>
                         <th scope="col">Edad de venta</th>
-                        <th scope="col">Peso de nacimiento</th>
+                        <th scope="col" style="border-left:solid #0006;">Peso de nacimiento</th>
                         <th scope="col">Peso actual</th>
                         <th scope="col">Peso destete</th>
                         <th scope="col">Peso de venta</th>
                         <th scope="col">Ganancia de peso por día</th>
                         <th scope="col">Ganancia de peso por mes</th>
-                        <th scope="col">Peso en 3 meses</th>
-                        <th scope="col">Fecha de nacimiento</th>
+                        <th scope="col">Ganancia en 3 meses</th>
+                        <th scope="col" style="border-left:solid #0006;">Fecha de nacimiento</th>
                         <th scope="col">Fecha de destete</th>
                         <th scope="col">Fecha de aretado</th>
                         <th scope="col">Fecha de tatuaje</th>
                         <th scope="col">Fecha de fierro</th>     
                         <th scope="col">Fecha de venta</th>
-                        <th scope="col">Fotografía</th>
+                        <th scope="col" style="border-left:solid #0006;">Fotografía</th>
                         <th scope="col">Fotografía del fierro</th>
                         <th scope="col">Observaciones</th>
                         <th scope="col">Fecha de registro</th>
@@ -201,38 +230,72 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         echo '<td>' . $arreglo_sql['macho_raza'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_estado_re'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_estatus'] . '</td>';
-                        echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
+
+                        if($arreglo_sql['macho_edad_actual']==null){ 
+                            echo '<td>-</td>';
+                        }else if($arreglo_sql['macho_edad_actual']=="Fallecido"){ 
+                            echo '<td>Fallecido</td>';
+                        }else{
+                            $total_months = intval($arreglo_sql['macho_edad_actual']);
+                            $years = floor($total_months / 12);
+                            $months = $total_months % 12;
+                            if($years == 1){
+                                $yearYears = "año";
+                            }else{
+                                $yearYears="años";
+                            }
+                            if($months==1){
+                                $mesMeses = "mes";
+                            }else{
+                                $mesMeses="meses";
+                            }
+                            echo '<td >' . $arreglo_sql['macho_edad_actual'] .' meses</br>
+                            ('.$years.' ' . $yearYears .', '.$months.' '.$mesMeses .')
+                            </td>';
+                        }
+                        echo '<td>' . $arreglo_sql['macho_finado'] . '</td>';
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['madre_numero'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_tatuaje'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_raza'] . '</td>';
-                        echo '<td>' . $arreglo_sql['padre_numero'] . '</td>';
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['padre_numero'] . '</td>';
                         echo '<td>' . $arreglo_sql['padre_arete'] . '</td>';
                         echo '<td>' . $arreglo_sql['padre_tatuaje'] . '</td>';
                         echo '<td>' . $arreglo_sql['padre_raza'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_color'] . '</td>';
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['macho_color'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_talla'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_pelo'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_condicion'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_potrero'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_lote'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_finado'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_edad_actual'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_edad_destete'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_edad_venta'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_peso_nacimiento'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_peso_actual'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_peso_destete'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_peso_venta'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_gan_peso_dia'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_gan_peso_mes'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_peso_3meses'] . '</td>';
-                        echo '<td>' . $arreglo_sql['macho_fecha_nacimiento'] . '</td>';
+
+                        if($arreglo_sql['macho_edad_destete']==null){ $mx='-';}else{$mx=' meses';}
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['macho_edad_destete'] . $mx.'</td>';
+                        if($arreglo_sql['macho_edad_venta']==null){ $mx='-';}else{$mx=' meses';}
+                        echo '<td>' . $arreglo_sql['macho_edad_venta'] .  $mx.'</td>';
+
+                        if($arreglo_sql['macho_peso_nacimiento']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['macho_peso_nacimiento'] . $kg.'</td>';
+                        if($arreglo_sql['macho_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['macho_peso_actual'] . $kg.'</td>';
+                        if($arreglo_sql['macho_peso_destete']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['macho_peso_destete'] .  $kg.'</td>';
+                        if($arreglo_sql['macho_peso_venta']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['macho_peso_venta'] .  $kg.'</td>';
+                        if($arreglo_sql['macho_gan_peso_dia']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['macho_gan_peso_dia'] .  $kg.'</td>';
+                        if($arreglo_sql['macho_gan_peso_mes']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['macho_gan_peso_mes'] .  $kg.'</td>';
+                        if($arreglo_sql['macho_peso_3meses']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['macho_peso_3meses'] .  $kg.'</td>';
+
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['macho_fecha_nacimiento'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_fecha_destete'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_fecha_aretado'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_fecha_tatuaje'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_fecha_fierro'] . '</td>';
                         echo '<td>' . $arreglo_sql['macho_fecha_venta'] . '</td>';
-                        echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['macho_foto'] .'"><img src="' . $arreglo_sql['macho_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
+                        echo '<td style="border-left:solid #0006;"> <a data-fancybox="gallery" href="' . $arreglo_sql['macho_foto'] .'"><img src="' . $arreglo_sql['macho_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
                         echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['macho_foto_fierro'] .'"><img src="' . $arreglo_sql['macho_foto_fierro'] .'" width="50" height="40" alt="Vacio"></a></td>';
                         echo '<td>' . $arreglo_sql['macho_observaciones'] . '</td>';
                         echo '<td>' . $arreglo_sql['fecha_registro'] . '</td>';
@@ -392,6 +455,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             search: {
                return: false
             },
+            "autoWidth": true,
             "language": { 
               "decimal" : "",
               "emptyTable":"No hay registros",
@@ -414,6 +478,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             },
             "lengthMenu": [ [10, 20, 30, 40, 50, 100, 1000], [10, 20, 30, 40, 50, 100, 1000] ],
             "scrollY": "500px", // Altura del área de desplazamiento vertical
+            "scrollX": true,
             "scrollCollapse": true // Colapso del scroll cuando no es necesario
         });
     });

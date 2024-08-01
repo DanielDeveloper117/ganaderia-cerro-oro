@@ -195,8 +195,8 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col">Lote</th>
                         <th scope="col">Partos totales</th>
                         <th scope="col">Estado de palpación</th>
-                        <th scope="col">Finada</th>
-                        <th scope="col">Edad destete</th>
+                        <th scope="col">Fallecida</th>
+                        <th scope="col" style="border-left:solid #0006;">Edad destete</th>
                         <th scope="col">Edad de venta</th>
                         <th scope="col" style="border-left:solid #0006;">Peso de nacimiento</th>
                         <th scope="col">Peso actual</th>
@@ -215,7 +215,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col" style="border-left:solid #0006;">Leche al día</th>
                         <th scope="col">Leche al mes</th>
                         <th scope="col">Comentario de leche</th>
-                        <th scope="col">Fotografía</th>
+                        <th scope="col" style="border-left:solid #0006;">Fotografía</th>
                         <th scope="col">Fotografía del fierro</th>
                         <th scope="col">Observaciones</th>
                         <th scope="col">Fecha de registro</th>
@@ -286,19 +286,27 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                             $total_months = intval($arreglo_sql['vaca_edad_actual']);
                             $years = floor($total_months / 12);
                             $months = $total_months % 12;
+                            if($years==1){
+                                $yarYears = "año";
+                            }else{
+                                $yearYears="años";
+                            }
                             if($months==1){
                                 $mesMeses = "mes";
                             }else{
                                 $mesMeses="meses";
                             }
                             echo '<td class="'.$classtd1.' '.$classtd2.' ">' . $arreglo_sql['vaca_edad_actual'] .' meses</br>
-                            ('.$years.' años, '.$months.' '.$mesMeses .')
+                            ('.$years.' '.$yearYears.', '.$months.' '.$mesMeses .')
                             </td>';
                         }
 
                         if($arreglo_sql['vaca_edad_parto1']==null){ $mx='Aun no';}else{$mx=' meses';}
+                        if($arreglo_sql['vaca_edad_actual']=="Fallecida"){$mx='Fallecida';}
                         echo '<td class="'.$classtd1.'">' . $arreglo_sql['vaca_edad_parto1'] . $mx.'</td>';
+
                         if($arreglo_sql['vaca_edad_parto2']==null){ $mx='Aun no';}else{$mx=' meses';}
+                        if($arreglo_sql['vaca_edad_actual']=="Fallecida"){$mx='Fallecida';}
                         echo '<td class="'.$classtd2.'">' . $arreglo_sql['vaca_edad_parto2'] . $mx.'</td>';
 
                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['madre_numero'] . '</td>';
@@ -320,7 +328,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         echo '<td>' . $arreglo_sql['vaca_finada'] . '</td>';
 
                         if($arreglo_sql['vaca_edad_destete']==null){ $mx='-';}else{$mx=' meses';}
-                        echo '<td>' . $arreglo_sql['vaca_edad_destete'] . $mx.'</td>';
+                        echo '<td style="border-left:solid #0006;">' . $arreglo_sql['vaca_edad_destete'] . $mx.'</td>';
                         if($arreglo_sql['vaca_edad_venta']==null){ $mx='-';}else{$mx=' meses';}
                         echo '<td>' . $arreglo_sql['vaca_edad_venta'] .  $mx.'</td>';
 
@@ -350,8 +358,8 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['vaca_leche_dia'] . $lts.'</td>';
                         if($arreglo_sql['vaca_leche_mes']==null){ $lts='-';}else{$lts=' Lts';}
                         echo '<td>' . $arreglo_sql['vaca_leche_mes'] . $lts. '</td>';
-                        echo '<td>' . $arreglo_sql['vaca_leche_comentario'] . '</td>';
-                        echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['vaca_foto'] .'"><img src="' . $arreglo_sql['vaca_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
+                        echo '<td >' . $arreglo_sql['vaca_leche_comentario'] . '</td>';
+                        echo '<td style="border-left:solid #0006;"> <a data-fancybox="gallery" href="' . $arreglo_sql['vaca_foto'] .'"><img src="' . $arreglo_sql['vaca_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
                         echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['vaca_foto_fierro'] .'"><img src="' . $arreglo_sql['vaca_foto_fierro'] .'" width="50" height="40" alt="Vacio"></a></td>';
                         echo '<td>' . $arreglo_sql['vaca_observaciones'] . '</td>';
                         echo '<td>' . $arreglo_sql['fecha_registro'] . '</td>';
