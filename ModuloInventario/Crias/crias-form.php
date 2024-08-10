@@ -92,7 +92,6 @@ include("../../conexion.php");
                                     <option class="option-hover" value="Ternero">Ternero 0-6 meses</option>
                                     <option class="option-hover" value="Becerra">Becerra 7-12 meses</option>
                                     <option class="option-hover" value="Becerro">Becerro 7-12 meses</option>
-                                    <option class="option-hover" value="Novillona">Novillona 13-36 meses</option>
                                     <option class="option-hover" value="Torete">Torete 13-18 meses</option>
                                 ';
                             }
@@ -265,17 +264,17 @@ include("../../conexion.php");
                     });
                     $('label[for="cria_edad"]').text('Edad 7-12 meses');
                     break;
-                case 'Novillona':
-                    $('button[type="submit"]').prop('disabled', false); 
-                    $('#cria_edad').attr({
-                        'min': '13',
-                        'max': '36',
-                        'pattern': '[13-36]',
-                        'maxlength': '2',
-                        'title': 'Ingrese un número del 13 al 36'
-                    });
-                    $('label[for="cria_edad"]').text('Edad 13-36 meses');                
-                    break;
+                // case 'Novillona':
+                //     $('button[type="submit"]').prop('disabled', false); 
+                //     $('#cria_edad').attr({
+                //         'min': '13',
+                //         'max': '36',
+                //         'pattern': '[13-36]',
+                //         'maxlength': '2',
+                //         'title': 'Ingrese un número del 13 al 36'
+                //     });
+                //     $('label[for="cria_edad"]').text('Edad 13-36 meses');                
+                //     break;
                 case 'Torete':
                     $('button[type="submit"]').prop('disabled', false); 
                     $('#cria_edad').attr({

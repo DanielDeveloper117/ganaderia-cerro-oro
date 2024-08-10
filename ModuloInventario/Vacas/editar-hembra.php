@@ -176,6 +176,8 @@ include("../../conexion.php");
                     <option class="option-hover" value="Vaca parida">Vaca parida</option>
                     <option class="option-hover" value="Vaca lactante">Vaca lactante</option>
                     <option class="option-hover" value="Vaca seca">Vaca seca</option>
+                    <option class="option-hover" value="Novillona">Novillona</option>
+
                 </select>             
             </div>
             <div class=" col-md-3" >
@@ -295,7 +297,7 @@ include("../../conexion.php");
             </div>      
             <div class=" col-md-2" >
                 <label class="label-form" for="vaca_partos">Partos totales</label>
-                <input type="number" class="form-control" id="vaca_partos" placeholder="Número de partos" value="<?php echo '' . $arreglo_sql['vaca_partos'] . '';?>" name="vaca_partos" >
+                <input type="number" class="form-control" id="partosTotales" placeholder="Número de partos" value="<?php echo '' . $arreglo_sql['vaca_partos'] . '';?>" name="vaca_partos" >
             </div>             
         </div>
 
@@ -491,42 +493,47 @@ include("../../conexion.php");
             let NumberParto2 = Number($("#parto2").val());
             let edadActual = $("#edadActual").val();
             let NumberEdadActual = Number($("#edadActual").val());
-
             let finada = $("#vacaFinada").val();
-
             let gestacion = 9;
+            let partosTotales = $("#partosTotales").val();
 
-            if((estadoReproductivo=="Vaca horra" && parto1 != "") || (estadoReproductivo=="Vaca horra" && parto2 != "")){
-                alert("No puede ser vaca horra si ya ha tenido algun parto.");
+            if((estadoReproductivo=="Novillona" && parto1 != "") || (estadoReproductivo=="Novillona" && parto2 != "")){
+                alert("No puede ser vaca novillona si ya ha tenido algun parto.");
                 console.log(parto1+gestacion);
                 console.log(parto2+gestacion);
 
-            }else if(NumberEdadActual < 24 && finada == "No"){
-                alert("Una edad menor a 24 meses no es valida.");
-
-            }else if(estadoReproductivo != "Vaca horra" && NumberEdadActual <= NumberParto1 && NumberParto1 != 0){
-                alert("La edad de 1er parto no puede ser mayor o igual a la edad actual.");
-                console.log(NumberEdadActual);
-                console.log(NumberParto1);
-                console.log(NumberParto2);
-                console.log(NumberParto1-9);
-                console.log(NumberParto2-9);
+            }else if(NumberEdadActual < 13 && finada == "No"){
+                alert("Una edad menor a 13 meses no es valida.");
 
             }
-            else if(estadoReproductivo != "Vaca horra" && NumberParto1 >= NumberParto2 && NumberParto2 != 0){
-                alert("La edad del 1er parto no puede ser mayor o igual a la del 2do parto");
-                console.log(NumberEdadActual);
-                console.log(NumberParto1);
-                console.log(NumberParto2);
-                console.log(NumberParto1-9);
-                console.log(NumberParto2-9);
+            else if(NumberParto1 < 13 && finada == "No" && (NumberParto2 != 0 || parto2 != "")){
+                alert("Edad de primer parto no valida.");
 
-            }else if(estadoReproductivo != "Vaca horra" && (NumberParto2 != 0 || parto2 != "") && (NumberParto1 == 0 || parto1 == "")){
+            }
+            else if(NumberParto2  < 13 && finada == "No" && (NumberParto2 != 0 || parto2 != "")){
+                alert("Edad de segundo parto no valida.");
+
+            }
+            else if(estadoReproductivo != "Novillona" && NumberEdadActual <= NumberParto1 && NumberParto1 != 0){
+                alert("La edad de 1er parto no puede ser mayor o igual a la edad actual.");
+
+            }
+            else if(estadoReproductivo != "Novillona" && NumberParto1 >= NumberParto2 && NumberParto2 != 0){
+                alert("La edad del 1er parto no puede ser mayor o igual a la del 2do parto");
+
+            }else if(estadoReproductivo != "Novillona" && (NumberParto2 != 0 || parto2 != "") && (NumberParto1 == 0 || parto1 == "")){
                 alert("No puede haber un segundo parto si no hay un primer parto.");
             }
             else{
+                if((NumberParto1 != 0 || parto1 != "") && (NumberParto2 == 0 || parto2 == "") && (partosTotales == "" || partosTotales==0) ){
+                    $("#partosTotales").val(1);
+                }else if((NumberParto2 != 0 || parto2 != "")  && (partosTotales == "" || partosTotales==0) ){
+                    $("#partosTotales").val(2);
+                }else {}
+                setTimeout(() => {
+                    $("#formHembra").submit();
+                }, 300);
                 //alert("Ya se puede enviar el formulario");
-                $("#formHembra").submit();
             }
         });
 
