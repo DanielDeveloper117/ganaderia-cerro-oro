@@ -107,6 +107,9 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             color: #ff1100 !important;
             font-weight: 700;
         }
+        .renglon-fallecida{
+            background-color: #ff000073 !important;
+        }
     </style>
 </head>
 <body>
@@ -222,24 +225,37 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     </tr>
                     </thead>
                     <tbody>';
-        
+            // $esFinadaHorra =0;
+            // $esFinadaTotal =0;
+
             while ($arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 // ------------ DETERMINAR MAS DE 36 SIN PRIMER PARTO
-                if($arreglo_sql["vaca_edad_actual"]>=36 && $arreglo_sql["vaca_edad_parto1"]==null && $arreglo_sql["vaca_edad_actual"]!="Fallecida"){
-                    $class='renglon-parto';
-                    $classtd1='renglon-parto1-td';
-                }else{
-                    $class='';
-                    $classtd1='';
-                }
-                if($arreglo_sql["vaca_edad_actual"]>=48 && $arreglo_sql["vaca_edad_parto2"]==null && $arreglo_sql["vaca_edad_actual"]!="Fallecida"){
-                    $class='renglon-parto';
-                    $classtd2='renglon-parto2-td';
-                }else{
-                    $classtd2='';
-                }
-                
-                echo '<tr class="'.$class.'" data-id="'. $arreglo_sql['id_vaca'].'" >';
+                 if($arreglo_sql["vaca_edad_actual"]>=36 && $arreglo_sql["vaca_edad_parto1"]==null && $arreglo_sql["vaca_edad_actual"]!="Fallecida"){
+                     $class='renglon-parto';
+                     $classtd1='renglon-parto1-td';
+                 }else{
+                     $class='';
+                     $classtd1='';
+                 }
+                 if($arreglo_sql["vaca_edad_actual"]>=48 && $arreglo_sql["vaca_edad_parto2"]==null && $arreglo_sql["vaca_edad_actual"]!="Fallecida"){
+                     $class='renglon-parto';
+                     $classtd2='renglon-parto2-td';
+                 }else{
+                     $classtd2='';
+                 }
+                 if($arreglo_sql["vaca_finada"]=="Si"){
+                    $classRowFallecida ='renglon-fallecida';
+                 }else{
+                    $classRowFallecida='';
+                 }
+                // SUMAR LAS FALLECIDAS
+                // if($arreglo_sql['vaca_estado_re']=="Vaca horra" && $arreglo_sql['vaca_finada']=="Si"){
+                //     $esFinadaHorra += 1;
+                //     $esFinadaTotal += $esFinadaHorra;
+                // }else{}
+
+                //--------------------
+                echo '<tr class="'.$class. ' '. $classRowFallecida.'" data-id="'. $arreglo_sql['id_vaca'].'" >';
 
                     echo '<td> 
                             <form action="eliminar-hembra.php" method="POST">
@@ -280,7 +296,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 
                         if($arreglo_sql['vaca_edad_actual']==null){ 
                             echo '<td>-</td>';
-                        }else if($arreglo_sql['vaca_edad_actual']=="Fallecida"){ 
+                        }else if($arreglo_sql['vaca_edad_actual']=="Fallecida" || $arreglo_sql['vaca_edad_actual']==0){ 
                             echo '<td>Fallecida</td>';
                         }else{
                             $total_months = intval($arreglo_sql['vaca_edad_actual']);
@@ -301,12 +317,20 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                             </td>';
                         }
 
-                        if($arreglo_sql['vaca_edad_parto1']==null){ $mx='Aun no';}else{$mx=' meses';}
-                        if($arreglo_sql['vaca_edad_actual']=="Fallecida"){$mx='Fallecida';}
+                        if($arreglo_sql['vaca_edad_parto1']==null){ 
+                            $mx='Aun no';
+                        }else{
+                            $mx=' meses';
+                        }
+
                         echo '<td class="'.$classtd1.'">' . $arreglo_sql['vaca_edad_parto1'] . $mx.'</td>';
 
-                        if($arreglo_sql['vaca_edad_parto2']==null){ $mx='Aun no';}else{$mx=' meses';}
-                        if($arreglo_sql['vaca_edad_actual']=="Fallecida"){$mx='Fallecida';}
+                        if($arreglo_sql['vaca_edad_parto2']==null){ 
+                            $mx='Aun no';
+                        }else{
+                            $mx=' meses';
+                        }
+
                         echo '<td class="'.$classtd2.'">' . $arreglo_sql['vaca_edad_parto2'] . $mx.'</td>';
 
                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['madre_numero'] . '</td>';
@@ -395,36 +419,38 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 
 <?php
     /// ESTADO REPRODUCTIVO /////////////////////////////////////////////////////////////////////////
+    // consultar estado reproductivo y si esta finada
+
     // Realizar la consulta para Vacas horras
-    $sql_horras = "SELECT COUNT(*) as total_horras FROM vacas WHERE vaca_estado_re = 'Vaca horra'";
+    $sql_horras = "SELECT vaca_finada, COUNT(*) as total_horras FROM vacas WHERE vaca_estado_re = 'Vaca horra' AND vaca_finada = 'No'";
     $stmt_horras = $conexion->prepare($sql_horras);
     $stmt_horras->execute();
     $result_horras = $stmt_horras->fetch(PDO::FETCH_ASSOC);
     $vacas_horras = $result_horras['total_horras'];
 
     // Realizar la consulta para Vacas preñadas
-    $sql_prenadas = "SELECT COUNT(*) as total_prenadas FROM vacas WHERE vaca_estado_re = 'Vaca preñada'";
+    $sql_prenadas = "SELECT COUNT(*) as total_prenadas FROM vacas WHERE vaca_estado_re = 'Vaca preñada' AND vaca_finada = 'No'";
     $stmt_prenadas = $conexion->prepare($sql_prenadas);
     $stmt_prenadas->execute();
     $result_prenadas = $stmt_prenadas->fetch(PDO::FETCH_ASSOC);
     $vacas_prenadas = $result_prenadas['total_prenadas'];
 
     // Realizar la consulta para Vacas paridas
-    $sql_paridas = "SELECT COUNT(*) as total_paridas FROM vacas WHERE vaca_estado_re = 'Vaca parida'";
+    $sql_paridas = "SELECT COUNT(*) as total_paridas FROM vacas WHERE vaca_estado_re = 'Vaca parida' AND vaca_finada = 'No'";
     $stmt_paridas = $conexion->prepare($sql_paridas);
     $stmt_paridas->execute();
     $result_paridas = $stmt_paridas->fetch(PDO::FETCH_ASSOC);
     $vacas_paridas = $result_paridas['total_paridas'];
 
     // Realizar la consulta para Vacas lactantes
-    $sql_lactantes = "SELECT COUNT(*) as total_lactantes FROM vacas WHERE vaca_estado_re = 'Vaca lactante'";
+    $sql_lactantes = "SELECT COUNT(*) as total_lactantes FROM vacas WHERE vaca_estado_re = 'Vaca lactante' AND vaca_finada = 'No'";
     $stmt_lactantes = $conexion->prepare($sql_lactantes);
     $stmt_lactantes->execute();
     $result_lactantes = $stmt_lactantes->fetch(PDO::FETCH_ASSOC);
     $vacas_lactantes = $result_lactantes['total_lactantes'];
 
     // Realizar la consulta para Vacas lactantes
-    $sql_secas = "SELECT COUNT(*) as total_secas FROM vacas WHERE vaca_estado_re = 'Vaca seca'";
+    $sql_secas = "SELECT COUNT(*) as total_secas FROM vacas WHERE vaca_estado_re = 'Vaca seca' AND vaca_finada = 'No'";
     $stmt_secas = $conexion->prepare($sql_secas);
     $stmt_secas->execute();
     $result_secas = $stmt_secas->fetch(PDO::FETCH_ASSOC);
@@ -455,6 +481,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     $stmt_finadas->execute();
     $arreglo_finadas = $stmt_finadas->fetch(PDO::FETCH_ASSOC);
     $finadas = $arreglo_finadas['total_finadas'];
+    
 
 ?>
 
@@ -468,7 +495,8 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                 </tr>
                 <tr>
                     <td>Vacas horras</td>
-                    <td><?php echo $vacas_horras; ?></td>
+                    <td><?php echo $vacas_horras; ?>
+                    </td>
                 </tr>
                 <tr>
                     <td>Vacas preñadas</td>
@@ -488,7 +516,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td class="fw-bold"><?php echo ($vacas_horras + $vacas_prenadas + $vacas_paridas + $vacas_lactantes + $vacas_secas); ?></td>
+                    <td class="fw-bold"><?php echo (($vacas_horras + $vacas_prenadas + $vacas_paridas + $vacas_lactantes + $vacas_secas) ); ?></td>
                 </tr>
             </table>
         </div>
@@ -574,6 +602,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                 "previous": "Anterior"
               }
             },
+            "pageLength": 30,
             "lengthMenu": [ [10, 20, 30, 40, 50, 100, 1000], [10, 20, 30, 40, 50, 100, 1000] ],
             "scrollY": "500px", // Altura del área de desplazamiento vertical
             "scrollX": true,

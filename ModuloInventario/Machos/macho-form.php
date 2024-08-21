@@ -10,7 +10,7 @@ include("../../conexion.php");
 //}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -71,7 +71,7 @@ include("../../conexion.php");
         
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group"> 
             <div class="col-md-2" >
-                <label class="label-form" for="edadActual" id="lblEdadActual">Edad actual</label>
+                <label class="label-form" for="edadActual" id="lblEdadActual">Edad actual (mayor a 12) *</label>
                 <input type="number" class="form-control" id="edadActual" step="1" min="13" placeholder="Edad en meses" name="macho_edad_actual" required>
             </div>
             <div class="col-md-2" >
@@ -83,7 +83,7 @@ include("../../conexion.php");
                 <label class="label-form" for="macho_estado_re">Estado reproductivo *</label>
                 <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re" required>
                     <option class="option-hover" value="" selected>Seleccionar</option>
-                    <option class="option-hover" value="Toro adulto">Toro adulto</option>
+                    <option class="option-hover" value="Torete">Torete</option>
                     <option class="option-hover" value="Toro semental">Toro semental</option>
                 </select>             
             </div>
@@ -351,8 +351,8 @@ include("../../conexion.php");
             let finado = $("#machoFinado").val();
 
 
-            if(NumberEdadActual < 24 && finado == "No"){
-                alert("Una edad menor a 24 meses no es valida.");
+            if(NumberEdadActual < 13 && finado == "No"){
+                alert("Una edad menor a 13 meses no es valida.");
 
             }else{
                 //alert("Ya se puede enviar el formulario");

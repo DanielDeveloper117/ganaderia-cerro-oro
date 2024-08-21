@@ -10,7 +10,7 @@ include("../../conexion.php");
 //}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -372,7 +372,6 @@ include("../../conexion.php");
                 $("#edadActual").attr('placeholder', "Edad actual");
                 $("#fechaNacimiento").val('');
                 $("#edadActual").css('background-color', '#fff');
-
             }
         });
 
@@ -386,10 +385,9 @@ include("../../conexion.php");
             }
         });
 
-
         // --------------------VALIDACIONES EVENTO SUBMIT DEL FORMULARIO
         $("#btnSubmit").on('click', function(e){
-            e.preventDefault();
+            //e.preventDefault();
             let estadoReproductivo = $("#estadoReproductivo").val();
             let parto1 =$("#parto1").val();
             let NumberParto1 = Number($("#parto1").val());
@@ -434,10 +432,16 @@ include("../../conexion.php");
                 }else if((NumberParto2 != 0 || parto2 != "")  && (partosTotales == "" || partosTotales==0) ){
                     $("#partosTotales").val(2);
                 }else {}
-                setTimeout(() => {
-                    $("#formHembra").submit();
-                }, 300);
-                //alert("Ya se puede enviar el formulario");
+
+                if($("#edadActual").val("")|| $("#")){
+                    alert("Digite la edad actual");
+                }
+                else{
+                    setTimeout(() => {
+                        $("#formHembra").submit();
+                    }, 300);
+                    //alert("Ya se puede enviar el formulario");
+                }
             }
         });
 

@@ -446,6 +446,14 @@ include("../../conexion.php");
 <!-- ------------------scripts section----------------- -->
 <script>
     $(document).ready(function() {
+        let finadaVal=$("#edadActual").val();
+        if(finadaVal == "" || finadaVal == 0){
+            $("#edadActual").attr('type', 'text'); 
+            $("#edadActual").val("Fallecida");
+            $("#edadActual").attr('readonly', true);
+            console.log('cae en la condicion');
+        }else {            console.log('no cae en la condicion');
+        }
 
         //---------------------SI ES FALLECIDA EDAD ACTUAL NO REQUERIDA
         $("#vacaFinada").on('change', function(){
@@ -468,7 +476,6 @@ include("../../conexion.php");
                 $("#edadActual").attr('placeholder', "Edad actual");
                 $("#fechaNacimiento").val('');
                 $("#edadActual").css('background-color', '#fff');
-
             }
         });
 
