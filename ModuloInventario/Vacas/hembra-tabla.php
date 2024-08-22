@@ -84,7 +84,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             table-layout: fixed;
             width: 100%;
         }
-
         table.dataTable td, table.dataTable th {
             white-space: nowrap;
             overflow: hidden;
@@ -93,8 +92,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         #spanNumberNoti{
             color: #fff;
             background-color: #000;
-            border-radius: 100px;
-            
+            border-radius: 100px; 
         }
         .renglon-parto{
             background-color: #ffe500a1 !important;
@@ -151,19 +149,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
             //$sql = "SELECT id_vaca, padre_num, padre_raza, madre_num, madere_raza FROM hembra WHERE rol = 'agente'";
-            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, vaca_edad_parto1, vaca_edad_parto2, 
-            madre_numero, madre_arete, madre_tatuaje, madre_raza, 
-            padre_numero, padre_arete, padre_tatuaje, padre_raza, 
-            vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
-            vaca_lote, vaca_estado_re, vaca_celo, vaca_partos, vaca_estado_pal, vaca_finada, 
-            vaca_edad_actual, vaca_edad_destete, vaca_edad_venta, 
-            vaca_peso_nacimiento, vaca_peso_actual, vaca_peso_destete, vaca_peso_venta, 
-            vaca_gan_peso_dia, vaca_gan_peso_mes, vaca_peso_3meses, 
-            vaca_fecha_nacimiento, vaca_fecha_destete, vaca_fecha_aretado, 
-            vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
-            vaca_leche_dia, vaca_leche_mes, vaca_leche_comentario, 
-            vaca_foto, vaca_foto_fierro, 
-            vaca_observaciones, fecha_registro FROM vacas";
+            $sql = "SELECT * FROM vacas";
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             // Mostrar los resultados en una tabla HTML
@@ -182,6 +168,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col">Edad actual</th>
                         <th scope="col">Edad 1er parto</th>
                         <th scope="col">Edad 2do parto</th>
+                        <th scope="col" >Peso actual</th>
                         <th scope="col" style="border-left:solid #0006;">Número de la madre</th>
                         <th scope="col">Número de arete de la madre</th>
                         <th scope="col">Tatuaje de la madre</th>
@@ -202,7 +189,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col" style="border-left:solid #0006;">Edad destete</th>
                         <th scope="col">Edad de venta</th>
                         <th scope="col" style="border-left:solid #0006;">Peso de nacimiento</th>
-                        <th scope="col">Peso actual</th>
                         <th scope="col">Peso destete</th>
                         <th scope="col">Peso de venta</th>
                         <th scope="col">Ganancia de peso por día</th>
@@ -332,6 +318,8 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         }
 
                         echo '<td class="'.$classtd2.'">' . $arreglo_sql['vaca_edad_parto2'] . $mx.'</td>';
+                        if($arreglo_sql['vaca_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['vaca_peso_actual'] . $kg.'</td>';
 
                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['madre_numero'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
@@ -358,8 +346,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 
                         if($arreglo_sql['vaca_peso_nacimiento']==null){ $kg='-';}else{$kg=' Kg';}
                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['vaca_peso_nacimiento'] . $kg.'</td>';
-                        if($arreglo_sql['vaca_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
-                        echo '<td>' . $arreglo_sql['vaca_peso_actual'] . $kg.'</td>';
                         if($arreglo_sql['vaca_peso_destete']==null){ $kg='-';}else{$kg=' Kg';}
                         echo '<td>' . $arreglo_sql['vaca_peso_destete'] .  $kg.'</td>';
                         if($arreglo_sql['vaca_peso_venta']==null){ $kg='-';}else{$kg=' Kg';}
@@ -456,6 +442,13 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     $result_secas = $stmt_secas->fetch(PDO::FETCH_ASSOC);
     $vacas_secas = $result_secas['total_secas'];
 
+    // Realizar la consulta para Vacas lactantes
+    $sql_novillonas = "SELECT COUNT(*) as total_novillonas FROM vacas WHERE vaca_estado_re = 'Novillona' AND vaca_finada = 'No'";
+    $stmt_novillonas = $conexion->prepare($sql_novillonas);
+    $stmt_novillonas->execute();
+    $result_novillonas = $stmt_novillonas->fetch(PDO::FETCH_ASSOC);
+    $vacas_novillonas = $result_novillonas['total_novillonas'];
+
     // ARETADOS //////////////////////////////////////////////////////////////////////////////////////////
     $sql_vigentes = "SELECT COUNT(*) as total_vigentes FROM vacas WHERE vaca_estatus = 'Vigente'";
     $stmt_vigentes = $conexion->prepare($sql_vigentes);
@@ -515,8 +508,12 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     <td><?php echo $vacas_secas; ?></td>
                 </tr>
                 <tr>
+                    <td>Vacas novillonas</td>
+                    <td><?php echo $vacas_novillonas; ?></td>
+                </tr>
+                <tr>
                     <td>Total</td>
-                    <td class="fw-bold"><?php echo (($vacas_horras + $vacas_prenadas + $vacas_paridas + $vacas_lactantes + $vacas_secas) ); ?></td>
+                    <td class="fw-bold"><?php echo (($vacas_horras + $vacas_prenadas + $vacas_paridas + $vacas_lactantes + $vacas_secas + $vacas_novillonas) ); ?></td>
                 </tr>
             </table>
         </div>

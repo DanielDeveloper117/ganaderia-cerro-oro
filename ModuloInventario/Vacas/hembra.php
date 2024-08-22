@@ -204,7 +204,7 @@ include("../../conexion.php");
                 <input type="text" class="form-control" id="vaca_estado_pal" placeholder="Estado de palpación" name="vaca_estado_pal" >
             </div>
             <div class=" col-md-2 mb-3" >
-                <label class="label-form" for="vaca_partos">Partos totales</label>
+                <label class="label-form" for="partosTotales">Partos totales</label>
                 <input type="number" class="form-control" id="partosTotales" placeholder="Número de partos" name="vaca_partos" >
             </div>            
         </div>
@@ -365,7 +365,7 @@ include("../../conexion.php");
                 $("#edadActual").css('background-color', '#e9ecef');
 
             }else if(finada == "No") {
-                $("#lblEdadActual").text("Edad actual *");
+                $("#lblEdadActual").text("Edad actual (mayor a 12) *");
                 $("#edadActual").attr('required', true);
                 $("#edadActual").attr('readonly', false);
                 $("#edadActual").attr('type', "number");
@@ -385,9 +385,17 @@ include("../../conexion.php");
             }
         });
 
+        //----------------------SI ES NOVILLONA RESETEAR PARTOS
+        $("#estadoReproductivo").on('change', function(){
+            if($("#estadoReproductivo").val()==="Novillona"){
+                $("#parto1").val("");
+                $("#parto2").val("");
+            }else{}
+        });
+
         // --------------------VALIDACIONES EVENTO SUBMIT DEL FORMULARIO
         $("#btnSubmit").on('click', function(e){
-            //e.preventDefault();
+            e.preventDefault();
             let estadoReproductivo = $("#estadoReproductivo").val();
             let parto1 =$("#parto1").val();
             let NumberParto1 = Number($("#parto1").val());
@@ -398,32 +406,29 @@ include("../../conexion.php");
             let finada = $("#vacaFinada").val();
             let gestacion = 9;
             let partosTotales = $("#partosTotales").val();
+            console.log($("#edadActual").val());
 
-            if((estadoReproductivo=="Novillona" && parto1 != "") || (estadoReproductivo=="Novillona" && parto2 != "")){
+
+            if(estadoReproductivo=="Novillona" && (parto1 != "" || parto2 != "")){
                 alert("No puede ser vaca novillona si ya ha tenido algun parto.");
-                console.log(parto1+gestacion);
-                console.log(parto2+gestacion);
-
-            }else if(NumberEdadActual < 13 && finada == "No"){
+            }
+            else if(NumberEdadActual < 13 && finada == "No"){
+                console.log($("#edadActual").val());
                 alert("Una edad menor a 13 meses no es valida.");
-
             }
             else if(NumberParto1 < 13 && finada == "No" && (NumberParto2 != 0 || parto2 != "")){
                 alert("Edad de primer parto no valida.");
-
             }
             else if(NumberParto2  < 13 && finada == "No" && (NumberParto2 != 0 || parto2 != "")){
                 alert("Edad de segundo parto no valida.");
-
             }
             else if(estadoReproductivo != "Novillona" && NumberEdadActual <= NumberParto1 && NumberParto1 != 0){
                 alert("La edad de 1er parto no puede ser mayor o igual a la edad actual.");
-
             }
             else if(estadoReproductivo != "Novillona" && NumberParto1 >= NumberParto2 && NumberParto2 != 0){
                 alert("La edad del 1er parto no puede ser mayor o igual a la del 2do parto");
-
-            }else if(estadoReproductivo != "Novillona" && (NumberParto2 != 0 || parto2 != "") && (NumberParto1 == 0 || parto1 == "")){
+            }
+            else if(estadoReproductivo != "Novillona" && (NumberParto2 != 0 || parto2 != "") && (NumberParto1 == 0 || parto1 == "")){
                 alert("No puede haber un segundo parto si no hay un primer parto.");
             }
             else{
@@ -433,10 +438,10 @@ include("../../conexion.php");
                     $("#partosTotales").val(2);
                 }else {}
 
-                if($("#edadActual").val("")|| $("#")){
-                    alert("Digite la edad actual");
-                }
-                else{
+                if($("#edadActual").val() === "" || $("#vaca_numero").val() === "" || $("#estadoReproductivo").val() === "" || $("#vaca_estatus").val() === ""){
+                    alert("Faltan campos obligatorios por llenar");
+                    console.log($("#edadActual").val());
+                }else{
                     setTimeout(() => {
                         $("#formHembra").submit();
                     }, 300);
@@ -444,7 +449,7 @@ include("../../conexion.php");
                 }
             }
         });
-
+        
         // -------------------CALCULO DE LECHES
         $('#vaca_leche_dia').on('input', function() {
             var lecheDia = parseFloat($(this).val());

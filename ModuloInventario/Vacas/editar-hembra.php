@@ -13,19 +13,7 @@ include("../../conexion.php");
         $id_vaca = $_POST['id_vaca'];
 
         try {
-            $sql = "SELECT id_vaca, vaca_numero, vaca_arete, vaca_tatuaje, vaca_raza, vaca_edad_parto1, vaca_edad_parto2,  
-            madre_numero, madre_arete, madre_tatuaje, madre_raza, 
-            padre_numero, padre_arete, padre_tatuaje, padre_raza, 
-            vaca_color, vaca_talla, vaca_pelo, vaca_condicion, vaca_estatus, vaca_potrero, 
-            vaca_lote, vaca_estado_re, vaca_celo, vaca_partos, vaca_estado_pal, vaca_finada, 
-            vaca_edad_actual, vaca_edad_destete, vaca_edad_venta, 
-            vaca_peso_nacimiento, vaca_peso_actual, vaca_peso_destete, vaca_peso_venta, 
-            vaca_gan_peso_dia, vaca_gan_peso_mes, vaca_peso_3meses, 
-            vaca_fecha_nacimiento, vaca_fecha_destete, vaca_fecha_aretado, 
-            vaca_fecha_tatuaje, vaca_fecha_fierro, vaca_fecha_probable, vaca_fecha_venta, 
-            vaca_leche_dia, vaca_leche_mes, vaca_leche_comentario, 
-            vaca_foto, vaca_foto_fierro, 
-            vaca_observaciones FROM vacas WHERE id_vaca = :id_vaca";
+            $sql = "SELECT * FROM vacas WHERE id_vaca = :id_vaca";
             $stmt = $conexion->prepare($sql);
             $stmt->bindParam(':id_vaca', $id_vaca);
             $stmt->execute();
@@ -168,8 +156,8 @@ include("../../conexion.php");
                 <input type="number" class="form-control" id="parto2" step="1" placeholder="Edad en meses" value="<?php echo '' . $arreglo_sql['vaca_edad_parto2'] . '';?>" name="vaca_edad_parto2">
             </div>
             <div class="col-md-3 " >
-                <label class="label-form" for="vaca_estado_re">Estado reproductivo *</label>
-                <select class="form-select" style="cursor: pointer; " id="vaca_estado_re" name="vaca_estado_re" required>
+                <label class="label-form" for="estadoReproductivo">Estado reproductivo *</label>
+                <select class="form-select" style="cursor: pointer; " id="estadoReproductivo" name="vaca_estado_re" required>
                     <option class="option-hover" value="<?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?>" selected><?php echo '' . $arreglo_sql['vaca_estado_re'] . '';?></option>
                     <option class="option-hover" value="Vaca horra">Vaca vacía/horra</option>
                     <option class="option-hover" value="Vaca preñada">Vaca preñada</option>
@@ -296,8 +284,8 @@ include("../../conexion.php");
                 <input type="text" class="form-control" id="vaca_estado_pal" placeholder="Estado de palpación" value="<?php echo '' . $arreglo_sql['vaca_estado_pal'] . '';?>" name="vaca_estado_pal" >
             </div>      
             <div class=" col-md-2" >
-                <label class="label-form" for="vaca_partos">Partos totales</label>
-                <input type="number" class="form-control" id="partosTotales" placeholder="Número de partos" value="<?php echo '' . $arreglo_sql['vaca_partos'] . '';?>" name="vaca_partos" >
+                <label class="label-form" for="estadoReproductivo">Partos totales</label>
+                <input type="number" class="form-control" id="estadoReproductivo" placeholder="Número de partos" value="<?php echo '' . $arreglo_sql['vaca_partos'] . '';?>" name="vaca_partos" >
             </div>             
         </div>
 
@@ -419,16 +407,14 @@ include("../../conexion.php");
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-vacas-conteiner-inputs-group">        
             <div class=" col-md-5" >
-                <label class="label-form" for="foto">Seleccionar nueva fotografía del fierro</label>
-                <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto_fierro">
-                <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
-                <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto_fierro'] . '';?>"  alt="Vacio">
+                <label class="label-form" for="vaca_foto_fierro">Seleccionar nueva fotografía del fierro</label>
+                <input class="form-control" type="file" id="vaca_foto_fierro"  accept="image/*" value="" name="vaca_foto_fierro">
+
             </div>            
             <div class=" col-md-5" >
-                <label class="label-form" for="foto">Seleccionar nueva fotografía de la vaca</label>
+                <label class="label-form" for="vaca_foto">Seleccionar nueva fotografía de la vaca</label>
                 <input class="form-control" type="file" id="vaca_foto"  accept="image/*" value="" name="vaca_foto">
-                <label class="label-form mt-4 mt-md-0" for="foto">Fotografía actual</label>
-                <img id="img-foto" class="mt-1 mt-md-4 img-fluid" src="<?php echo '' . $arreglo_sql['vaca_foto'] . '';?>"  alt="Vacio">
+                
             </div>
         </div>
         
@@ -446,13 +432,15 @@ include("../../conexion.php");
 <!-- ------------------scripts section----------------- -->
 <script>
     $(document).ready(function() {
+        //-----------SI INICIALMENTE ES FALLECIDA
         let finadaVal=$("#edadActual").val();
         if(finadaVal == "" || finadaVal == 0){
             $("#edadActual").attr('type', 'text'); 
             $("#edadActual").val("Fallecida");
             $("#edadActual").attr('readonly', true);
             console.log('cae en la condicion');
-        }else {            console.log('no cae en la condicion');
+        }else {            
+            console.log('no cae en la condicion');
         }
 
         //---------------------SI ES FALLECIDA EDAD ACTUAL NO REQUERIDA
@@ -469,7 +457,7 @@ include("../../conexion.php");
                 $("#edadActual").css('background-color', '#e9ecef');
 
             }else if(finada == "No") {
-                $("#lblEdadActual").text("Edad actual *");
+                $("#lblEdadActual").text("Edad actual (mayor a 12) *");
                 $("#edadActual").attr('required', true);
                 $("#edadActual").attr('readonly', false);
                 $("#edadActual").attr('type', "number");
@@ -490,6 +478,14 @@ include("../../conexion.php");
         });
 
 
+        //----------------------SI ES NOVILLONA RESETEAR PARTOS
+        $("#estadoReproductivo").on('change', function(){
+            if($("#estadoReproductivo").val()==="Novillona"){
+                $("#parto1").val("");
+                $("#parto2").val("");
+            }else{}
+        });
+
         // --------------------VALIDACIONES EVENTO SUBMIT DEL FORMULARIO
         $("#btnSubmit").on('click', function(e){
             e.preventDefault();
@@ -503,32 +499,29 @@ include("../../conexion.php");
             let finada = $("#vacaFinada").val();
             let gestacion = 9;
             let partosTotales = $("#partosTotales").val();
+            console.log($("#edadActual").val());
 
-            if((estadoReproductivo=="Novillona" && parto1 != "") || (estadoReproductivo=="Novillona" && parto2 != "")){
+
+            if(estadoReproductivo=="Novillona" && (parto1 != "" || parto2 != "")){
                 alert("No puede ser vaca novillona si ya ha tenido algun parto.");
-                console.log(parto1+gestacion);
-                console.log(parto2+gestacion);
-
-            }else if(NumberEdadActual < 13 && finada == "No"){
+            }
+            else if(NumberEdadActual < 13 && finada == "No"){
+                console.log($("#edadActual").val());
                 alert("Una edad menor a 13 meses no es valida.");
-
             }
             else if(NumberParto1 < 13 && finada == "No" && (NumberParto2 != 0 || parto2 != "")){
                 alert("Edad de primer parto no valida.");
-
             }
             else if(NumberParto2  < 13 && finada == "No" && (NumberParto2 != 0 || parto2 != "")){
                 alert("Edad de segundo parto no valida.");
-
             }
             else if(estadoReproductivo != "Novillona" && NumberEdadActual <= NumberParto1 && NumberParto1 != 0){
                 alert("La edad de 1er parto no puede ser mayor o igual a la edad actual.");
-
             }
             else if(estadoReproductivo != "Novillona" && NumberParto1 >= NumberParto2 && NumberParto2 != 0){
                 alert("La edad del 1er parto no puede ser mayor o igual a la del 2do parto");
-
-            }else if(estadoReproductivo != "Novillona" && (NumberParto2 != 0 || parto2 != "") && (NumberParto1 == 0 || parto1 == "")){
+            }
+            else if(estadoReproductivo != "Novillona" && (NumberParto2 != 0 || parto2 != "") && (NumberParto1 == 0 || parto1 == "")){
                 alert("No puede haber un segundo parto si no hay un primer parto.");
             }
             else{
@@ -537,10 +530,16 @@ include("../../conexion.php");
                 }else if((NumberParto2 != 0 || parto2 != "")  && (partosTotales == "" || partosTotales==0) ){
                     $("#partosTotales").val(2);
                 }else {}
-                setTimeout(() => {
-                    $("#formHembra").submit();
-                }, 300);
-                //alert("Ya se puede enviar el formulario");
+
+                if($("#edadActual").val() === "" || $("#vaca_numero").val() === "" || $("#estadoReproductivo").val() === "" || $("#vaca_estatus").val() === ""){
+                    alert("Faltan campos obligatorios por llenar");
+                    console.log($("#edadActual").val());
+                }else{
+                    setTimeout(() => {
+                        $("#formHembra").submit();
+                    }, 300);
+                    //alert("Ya se puede enviar el formulario");
+                }
             }
         });
 

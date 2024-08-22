@@ -262,7 +262,7 @@ include("../../conexion.php");
             } catch (PDOException $e) {
                 // Error cuando no se ejecuta la consulta SQL
                 echo "<script>alert('Hubo un error al ejecutar la consulta SQL.');</script>";
-                //echo "Error: " . $e->getMessage();
+                echo "Error: " . $e->getMessage();
                 echo '
                 <div class="d-flex flex-row justify-content-center col-12">
                     <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >

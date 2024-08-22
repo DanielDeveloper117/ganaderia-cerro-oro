@@ -47,6 +47,8 @@ include("../../conexion.php");
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
     <form id="formMacho" class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  action="macho-form-script.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden"  value="<?php echo '' . $arreglo_sql['id_macho'] . '';?>" name="id_macho">
+
         <p class="p-form">Formulario para dar de alta un macho.</p>
         <h3 class="mb-4">Información principal</h3> 
 
@@ -80,8 +82,8 @@ include("../../conexion.php");
             </div>      
             
             <div class="col-md-3 " >
-                <label class="label-form" for="macho_estado_re">Estado reproductivo *</label>
-                <select class="form-select" style="cursor: pointer; " id="macho_estado_re" name="macho_estado_re" required>
+                <label class="label-form" for="estadoReproductivo">Estado reproductivo *</label>
+                <select class="form-select" style="cursor: pointer; " id="estadoReproductivo" name="macho_estado_re" required>
                     <option class="option-hover" value="" selected>Seleccionar</option>
                     <option class="option-hover" value="Torete">Torete</option>
                     <option class="option-hover" value="Toro semental">Toro semental</option>
@@ -320,7 +322,7 @@ include("../../conexion.php");
                 $("#edadActual").css('background-color', '#e9ecef');
 
             }else if(finada == "No") {
-                $("#lblEdadActual").text("Edad actual *");
+                $("#lblEdadActual").text("Edad actual (mayor a 12) *");
                 $("#edadActual").attr('required', true);
                 $("#edadActual").attr('readonly', false);
                 $("#edadActual").attr('type', "number");
@@ -355,8 +357,15 @@ include("../../conexion.php");
                 alert("Una edad menor a 13 meses no es valida.");
 
             }else{
-                //alert("Ya se puede enviar el formulario");
-                $("#formMacho").submit();
+                if($("#edadActual").val() === "" || $("#macho_numero").val() === "" || $("#estadoReproductivo").val() === "" || $("#macho_estatus").val() === ""){
+                    alert("Faltan campos obligatorios por llenar");
+                    console.log($("#edadActual").val());
+                }else{
+                    setTimeout(() => {
+                        $("#formMacho").submit();
+                    }, 300);
+                    //alert("Ya se puede enviar el formulario");
+                }
             }
         });
     });
