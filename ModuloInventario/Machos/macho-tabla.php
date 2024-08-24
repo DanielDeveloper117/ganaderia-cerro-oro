@@ -82,7 +82,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             table-layout: fixed;
             width: 100%;
         }
-
         table.dataTable td, table.dataTable th {
             white-space: nowrap;
             overflow: hidden;
@@ -92,18 +91,9 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             color: #fff;
             background-color: #000;
             border-radius: 100px;
-            
         }
-        .renglon-parto{
-            background-color: #ffe500a1 !important;
-        }
-        .renglon-parto1-td{
-            color: #ff1100 !important;
-            font-weight: 700;
-        }
-        .renglon-parto2-td{
-            color: #ff1100 !important;
-            font-weight: 700;
+        .renglon-fallecido{
+            background-color: #ff000073 !important;
         }
     </style>
 </head>
@@ -135,18 +125,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
             //$sql = "SELECT id_macho, padre_num, padre_raza, madre_num, madere_raza FROM hembra WHERE rol = 'agente'";
-            $sql = "SELECT id_macho, macho_numero, macho_arete, macho_tatuaje, macho_raza, 
-            madre_numero, madre_arete, madre_tatuaje, madre_raza, 
-            padre_numero, padre_arete, padre_tatuaje, padre_raza, 
-            macho_color, macho_talla, macho_pelo, macho_condicion, macho_estatus, macho_potrero, 
-            macho_lote, macho_estado_re, macho_finado, 
-            macho_edad_actual, macho_edad_destete, macho_edad_venta, 
-            macho_peso_nacimiento, macho_peso_actual, macho_peso_destete, macho_peso_venta, 
-            macho_gan_peso_dia, macho_gan_peso_mes, macho_peso_3meses, 
-            macho_fecha_nacimiento, macho_fecha_destete, macho_fecha_aretado, 
-            macho_fecha_tatuaje, macho_fecha_fierro, macho_fecha_venta, 
-            macho_foto, macho_foto_fierro, 
-            macho_observaciones, fecha_registro FROM machos";
+            $sql = "SELECT * FROM machos";
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             // Mostrar los resultados en una tabla HTML
@@ -164,6 +143,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col">Estatus del arete</th>
                         <th scope="col">Edad actual</th>
                         <th scope="col">Fallecido</th>
+                        <th scope="col">Peso actual</th>
                         <th scope="col" style="border-left:solid #0006;">Número de la madre</th>
                         <th scope="col">Número de arete de la madre</th>
                         <th scope="col">Tatuaje de la madre</th>
@@ -181,7 +161,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                         <th scope="col" style="border-left:solid #0006;">Edad destete</th>
                         <th scope="col">Edad de venta</th>
                         <th scope="col" style="border-left:solid #0006;">Peso de nacimiento</th>
-                        <th scope="col">Peso actual</th>
                         <th scope="col">Peso destete</th>
                         <th scope="col">Peso de venta</th>
                         <th scope="col">Ganancia de peso por día</th>
@@ -202,7 +181,13 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                     <tbody>';
         
             while ($arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<tr>';
+                if($arreglo_sql["macho_finado"]=="Si"){
+                    $classRowFallecido ='renglon-fallecido';
+                 }else{
+                    $classRowFallecido='';
+                 }
+
+                echo '<tr class="'. $classRowFallecido.'" data-id="'. $arreglo_sql['id_macho'].'" >';
 
                     echo '<td> 
                             <form action="eliminar-macho.php" method="POST">
@@ -254,6 +239,8 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                             </td>';
                         }
                         echo '<td>' . $arreglo_sql['macho_finado'] . '</td>';
+                        if($arreglo_sql['macho_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['macho_peso_actual'] . $kg.'</td>';
                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['madre_numero'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_arete'] . '</td>';
                         echo '<td>' . $arreglo_sql['madre_tatuaje'] . '</td>';
@@ -276,8 +263,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 
                         if($arreglo_sql['macho_peso_nacimiento']==null){ $kg='-';}else{$kg=' Kg';}
                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['macho_peso_nacimiento'] . $kg.'</td>';
-                        if($arreglo_sql['macho_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
-                        echo '<td>' . $arreglo_sql['macho_peso_actual'] . $kg.'</td>';
                         if($arreglo_sql['macho_peso_destete']==null){ $kg='-';}else{$kg=' Kg';}
                         echo '<td>' . $arreglo_sql['macho_peso_destete'] .  $kg.'</td>';
                         if($arreglo_sql['macho_peso_venta']==null){ $kg='-';}else{$kg=' Kg';}
@@ -330,14 +315,14 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 <?php
     /// ESTADO REPRODUCTIVO /////////////////////////////////////////////////////////////////////////
     // Realizar la consulta para machos toretes
-    $sql_toretes = "SELECT COUNT(*) as total_toretes FROM machos WHERE macho_estado_re = 'Torete'";
+    $sql_toretes = "SELECT COUNT(*) as total_toretes FROM machos WHERE macho_estado_re = 'Torete' AND macho_finado = 'No'";
     $stmt_toretes = $conexion->prepare($sql_toretes);
     $stmt_toretes->execute();
     $result_toretes = $stmt_toretes->fetch(PDO::FETCH_ASSOC);
     $machos_toretes = $result_toretes['total_toretes'];
 
     // Realizar la consulta para machos preñadas
-    $sql_sementales = "SELECT COUNT(*) as total_sementales FROM machos WHERE macho_estado_re = 'Toro semental'";
+    $sql_sementales = "SELECT COUNT(*) as total_sementales FROM machos WHERE macho_estado_re = 'Toro semental' AND macho_finado = 'No'";
     $stmt_sementales = $conexion->prepare($sql_sementales);
     $stmt_sementales->execute();
     $result_sementales = $stmt_sementales->fetch(PDO::FETCH_ASSOC);

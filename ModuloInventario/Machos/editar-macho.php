@@ -117,6 +117,8 @@ include("../../conexion.php");
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
     <form id="formMacho" class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  action="editar-macho-script.php" method="POST" enctype="multipart/form-data">
+        <input type="hidden"  value="<?php echo '' . $arreglo_sql['id_macho'] . '';?>" name="id_macho">
+
         <p class="p-form">Formulario para dar de alta un macho.</p>
         <h3 class="mb-4">Información principal</h3> 
 
@@ -152,15 +154,15 @@ include("../../conexion.php");
             <div class="col-md-3 " >
                 <label class="label-form" for="estadoReproductivo">Estado reproductivo *</label>
                 <select class="form-select" style="cursor: pointer; " id="estadoReproductivo"  name="macho_estado_re" required>
-                    <option class="option-hover" value="<?php echo '' . $arreglo_sql['macho_estado_re'] . '';?>" selected></option>
+                    <option class="option-hover" value="<?php echo '' . $arreglo_sql['macho_estado_re'] . '';?>" selected><?php echo '' . $arreglo_sql['macho_estado_re'] . '';?></option>
                     <option class="option-hover" value="Torete">Torete</option>
                     <option class="option-hover" value="Toro semental">Toro semental</option>
                 </select>             
             </div>
             <div class=" col-md-3" >
                 <label class="label-form" for="macho_estatus">Estatus del arete *</label>
-                <select class="form-select" style="cursor: pointer; " id="macho_estatus"  name="macho_estatus" required>
-                    <option class="option-hover" value="<?php echo '' . $arreglo_sql['macho_estatus'] . '';?>" selected></option>
+                <select class="form-select" style="cursor: pointer; " id="macho_estatus" name="macho_estatus" required>
+                    <option class="option-hover" value="<?php echo '' . $arreglo_sql['macho_estatus'] . '';?>" selected><?php echo '' . $arreglo_sql['macho_estatus'] . '';?></option>
                     <option class="option-hover" value="Vigente">Vigente</option>
                     <option class="option-hover" value="Pendiente">Pendiente</option>
                     <option class="option-hover" value="Baja">Baja</option>
@@ -175,8 +177,9 @@ include("../../conexion.php");
             </div>
             <div class=" col-md-2" >
                 <label class="label-form" for="machoFinado">Finado/Fallecido</label>
-                <select class="form-select" style="cursor: pointer; " id="machoFinado" value="<?php echo '' . $arreglo_sql['macho_finado'] . '';?>" name="macho_finado">
-                        <option class="option-hover" value="Si">Si</option>
+                <select class="form-select" style="cursor: pointer; " id="machoFinado" name="macho_finado">
+                <option class="option-hover" value="<?php echo '' . $arreglo_sql['macho_finado'] . '';?>" selected><?php echo '' . $arreglo_sql['macho_finado'] . '';?></option>
+                <option class="option-hover" value="Si">Si</option>
                         <option class="option-hover" value="No" selected>No</option>
                 </select>
             </div> 
@@ -224,7 +227,6 @@ include("../../conexion.php");
                 <label class="label-form" for="padre_raza">Raza del padre</label>
                 <input type="text" class="form-control" id="padre_raza" value="<?php echo '' . $arreglo_sql['padre_raza'] . '';?>" placeholder="Raza del padre" name="padre_raza" >
             </div>
-
         </div>
 
         <h3 class="">Información adicional</h3>
@@ -464,11 +466,11 @@ include("../../conexion.php");
         });
     });
 
-        //VALIDACION EDAD RELACION CON FECHA DE NACIMIENTO
-        document.addEventListener('DOMContentLoaded', function() {
+    //VALIDACION EDAD RELACION CON FECHA DE NACIMIENTO
+    document.addEventListener('DOMContentLoaded', function() {
         // Obtener el input de Edad y el input de Fecha
-        var inputEdad = document.getElementById('macho_edad_actual');
-        var inputFecha = document.getElementById('macho_fecha_nacimiento');
+        var inputEdad = document.getElementById('edadActual');
+        var inputFecha = document.getElementById('fechaNacimiento');
 
         // Función para actualizar la fecha según la edad ingresada
         function actualizarFecha() {

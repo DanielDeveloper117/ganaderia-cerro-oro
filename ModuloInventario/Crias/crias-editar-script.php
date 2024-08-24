@@ -19,6 +19,8 @@ include("../../conexion.php");
             && isset($_POST['cria_tatuaje'])
             && isset($_POST['cria_raza'])
             && isset($_POST['cria_peso_nacimiento'])
+            && isset($_POST['cria_peso_actual'])
+
             && isset($_POST['cria_peso_destete'])
             && isset($_POST['cria_peso_venta'])
             && isset($_POST['cria_finada'])
@@ -27,9 +29,9 @@ include("../../conexion.php");
             && isset($_POST['cria_fecha_tatuaje'])
             && isset($_POST['cria_fecha_fierro'])
             && isset($_POST['cria_fecha_venta'])
+            && isset($_POST['cria_observaciones'])) {
             //&& isset($_FILES['cria_foto'])
             //&& isset($_FILES['cria_foto_fierro'])
-            && isset($_POST['cria_observaciones'])) {
             //establecer ruta para almacenar la foto
             // $random_number1 = rand(1, 1000);
             // $random_number2 = rand(1, 1000);
@@ -70,6 +72,7 @@ include("../../conexion.php");
             $cria_tatuaje= $_POST['cria_tatuaje'];
             $cria_raza= $_POST['cria_raza'];
 
+            $cria_peso_actual= $_POST['cria_peso_actual'];
             $cria_peso_nacimiento= $_POST['cria_peso_nacimiento'];            
             $cria_peso_destete= $_POST['cria_peso_destete'];
             $cria_peso_venta= $_POST['cria_peso_venta'];
@@ -130,6 +133,7 @@ include("../../conexion.php");
                 cria_estado_arete = :cria_estado_arete, 
                 cria_tatuaje = :cria_tatuaje, 
                 cria_raza = :cria_raza, 
+                cria_peso_actual = :cria_peso_actual, 
                 cria_peso_nacimiento = :cria_peso_nacimiento, 
                 cria_peso_destete = :cria_peso_destete, 
                 cria_peso_venta = :cria_peso_venta, 
@@ -157,6 +161,7 @@ include("../../conexion.php");
                 $stmt->bindParam(':cria_tatuaje', $cria_tatuaje);
                 $stmt->bindParam(':cria_raza', $cria_raza);
 
+                $stmt->bindParam(':cria_peso_actual', $cria_peso_actual);
                 $stmt->bindParam(':cria_peso_nacimiento', $cria_peso_nacimiento);
                 $stmt->bindParam(':cria_peso_destete', $cria_peso_destete);
                 $stmt->bindParam(':cria_peso_venta', $cria_peso_venta);

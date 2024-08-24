@@ -167,8 +167,7 @@ if (isset($_POST['macho_numero'])
             :macho_peso_nacimiento, :macho_peso_actual, :macho_peso_destete, :macho_peso_venta, 
             :macho_gan_peso_dia, :macho_gan_peso_mes, :macho_peso_3meses, 
             :macho_fecha_nacimiento, :macho_fecha_destete, :macho_fecha_aretado, 
-            :macho_fecha_tatuaje, :macho_fecha_fierro, :macho_fecha_venta, 
-             
+            :macho_fecha_tatuaje, :macho_fecha_fierro, :macho_fecha_venta,     
             :macho_foto, :macho_foto_fierro, 
             :macho_observaciones)";
         $stmt = $conexion->prepare($sql); // Preparar la consulta

@@ -45,7 +45,7 @@ include("../../conexion.php");
 
  
 <section class="d-flex col-12 flex-column align-items-center justify-content-center" >    
-    <form class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  action="crias-form-script.php" method="POST" >
+    <form class="d-flex flex-column col-11 col-md-10 justify-content-center align-items-center formulario"  action="crias-form-script.php" method="POST" enctype="multipart/form-data">
         <p class="p-form">Formulario para dar de alta una cría.</p>
         <?php
             if (isset($_POST['id_vaca'])) {
@@ -59,7 +59,7 @@ include("../../conexion.php");
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-3" >
-                <label class="label-form" for="cria_numero">Número de la madre</label>
+                <label class="label-form" for="madre_numero">Número de la madre *</label>
                 <?php
                     if (isset($_POST['id_vaca'])) {
                         $id_vaca = $_POST['id_vaca'];
@@ -68,15 +68,15 @@ include("../../conexion.php");
                         $stmt->bindParam(':id_vaca', $id_vaca);
                         $stmt->execute();
                         $arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC);
-                        echo '<input type="number" class="form-control" id="cria_numero" value="'.$arreglo_sql['vaca_numero'].'" name="madre_numero" required>';
+                        echo '<input type="number" class="form-control" id="madre_numero" value="'.$arreglo_sql['vaca_numero'].'" name="madre_numero" required>';
                         //echo '<input type="hidden" name="id_vaca" value="'. $id_vaca.'">';
                     } else{
-                        echo '<input type="number" class="form-control" id="cria_numero" placeholder="Número de la madre" name="madre_numero" required>';
+                        echo '<input type="number" class="form-control" id="madre_numero" placeholder="Número de la madre" name="madre_numero" required>';
                     }
                 ?>
             </div>
             <div class=" col-md-3" >
-                <label class="label-form" for="cria_sexo">Estado productivo</label>
+                <label class="label-form" for="cria_sexo">Estado productivo *</label>
                 <select class="form-select" style="cursor: pointer; " id="cria_sexo" name="cria_sexo" required>
                         <?php
                             if (isset($_POST['id_vaca'])) {
@@ -92,14 +92,13 @@ include("../../conexion.php");
                                     <option class="option-hover" value="Ternero">Ternero 0-6 meses</option>
                                     <option class="option-hover" value="Becerra">Becerra 7-12 meses</option>
                                     <option class="option-hover" value="Becerro">Becerro 7-12 meses</option>
-                                    <option class="option-hover" value="Torete">Torete 13-18 meses</option>
                                 ';
                             }
                         ?>
                 </select>
             </div>
             <div class=" col-md-2" >
-                <label class="label-form" for="cria_edad">Edad
+                <label class="label-form" for="edadActual" id="lblEdadActual" required>Edad *
                 <?php
                     if (isset($_POST['id_vaca'])) {
                         echo ' 0-6 meses';
@@ -108,25 +107,25 @@ include("../../conexion.php");
                     }
                 ?>
                 </label>
-                <input type="number" class="form-control" id="cria_edad" step="1" min="" max="" pattern="" maxlength="" title="" placeholder="Edad actual" name="cria_edad" required>
+                <input type="number" class="form-control" id="edadActual" step="1" min="" max="" pattern="" maxlength="" title="" placeholder="Edad actual" name="cria_edad" required>
             </div>  
             <div class="col-md-2" >
-                <label class="label-form" for="cria_fecha_nacimiento">Fecha de nacimiento</label>
-                <input type="date" class="form-control" id="cria_fecha_nacimiento" placeholder="Seleccionar fecha" name="cria_fecha_nacimiento" >
+                <label class="label-form" for="fechaNacimiento">Fecha de nacimiento</label>
+                <input type="date" class="form-control" id="fechaNacimiento" placeholder="Seleccionar fecha" name="cria_fecha_nacimiento" >
             </div>  
         </div>
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-3" >
-                <label class="label-form" for="cria_numero">Número de la cria</label>
-                <input type="number" class="form-control" id="cria_numero" placeholder="Número de la cría" name="cria_numero" >
+                <label class="label-form" for="cria_numero">Número de la cria *</label>
+                <input type="number" class="form-control" id="cria_numero" placeholder="Número de la cría" name="cria_numero" required>
             </div>
             <div class=" col-md-3" >
                 <label class="label-form" for="cria_arete">Arete de la cria</label>
                 <input type="text" class="form-control" id="cria_arete" placeholder="Número del arete de la cria" name="cria_arete" >
             </div>  
             <div class=" col-md-2" >
-                <label class="label-form" for="cria_estado_arete">Estatus del arete</label>
+                <label class="label-form" for="cria_estado_arete">Estatus del arete *</label>
                 <select class="form-select" style="cursor: pointer; " id="cria_estado_arete" name="cria_estado_arete" required>
                         <option class="option-hover" value="" selected>Seleccionar</option>
                         <option class="option-hover" value="Vigente">Vigente</option>
@@ -145,6 +144,18 @@ include("../../conexion.php");
                 <label class="label-form" for="cria_raza">Raza</label>
                 <input type="text" class="form-control" id="cria_raza" placeholder="Raza de la cria" name="cria_raza" >
             </div>
+            <div class="col-md-3 mb-3" >
+                <label class="label-form" for="cria_peso_actual">Peso actual *</label>
+                <input type="number" class="form-control" id="cria_peso_actual" step="0.001" min="0" max="9999.999" placeholder="Ejemplo 89.705" name="cria_peso_actual" required>
+            </div>
+            <div class=" col-md-2" >
+                <label class="label-form" for="criaFinada">Cría finada *</label>
+                <select class="form-select" style="cursor: pointer; " id="criaFinada" name="cria_finada" required>
+                        <option class="option-hover" value="Si">Si</option>
+                        <option class="option-hover" value="No" selected>No</option>
+                </select>
+            </div>
+            <div class="col-md-2 mb-3"></div>
         </div>
 
         <h3 class="">Pesos</h3>
@@ -162,13 +173,6 @@ include("../../conexion.php");
                 <label class="label-form" for="cria_peso_venta">Peso de venta</label>
                 <input type="number" class="form-control" id="cria_peso_venta" step="0.001" min="0" max="9999.999" placeholder="Digitar peso de venta" name="cria_peso_venta" >
             </div>              
-            <div class=" col-md-2" >
-                <label class="label-form" for="cria_finada">Cría finada</label>
-                <select class="form-select" style="cursor: pointer; " id="cria_finada" name="cria_finada">
-                        <option class="option-hover" value="Si">Si</option>
-                        <option class="option-hover" value="No" selected>No</option>
-                </select>
-            </div>
         </div>
 
         <h3 class="">Otras fechas</h3>
@@ -202,9 +206,9 @@ include("../../conexion.php");
             </div>
         </div>  
 
-        <!-- <h3 class="">Información adicional</h3>
+        <h3 class="">Fotografías y observaciones</h3>
 
-        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12">
+        <div class="justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">
             <div class=" col-md-5" >
                 <label class="label-form" for="cria_foto">Fotografía de la cria</label>
                 <input class="form-control" type="file" id="cria_foto"  accept="image/*" name="cria_foto">
@@ -213,8 +217,8 @@ include("../../conexion.php");
                 <label class="label-form" for="cria_foto_fierro">Fotografía fierro</label>
                 <input class="form-control" type="file" id="cria_foto_fierro"  accept="image/*" name="cria_foto_fierro">
         </div>
-        </div> -->
-        
+        </div>
+
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class="col-md-12" > 
                 <label class="label-form" for="cria_observaciones">Observaciones</label>
@@ -230,6 +234,42 @@ include("../../conexion.php");
 <script>
     //VALIDACIONES DE ESTADO PRODUCTIVO EN RELACION A LA EDAD
     $(document).ready(function(){
+        
+        //---------------------SI ES FALLECIDA EDAD ACTUAL NO REQUERIDA
+        $("#criaFinada").on('change', function(){
+            let finada = $("#criaFinada").val();
+            if(finada == "Si"){
+                $("#lblEdadActual").text("Edad actual");
+                $("#edadActual").attr('required', false);
+                $("#edadActual").attr('readonly', true);
+                $("#edadActual").attr('type', "text");
+                $("#edadActual").attr('placeholder', "Fallecida");
+                $("#edadActual").val('Fallecida');
+                $("#edadActual").removeAttr('step');
+                $("#edadActual").css('background-color', '#e9ecef');
+
+            }else if(finada == "No") {
+                $("#lblEdadActual").text("Edad actual *");
+                $("#edadActual").attr('required', true);
+                $("#edadActual").attr('readonly', false);
+                $("#edadActual").attr('type', "number");
+                $("#edadActual").attr('placeholder', "Edad actual");
+                $("#fechaNacimiento").val('');
+                $("#edadActual").css('background-color', '#fff');
+            }
+        });
+
+        $("#fechaNacimiento").on('input', function(){
+            let finada = $("#criaFinada").val();
+
+            if(finada == "Si"){
+                $("#edadActual").val('Fallecida');
+            }else if(finada == "No") {
+
+            }
+        });
+
+
         // Detectar cambios en el selector
         $('#cria_sexo').change(function(){
             // Obtener el valor seleccionado del selector
@@ -243,61 +283,61 @@ include("../../conexion.php");
                 case 'Ternera':
                 case 'Ternero':
                     $('button[type="submit"]').prop('disabled', false); 
-                    $('#cria_edad').attr({
+                    $('#edadActual').attr({
                         'min': '0',
                         'max': '6',
                         'pattern': '[0-6]',
                         'maxlength': '1',
                         'title': 'Ingrese un número del 0 al 6'
                     });
-                    $('label[for="cria_edad"]').text('Edad 0-6 meses');
+                    $('label[for="edadActual"]').text('Edad 0-6 meses');
                     break;
                 case 'Becerra':
                 case 'Becerro':
                     $('button[type="submit"]').prop('disabled', false); 
-                    $('#cria_edad').attr({
+                    $('#edadActual').attr({
                         'min': '7',
                         'max': '12',
                         'pattern': '[7-12]',
                         'maxlength': '2',
                         'title': 'Ingrese un número del 7 al 12'
                     });
-                    $('label[for="cria_edad"]').text('Edad 7-12 meses');
+                    $('label[for="edadActual"]').text('Edad 7-12 meses');
                     break;
                 // case 'Novillona':
                 //     $('button[type="submit"]').prop('disabled', false); 
-                //     $('#cria_edad').attr({
+                //     $('#edadActual').attr({
                 //         'min': '13',
                 //         'max': '36',
                 //         'pattern': '[13-36]',
                 //         'maxlength': '2',
                 //         'title': 'Ingrese un número del 13 al 36'
                 //     });
-                //     $('label[for="cria_edad"]').text('Edad 13-36 meses');                
+                //     $('label[for="edadActual"]').text('Edad 13-36 meses');                
                 //     break;
                 case 'Torete':
                     $('button[type="submit"]').prop('disabled', false); 
-                    $('#cria_edad').attr({
+                    $('#edadActual').attr({
                         'min': '13',
                         'max': '18',
                         'pattern': '[13-18]',
                         'maxlength': '2',
                         'title': 'Ingrese un número del 13 al 18'
                     });
-                    $('label[for="cria_edad"]').text('Edad 13-18 meses');                 
+                    $('label[for="edadActual"]').text('Edad 13-18 meses');                 
                     break;
                 default:
                     // En caso de opción no válida, restaurar valores predeterminados
                     alert('Por favor seleccione un estado productivo.');
                     $('button[type="submit"]').prop('disabled', true);
-                    $('#cria_edad').attr({
+                    $('#edadActual').attr({
                         'min': '',
                         'max': '',
                         'pattern': '',
                         'maxlength': '',
                         'title': ''
                     });
-                    $('label[for="cria_edad"]').text('Edad');
+                    $('label[for="edadActual"]').text('Edad');
                     break;
             }
         });
@@ -305,8 +345,8 @@ include("../../conexion.php");
     //VALIDACIONES EDAD RELACION CON FECHA DE NACIMIENTO
     document.addEventListener('DOMContentLoaded', function() {
         // Obtener el input de Edad y el input de Fecha
-        var inputEdad = document.getElementById('cria_edad');
-        var inputFecha = document.getElementById('cria_fecha_nacimiento');
+        var inputEdad = document.getElementById('edadActual');
+        var inputFecha = document.getElementById('fechaNacimiento');
 
         // Función para actualizar la fecha según la edad ingresada
         function actualizarFecha() {
@@ -326,8 +366,8 @@ include("../../conexion.php");
         inputEdad.addEventListener('input', actualizarFecha);
 
         // Obtener el input de Edad y el input de Fecha
-        var inputEdad = document.getElementById('cria_edad');
-        var inputFecha = document.getElementById('cria_fecha_nacimiento');
+        var inputEdad = document.getElementById('edadActual');
+        var inputFecha = document.getElementById('fechaNacimiento');
 
         // Función para actualizar la edad según la fecha de nacimiento seleccionada
         function actualizarEdad() {

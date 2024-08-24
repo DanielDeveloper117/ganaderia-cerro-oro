@@ -474,7 +474,6 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     $stmt_finadas->execute();
     $arreglo_finadas = $stmt_finadas->fetch(PDO::FETCH_ASSOC);
     $finadas = $arreglo_finadas['total_finadas'];
-    
 
 ?>
 

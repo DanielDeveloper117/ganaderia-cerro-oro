@@ -8,7 +8,7 @@ include("../../conexion.php");
 //si el campo foto esta vacio
 
 //------------------------------------------------------------------- si el campo de foto tiene una nueva foto actualizar todo, incluyendo la foto
-        if (isset($_POST['id_macho'])
+        if (isset($_POST['id_macho']) 
             && isset($_POST['macho_numero'])
             && isset($_POST['macho_arete'])
             && isset($_POST['macho_tatuaje'])
@@ -282,7 +282,7 @@ include("../../conexion.php");
         
         }else {
             echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
-            //echo "Error: " . $e->getMessage();
+            echo "Error: " . $e->getMessage();
             echo '
             <div class="d-flex flex-row justify-content-center col-12">
                 <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >

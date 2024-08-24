@@ -200,7 +200,6 @@ include("../../conexion.php");
                         <option class="option-hover" value="No">No</option>
                 </select>
             </div>
-            
         </div>
         
         <h3 class="pt-4 mb-3">Madre</h3>  
