@@ -149,9 +149,8 @@ include("../../conexion.php");
                     :cria_foto, :cria_foto_fierro,
                     :cria_observaciones)";
                 $stmt = $conexion->prepare($sql); // Preparar la consulta
+
                 // Vincular los valores a los marcadores de posición
-                #$id_usuario=$_SESSION['id_usuario']; //insertar id del usuario actual en sesion para clave foranea
-                //$stmt->bindParam(':id_usuario', $id_usuario);
                 $stmt->bindParam(':madre_numero', $madre_numero);   
                 $stmt->bindParam(':cria_edad', $cria_edad);   
                 $stmt->bindParam(':cria_sexo', $cria_sexo);  
@@ -224,7 +223,6 @@ include("../../conexion.php");
             
         }else {
             echo "<script>alert('Hubo un error al recibir el formulario.');</script>";
-            //echo "Error: " . $e->getMessage();
             echo '
             <div class="d-flex flex-row justify-content-center col-12">
                 <div class="d-flex justify-content-center align-items-center flex-column mt-5 col-8" >

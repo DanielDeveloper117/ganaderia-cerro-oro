@@ -216,7 +216,7 @@ include("../../conexion.php");
             <div class=" col-md-5" >
                 <label class="label-form" for="cria_foto_fierro">Fotografía fierro</label>
                 <input class="form-control" type="file" id="cria_foto_fierro"  accept="image/*" name="cria_foto_fierro">
-        </div>
+            </div>
         </div>
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        

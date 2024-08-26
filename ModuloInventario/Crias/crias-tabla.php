@@ -146,11 +146,7 @@ if ($totalToretes > 0) {
         try {
             // Consulta SQL con prepared statement filtrando por rol=agente
             //$sql = "SELECT id_cria, padre_num, padre_raza, madre_num, madere_raza FROM hembra WHERE rol = 'agente'";
-            $sql = "SELECT id_cria, madre_numero, cria_edad, cria_sexo, 
-            cria_fecha_nacimiento, cria_numero, cria_arete, cria_tatuaje, cria_estado_arete, cria_raza,  
-            cria_peso_nacimiento, cria_peso_destete, cria_peso_venta, cria_finada, 
-            cria_fecha_destete, cria_fecha_aretado, cria_fecha_tatuaje, 
-            cria_fecha_fierro, cria_fecha_venta, cria_observaciones, fecha_registro  FROM crias";
+            $sql = "SELECT * FROM crias";
             $stmt = $conexion->prepare($sql);
             $stmt->execute();
             // Mostrar los resultados en una tabla HTML
@@ -161,7 +157,7 @@ if ($totalToretes > 0) {
                         <th scope="col">Editar registro</th>
 
                         <th scope="col">Número de la madre</th>
-                        <th scope="col">Edad de la cría</th>
+                        <th scope="col">Edad actual</th>
                         <th scope="col">Estado productivo</th>
                         <th scope="col">Fecha de nacimiento</th>
 
@@ -170,6 +166,8 @@ if ($totalToretes > 0) {
                         <th scope="col">Estado del arete</th>
                         <th scope="col">Tatuaje</th>
                         <th scope="col">Raza de la cria</th>
+                        <th scope="col">Peso actual</th>
+
 
                         <th scope="col">Peso de nacimiento</th>
                         <th scope="col">Peso destete</th>
@@ -221,6 +219,7 @@ if ($totalToretes > 0) {
                          echo '<td>' . $arreglo_sql['cria_estado_arete'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_tatuaje'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_peso_actual'] . '</td>';
 
                          echo '<td>' . $arreglo_sql['cria_peso_nacimiento'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_peso_destete'] . '</td>';
