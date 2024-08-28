@@ -461,6 +461,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
                 "previous": "Anterior"
               }
             },
+            "pageLength": 30,
             "lengthMenu": [ [10, 20, 30, 40, 50, 100, 1000], [10, 20, 30, 40, 50, 100, 1000] ],
             "scrollY": "500px", // Altura del área de desplazamiento vertical
             "scrollX": true,

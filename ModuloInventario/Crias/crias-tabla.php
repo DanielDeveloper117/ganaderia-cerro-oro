@@ -82,14 +82,14 @@ $stmt = $conexion->prepare($sql);
 $stmt->execute();
 
 // Verificar si hay Novillonas con más de 36 meses de edad
-$sqlNovillona = "SELECT COUNT(*) AS total_novillonas FROM crias WHERE cria_sexo = 'Novillona' AND cria_edad > 36";
+$sqlNovillona = "SELECT COUNT(*) AS total_novillonas FROM crias WHERE cria_sexo = 'Becerra' AND cria_edad > 12";
 $stmtNovillona = $conexion->prepare($sqlNovillona);
 $stmtNovillona->execute();
 $resultadoNovillona = $stmtNovillona->fetch(PDO::FETCH_ASSOC);
 $totalNovillonas = $resultadoNovillona['total_novillonas'];
 
 // Verificar si hay Toretes con más de 18 meses de edad
-$sqlTorete = "SELECT COUNT(*) AS total_toretes FROM crias WHERE cria_sexo = 'Torete' AND cria_edad > 18";
+$sqlTorete = "SELECT COUNT(*) AS total_toretes FROM crias WHERE cria_sexo = 'Becerro' AND cria_edad > 12";
 $stmtTorete = $conexion->prepare($sqlTorete);
 $stmtTorete->execute();
 $resultadoTorete = $stmtTorete->fetch(PDO::FETCH_ASSOC);
@@ -97,11 +97,11 @@ $totalToretes = $resultadoTorete['total_toretes'];
 
 // Mostrar mensajes si hay Novillonas o Toretes con más de la edad especificada
 if ($totalNovillonas > 0) {
-    echo "<script>alert('Hay una o más Novillonas con más de 36 meses de edad.');</script>";
+    echo "<script>alert('Hay una o más Becerras con más de 12 meses de edad.');</script>";
 }
 
 if ($totalToretes > 0) {
-    echo "<script>alert('Hay uno o más Toretes con más de 18 meses de edad.');</script>";
+    echo "<script>alert('Hay uno o más Becerros con más de 12 meses de edad.');</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -115,11 +115,33 @@ if ($totalToretes > 0) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <link href="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.0/datatables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <link rel="stylesheet" href="../styles/styles-crias.css">
 
     <title>Tabla de inventario - Crías</title>
 </head>
 <body>
+
+<style>
+        table.dataTable {
+            table-layout: fixed;
+            width: 100%;
+        }
+        table.dataTable td, table.dataTable th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #spanNumberNoti{
+            color: #fff;
+            background-color: #000;
+            border-radius: 100px;
+        }
+        .renglon-fallecido{
+            background-color: #ff000073 !important;
+        }
+    </style>
 
 <section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-buttons2">
     <div class="col-11 col-md-11">
@@ -156,29 +178,31 @@ if ($totalToretes > 0) {
                         <th scope="col">Eliminar</th>
                         <th scope="col">Editar registro</th>
 
-                        <th scope="col">Número de la madre</th>
-                        <th scope="col">Edad actual</th>
-                        <th scope="col">Estado productivo</th>
-                        <th scope="col">Fecha de nacimiento</th>
-
                         <th scope="col">Número de la cria</th>
-                        <th scope="col">Número de arete</th>
+                        <th scope="col">Número de la madre</th>
+                        <th scope="col">Estado productivo</th>
                         <th scope="col">Estado del arete</th>
-                        <th scope="col">Tatuaje</th>
-                        <th scope="col">Raza de la cria</th>
+                        <th scope="col">Edad actual</th>
                         <th scope="col">Peso actual</th>
-
-
-                        <th scope="col">Peso de nacimiento</th>
+            
+                        <th scope="col">Raza de la cria</th>
+                        <th scope="col">Número de arete</th>
+                        <th scope="col">Tatuaje</th>
+                        <th scope="col">Fallecida</th>
+                        
+                        
+                        <th scope="col" style="border-left:solid #0006;">Peso de nacimiento</th>
                         <th scope="col">Peso destete</th>
                         <th scope="col">Peso de venta</th>                       
-                        <th scope="col">Finada</th>
-
+                        
+                        <th scope="col" style="border-left:solid #0006;">Fecha de nacimiento</th>
                         <th scope="col">Fecha de destete</th>
                         <th scope="col">Fecha de aretado</th>
                         <th scope="col">Fecha de tatuaje</th>
                         <th scope="col">Fecha de fierro</th>
                         <th scope="col">Fecha de venta</th>
+                        <th scope="col" style="border-left:solid #0006;">Fotografía</th>
+                        <th scope="col">Fotografía del fierro</th>
 
                         <th scope="col">Observaciones</th>
                         <th scope="col">Fecha de registro</th>
@@ -209,30 +233,30 @@ if ($totalToretes > 0) {
                             </form>
                          </td>';
 
-                         echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_edad'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_sexo'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_fecha_nacimiento'] . '</td>';
-   
                          echo '<td>' . $arreglo_sql['cria_numero'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_arete'] . '</td>';
+                         echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_sexo'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_estado_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_tatuaje'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_edad'] . '</td>';
+                         
                          echo '<td>' . $arreglo_sql['cria_peso_actual'] . '</td>';
-
-                         echo '<td>' . $arreglo_sql['cria_peso_nacimiento'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_arete'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_tatuaje'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_finada'] . '</td>';
+                         
+                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['cria_peso_nacimiento'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_peso_destete'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_peso_venta'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_finada'] . '</td>';
-
+                         
+                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['cria_fecha_nacimiento'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_fecha_destete'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_fecha_aretado'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_fecha_tatuaje'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_fecha_fierro'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_fecha_venta'] . '</td>';
-                         //echo '<td> <img src="' . $arreglo_sql['cria_foto'] .'" width="50" height="40" alt="Vacio"></td>';
-                         //echo '<td> <img src="' . $arreglo_sql['cria_foto_fierro'] .'" width="50" height="40" alt="Vacio"></td>';
+                         echo '<td style="border-left:solid #0006;"> <a data-fancybox="gallery" href="' . $arreglo_sql['cria_foto'] .'"><img src="' . $arreglo_sql['cria_foto'] .'" width="50" height="40" alt="Vacio"></a></td>';
+                         echo '<td> <a data-fancybox="gallery" href="' . $arreglo_sql['cria_foto_fierro'] .'"><img src="' . $arreglo_sql['cria_foto_fierro'] .'" width="50" height="40" alt="Vacio"></a></td>';
                          echo '<td>' . $arreglo_sql['cria_observaciones'] . '</td>';
                          echo '<td>' . $arreglo_sql['fecha_registro'] . '</td>';
                     // echo '<td><a href="fpdf/reporte-agente.php?id=' . $arreglo_sql['id_usuario'] . '" target="_blank" class="btn btn-success">Generar reporte<svg style="padding-left:5px;" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
@@ -414,6 +438,15 @@ if ($totalToretes > 0) {
     </div>
 </section>
 
+<!-- codigo de fancybox -->
+<script>
+    $(document).ready(function() {
+  // Inicializar FancyBox
+  $('[data-fancybox="gallery"]').fancybox({
+    // Opciones adicionales aquí
+  });
+});
+</script>
 
 <script>
     $(document).ready(function() {
@@ -424,6 +457,7 @@ if ($totalToretes > 0) {
             search: {
                return: false
             },
+            "autoWidth": true,
             "language": { 
               "decimal" : "",
               "emptyTable":"No hay registros",
@@ -444,8 +478,10 @@ if ($totalToretes > 0) {
                 "previous": "Anterior"
               }
             },
+            "pageLength": 30,
             "lengthMenu": [ [10, 20, 30, 40, 50, 100, 1000], [10, 20, 30, 40, 50, 100, 1000] ],
             "scrollY": "500px", // Altura del área de desplazamiento vertical
+            "scrollX": true,
             "scrollCollapse": true // Colapso del scroll cuando no es necesario
         });
     });
