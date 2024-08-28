@@ -8,6 +8,27 @@
 // } else {
 //     echo 'Usuario autenticado con ID: '.$_SESSION['id_usuario'];
 // }
+include("../conexion.php");
+
+$sqlTotalCrias = "SELECT COUNT(*) AS total_crias FROM crias WHERE cria_finada = 'No'";
+$stmtTotalCrias = $conexion->prepare($sqlTotalCrias);
+$stmtTotalCrias->execute();
+$arregloTotalCrias = $stmtTotalCrias->fetch(PDO::FETCH_ASSOC);
+$cantidadTotalCrias = $arregloTotalCrias['total_crias'];
+
+$sqlTotalVacas = "SELECT COUNT(*) AS total_vacas FROM vacas WHERE vaca_finada = 'No'";
+$stmtTotalVacas = $conexion->prepare($sqlTotalVacas);
+$stmtTotalVacas->execute();
+$arregloTotalVacas = $stmtTotalVacas->fetch(PDO::FETCH_ASSOC);
+$cantidadTotalVacas = $arregloTotalVacas['total_vacas'];
+
+$sqlTotalMachos = "SELECT COUNT(*) AS total_machos FROM machos WHERE macho_finado = 'No'";
+$stmtTotalMachos = $conexion->prepare($sqlTotalMachos);
+$stmtTotalMachos->execute();
+$arregloTotalMachos = $stmtTotalMachos->fetch(PDO::FETCH_ASSOC);
+$cantidadTotalMachos = $arregloTotalMachos['total_machos'];
+
+$totalGanado = $cantidadTotalCrias + $cantidadTotalVacas + $cantidadTotalMachos;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,23 +104,21 @@
             </div>
         </div>
 
-        <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center ">
+        <div class="d-flex flex-column flex-md-row col-12 justify-content-around justify-content-md-around align-items-center ">
             <div class="col-12 col-md-3">
                 <a href="calcular-cai.php"><button class="btn-m-inv" >Calcular CAI</button></a>
-            </div>
+            </div >
         </div>
-           
-        <!-- <div class="d-flex flex-column flex-md-row col-12 justify-content-between justify-content-md-around align-items-center">
-            <div class="col-12 col-md-5">
-                <a  href="#"><button class="form-control btn-dark btn-options" >x</button></a>
-            </div>
-            <div class="col-12 col-md-5">
-                <a  href="#"><button class="form-control btn-dark btn-options" >x</button></a>
-            </div>
-        </div> -->
-
     </div>
 
+    <div class="d-flex flex-column flex-md-row col-12 justify-content-around justify-content-md-around align-items-center mb-5">
+        <div class="col-12 col-md-9 flex-column align-items-center justify-content-start p-3" style="border: 1px solid #307672; height: 100%;">
+            <h5 class="mb-4">Ganado vivo total</h5>
+            <p>Usted tiene <?php echo $cantidadTotalCrias?> cria(s)</p>
+            <p>Usted tiene <?php echo $cantidadTotalVacas?> hembra(s)</p>
+            <p>Usted tiene <?php echo $cantidadTotalMachos?> machos(s)</p>
+        </div>
+    </div>
     
 </section>
 

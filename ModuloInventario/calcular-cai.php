@@ -8,6 +8,47 @@
 //} else {
 //    echo 'Usuario autenticado con ID: '.$_SESSION['id_usuario'];
 //}
+include("../conexion.php");
+
+$sqlTotalCrias = "SELECT COUNT(*) AS total_crias FROM crias WHERE cria_finada = 'No'";
+$stmtTotalCrias = $conexion->prepare($sqlTotalCrias);
+$stmtTotalCrias->execute();
+$arregloTotalCrias = $stmtTotalCrias->fetch(PDO::FETCH_ASSOC);
+$cantidadTotalCrias = $arregloTotalCrias['total_crias'];
+
+$sqlTotalVacas = "SELECT COUNT(*) AS total_vacas FROM vacas WHERE vaca_finada = 'No'";
+$stmtTotalVacas = $conexion->prepare($sqlTotalVacas);
+$stmtTotalVacas->execute();
+$arregloTotalVacas = $stmtTotalVacas->fetch(PDO::FETCH_ASSOC);
+$cantidadTotalVacas = $arregloTotalVacas['total_vacas'];
+
+$sqlTotalMachos = "SELECT COUNT(*) AS total_machos FROM machos WHERE macho_finado = 'No'";
+$stmtTotalMachos = $conexion->prepare($sqlTotalMachos);
+$stmtTotalMachos->execute();
+$arregloTotalMachos = $stmtTotalMachos->fetch(PDO::FETCH_ASSOC);
+$cantidadTotalMachos = $arregloTotalMachos['total_machos'];
+
+$totalGanado = $cantidadTotalCrias + $cantidadTotalVacas + $cantidadTotalMachos;
+
+$sqlSumaPesoCrias = "SELECT SUM(cria_peso_actual) AS suma_peso_crias FROM crias WHERE cria_finada = 'No'";
+$stmtSumaPesoCrias = $conexion->prepare($sqlSumaPesoCrias);
+$stmtSumaPesoCrias->execute();
+$arregloSumaPesoCrias = $stmtSumaPesoCrias->fetch(PDO::FETCH_ASSOC);
+$sumaPesoCrias = $arregloSumaPesoCrias['suma_peso_crias'];
+
+$sqlSumaPesoMachos = "SELECT SUM(macho_peso_actual) AS suma_peso_machos FROM machos WHERE macho_finado = 'No'";
+$stmtSumaPesoMachos = $conexion->prepare($sqlSumaPesoMachos);
+$stmtSumaPesoMachos->execute();
+$arregloSumaPesoMachos = $stmtSumaPesoMachos->fetch(PDO::FETCH_ASSOC);
+$sumaPesoMachos = $arregloSumaPesoMachos['suma_peso_machos'];
+
+$sqlSumaPesoVacas = "SELECT SUM(vaca_peso_actual) AS suma_peso_vacas FROM vacas WHERE vaca_finada = 'No'";
+$stmtSumaPesoVacas = $conexion->prepare($sqlSumaPesoVacas);
+$stmtSumaPesoVacas->execute();
+$arregloSumaPesoVacas = $stmtSumaPesoVacas->fetch(PDO::FETCH_ASSOC);
+$sumaPesoVacas = $arregloSumaPesoVacas['suma_peso_vacas'];
+
+$pesoTotalGanado = $sumaPesoCrias + $sumaPesoMachos + $sumaPesoVacas;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,12 +94,8 @@
 
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-2" >
-                <label class="label-form" for="ugm">UGM</label>
-                <input type="number" class="form-control mb-3" id="ugm" placeholder="Digitar el UGM" >
-            </div>
-            <div class=" col-md-2" >
                 <label class="label-form" for="cg">Cantidad de ganado</label>
-                <input type="number" class="form-control mb-3" id="cg" placeholder="Digitar cantidad" >
+                <input type="number" class="form-control mb-3" id="cg" value="<?php echo $totalGanado ?>"  placeholder="Digitar cantidad" >
             </div>
             <div class=" col-md-2" >
             </div>
@@ -73,7 +110,7 @@
         <div class="d-flex flex-column justify-content-md-between d-md-flex flex-md-row col-md-12 div-conteiner-inputs-group">        
             <div class=" col-md-2" >
                 <label class="label-form" for="pvt">Peso Vivo Total</label>
-                <input type="number" class="form-control mb-3" id="pvt" placeholder="Digitar el PVT" >
+                <input type="number" class="form-control mb-3" id="pvt" value="<?php echo $pesoTotalGanado ?>" placeholder="Digitar el PVT" >
             </div>
             <div class=" col-md-2" >
                 <label class="label-form" for="po">Periodo de Ocupación</label>
@@ -84,9 +121,12 @@
                 
             </div>
             <div class=" col-md-2" >
-                <label class="label-form" for="ua">UA</label>
+                <label class="label-form" for="ua">UA o UGM</label>
                 <div class="d-flex text-center flex-row justify-content-center align-items-center">
-                    <input type="number" class="form-control mb-3" id="ua" placeholder="Digitar UA" >
+                    <select class="form-select" style="cursor: pointer; " id="ua">
+                            <option class="option-hover" value="450" selected>UA</option>
+                            <option class="option-hover" value="1000" >UGM</option>
+                    </select>  
                     <p style="margin-bottom:0px;">Kg.</p>
                 </div>
                 

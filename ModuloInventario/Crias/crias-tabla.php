@@ -212,7 +212,12 @@ if ($totalToretes > 0) {
                     <tbody>';
         
             while ($arreglo_sql = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<tr>';
+                if($arreglo_sql["cria_finada"]=="Si"){
+                    $classRowFallecido ='renglon-fallecido';
+                 }else{
+                    $classRowFallecido='';
+                 }
+                echo '<tr class="'. $classRowFallecido.'">';
                     echo '<td> 
                             <form action="eliminar-cria.php" method="POST">
                                 <input type="hidden" name="id_cria"  value="'. $arreglo_sql['id_cria'].'" >
@@ -237,17 +242,34 @@ if ($totalToretes > 0) {
                          echo '<td>' . $arreglo_sql['madre_numero'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_sexo'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_estado_arete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_edad'] . '</td>';
+
+                        if($arreglo_sql['cria_edad']==null){ 
+                            echo '<td>-</td>';
+                        }else if($arreglo_sql['cria_edad']=="Fallecida"){ 
+                            echo '<td>Fallecida</td>';
+                        }
+                        else if($arreglo_sql['cria_edad']==1){
+                            echo '<td >' . $arreglo_sql['cria_edad'] .' mes
+                             </td>';
+                        }
+                        else if($arreglo_sql['cria_edad'] > 1 || $arreglo_sql['cria_edad'] == 0 ){
+                            echo '<td >' . $arreglo_sql['cria_edad'] .' meses
+                             </td>';
+                        }
                          
-                         echo '<td>' . $arreglo_sql['cria_peso_actual'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
+                        if($arreglo_sql['cria_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
+                        echo '<td>' . $arreglo_sql['cria_peso_actual'] . $kg.'</td>';                         echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_arete'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_tatuaje'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_finada'] . '</td>';
                          
-                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['cria_peso_nacimiento'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_peso_destete'] . '</td>';
-                         echo '<td>' . $arreglo_sql['cria_peso_venta'] . '</td>';
+                         if($arreglo_sql['cria_peso_nacimiento']==null){ $kg='-';}else{$kg=' Kg';}
+                         echo '<td style="border-left:solid #0006;">' . $arreglo_sql['cria_peso_nacimiento'] . $kg.'</td>';
+                         if($arreglo_sql['cria_peso_destete']==null){ $kg='-';}else{$kg=' Kg';}
+                         echo '<td>' . $arreglo_sql['cria_peso_destete'] .  $kg.'</td>';
+                         if($arreglo_sql['cria_peso_venta']==null){ $kg='-';}else{$kg=' Kg';}
+                         echo '<td>' . $arreglo_sql['cria_peso_venta'] .  $kg.'</td>';
+
                          
                          echo '<td style="border-left:solid #0006;">' . $arreglo_sql['cria_fecha_nacimiento'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_fecha_destete'] . '</td>';
@@ -291,46 +313,46 @@ if ($totalToretes > 0) {
 <?php 
     /// ESTADO PRODUCTIVO /////////////////////////////////////////////////////////////////////////
     // Realizar la consulta para terneras
-    $sql_terneras = "SELECT COUNT(*) as total_terneras FROM crias WHERE cria_sexo = 'Ternera'";
+    $sql_terneras = "SELECT COUNT(*) as total_terneras FROM crias WHERE cria_sexo = 'Ternera' AND cria_finada = 'No'";
     $stmt_terneras = $conexion->prepare($sql_terneras);
     $stmt_terneras->execute();
     $result_terneras = $stmt_terneras->fetch(PDO::FETCH_ASSOC);
     $terneras = $result_terneras['total_terneras'];
 
     // Realizar la consulta para Ternero
-    $sql_ternero = "SELECT COUNT(*) as total_ternero FROM crias WHERE cria_sexo = 'Ternero'";
+    $sql_ternero = "SELECT COUNT(*) as total_ternero FROM crias WHERE cria_sexo = 'Ternero'  AND cria_finada = 'No'";
     $stmt_ternero = $conexion->prepare($sql_ternero);
     $stmt_ternero->execute();
     $result_ternero = $stmt_ternero->fetch(PDO::FETCH_ASSOC);
     $terneros = $result_ternero['total_ternero'];
 
     // Realizar la consulta para Becerra
-    $sql_becerra = "SELECT COUNT(*) as total_becerra FROM crias WHERE cria_sexo = 'Becerra'";
+    $sql_becerra = "SELECT COUNT(*) as total_becerra FROM crias WHERE cria_sexo = 'Becerra' AND cria_finada = 'No'";
     $stmt_becerra = $conexion->prepare($sql_becerra);
     $stmt_becerra->execute();
     $result_becerra = $stmt_becerra->fetch(PDO::FETCH_ASSOC);
     $becerras = $result_becerra['total_becerra'];
 
     // Realizar la consulta para Becerro
-    $sql_becerro = "SELECT COUNT(*) as total_becerro FROM crias WHERE cria_sexo = 'Becerro'";
+    $sql_becerro = "SELECT COUNT(*) as total_becerro FROM crias WHERE cria_sexo = 'Becerro' AND cria_finada = 'No'";
     $stmt_becerro = $conexion->prepare($sql_becerro);
     $stmt_becerro->execute();
     $result_becerro = $stmt_becerro->fetch(PDO::FETCH_ASSOC);
     $becerros = $result_becerro['total_becerro'];
 
     // Realizar la consulta para Novillona
-    $sql_novillona = "SELECT COUNT(*) as total_novillona FROM crias WHERE cria_sexo = 'Novillona'";
-    $stmt_novillona = $conexion->prepare($sql_novillona);
-    $stmt_novillona->execute();
-    $result_novillona = $stmt_novillona->fetch(PDO::FETCH_ASSOC);
-    $novillonas = $result_novillona['total_novillona'];
+    // $sql_novillona = "SELECT COUNT(*) as total_novillona FROM crias WHERE cria_sexo = 'Novillona'";
+    // $stmt_novillona = $conexion->prepare($sql_novillona);
+    // $stmt_novillona->execute();
+    // $result_novillona = $stmt_novillona->fetch(PDO::FETCH_ASSOC);
+    // $novillonas = $result_novillona['total_novillona'];
 
-    // Realizar la consulta para Torete
-    $sql_torete = "SELECT COUNT(*) as total_torete FROM crias WHERE cria_sexo = 'Torete'";
-    $stmt_torete = $conexion->prepare($sql_torete);
-    $stmt_torete->execute();
-    $result_torete = $stmt_torete->fetch(PDO::FETCH_ASSOC);
-    $toretes = $result_torete['total_torete'];
+    // // Realizar la consulta para Torete
+    // $sql_torete = "SELECT COUNT(*) as total_torete FROM crias WHERE cria_sexo = 'Torete'";
+    // $stmt_torete = $conexion->prepare($sql_torete);
+    // $stmt_torete->execute();
+    // $result_torete = $stmt_torete->fetch(PDO::FETCH_ASSOC);
+    // $toretes = $result_torete['total_torete'];
 
     // ARETADOS //////////////////////////////////////////////////////////////////////////////////////////
     $sql_vigentes = "SELECT COUNT(*) as total_vigentes FROM crias WHERE cria_estado_arete = 'Vigente'";
@@ -383,17 +405,10 @@ if ($totalToretes > 0) {
                     <td>Becerros</td>
                     <td><?php echo $becerros; ?></td>
                 </tr>
-                <tr>
-                    <td>Novillonas</td>
-                    <td><?php echo $novillonas; ?></td>
-                </tr>
-                <tr>
-                    <td>Toretes</td>
-                    <td><?php echo $toretes; ?></td>
-                </tr>
+
                 <tr>
                     <td>Total</td>
-                    <td class="fw-bold"><?php echo ($terneras + $terneros + $becerras + $becerros + $novillonas + $toretes); ?></td>
+                    <td class="fw-bold"><?php echo ($terneras + $terneros + $becerras + $becerros); ?></td>
                 </tr>
             </table>
         </div>
