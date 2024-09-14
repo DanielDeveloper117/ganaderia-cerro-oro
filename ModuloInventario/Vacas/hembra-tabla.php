@@ -408,46 +408,70 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     // consultar estado reproductivo y si esta finada
 
     // Realizar la consulta para Vacas horras
-    $sql_horras = "SELECT vaca_finada, COUNT(*) as total_horras FROM vacas WHERE vaca_estado_re = 'Vaca horra' AND vaca_finada = 'No'";
+    $sql_horras = "SELECT vaca_finada, vaca_peso_actual, COUNT(*) as total_horras, SUM(vaca_peso_actual) as peso_total 
+    FROM vacas 
+    WHERE vaca_estado_re = 'Vaca horra' 
+    AND vaca_finada = 'No'";
     $stmt_horras = $conexion->prepare($sql_horras);
     $stmt_horras->execute();
     $result_horras = $stmt_horras->fetch(PDO::FETCH_ASSOC);
     $vacas_horras = $result_horras['total_horras'];
+    $horras_peso = $result_horras['peso_total'];
 
     // Realizar la consulta para Vacas preñadas
-    $sql_prenadas = "SELECT COUNT(*) as total_prenadas FROM vacas WHERE vaca_estado_re = 'Vaca preñada' AND vaca_finada = 'No'";
+    $sql_prenadas = "SELECT COUNT(*) as total_prenadas, SUM(vaca_peso_actual) as peso_total_prenadas 
+    FROM vacas 
+    WHERE vaca_estado_re = 'Vaca preñada' 
+    AND vaca_finada = 'No'";
     $stmt_prenadas = $conexion->prepare($sql_prenadas);
     $stmt_prenadas->execute();
     $result_prenadas = $stmt_prenadas->fetch(PDO::FETCH_ASSOC);
     $vacas_prenadas = $result_prenadas['total_prenadas'];
+    $peso_total_prenadas = $result_prenadas['peso_total_prenadas'];
 
     // Realizar la consulta para Vacas paridas
-    $sql_paridas = "SELECT COUNT(*) as total_paridas FROM vacas WHERE vaca_estado_re = 'Vaca parida' AND vaca_finada = 'No'";
+    $sql_paridas = "SELECT COUNT(*) as total_paridas, SUM(vaca_peso_actual) as peso_total_paridas 
+    FROM vacas 
+    WHERE vaca_estado_re = 'Vaca parida' 
+    AND vaca_finada = 'No'";
     $stmt_paridas = $conexion->prepare($sql_paridas);
     $stmt_paridas->execute();
     $result_paridas = $stmt_paridas->fetch(PDO::FETCH_ASSOC);
     $vacas_paridas = $result_paridas['total_paridas'];
+    $peso_total_paridas = $result_paridas['peso_total_paridas'];
 
     // Realizar la consulta para Vacas lactantes
-    $sql_lactantes = "SELECT COUNT(*) as total_lactantes FROM vacas WHERE vaca_estado_re = 'Vaca lactante' AND vaca_finada = 'No'";
+    $sql_lactantes = "SELECT COUNT(*) as total_lactantes, SUM(vaca_peso_actual) as peso_total_lactantes 
+    FROM vacas 
+    WHERE vaca_estado_re = 'Vaca lactante' 
+    AND vaca_finada = 'No'";
     $stmt_lactantes = $conexion->prepare($sql_lactantes);
     $stmt_lactantes->execute();
     $result_lactantes = $stmt_lactantes->fetch(PDO::FETCH_ASSOC);
     $vacas_lactantes = $result_lactantes['total_lactantes'];
+    $peso_total_lactantes = $result_lactantes['peso_total_lactantes'];
 
-    // Realizar la consulta para Vacas lactantes
-    $sql_secas = "SELECT COUNT(*) as total_secas FROM vacas WHERE vaca_estado_re = 'Vaca seca' AND vaca_finada = 'No'";
+    // Realizar la consulta para Vacas seca
+    $sql_secas = "SELECT COUNT(*) as total_secas, SUM(vaca_peso_actual) as peso_total_secas 
+    FROM vacas 
+    WHERE vaca_estado_re = 'Vaca seca' 
+    AND vaca_finada = 'No'";
     $stmt_secas = $conexion->prepare($sql_secas);
     $stmt_secas->execute();
     $result_secas = $stmt_secas->fetch(PDO::FETCH_ASSOC);
     $vacas_secas = $result_secas['total_secas'];
+    $peso_total_secas = $result_secas['peso_total_secas'];
 
-    // Realizar la consulta para Vacas lactantes
-    $sql_novillonas = "SELECT COUNT(*) as total_novillonas FROM vacas WHERE vaca_estado_re = 'Novillona' AND vaca_finada = 'No'";
+    // Realizar la consulta para Vacas Novillona
+    $sql_novillonas = "SELECT COUNT(*) as total_novillonas, SUM(vaca_peso_actual) as peso_total_novillonas 
+    FROM vacas 
+    WHERE vaca_estado_re = 'Novillona' 
+    AND vaca_finada = 'No'";
     $stmt_novillonas = $conexion->prepare($sql_novillonas);
     $stmt_novillonas->execute();
     $result_novillonas = $stmt_novillonas->fetch(PDO::FETCH_ASSOC);
     $vacas_novillonas = $result_novillonas['total_novillonas'];
+    $peso_total_novillonas = $result_novillonas['peso_total_novillonas'];
 
     // ARETADOS //////////////////////////////////////////////////////////////////////////////////////////
     $sql_vigentes = "SELECT COUNT(*) as total_vigentes FROM vacas WHERE vaca_estatus = 'Vigente'";
@@ -475,6 +499,8 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
     $arreglo_finadas = $stmt_finadas->fetch(PDO::FETCH_ASSOC);
     $finadas = $arreglo_finadas['total_finadas'];
 
+    $peso_total_todas = $horras_peso + $peso_total_prenadas + $peso_total_paridas + $peso_total_lactantes + $peso_total_secas + $peso_total_novillonas;
+
 ?>
 
 <section class="d-flex col-12 justify-content-center" style="margin-bottom: 200px;">
@@ -483,36 +509,36 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
             <table class="table table-bordered">
                 <tr>
                     <th>Estado reproductivo</th>
-                    <th>Cantidad</th>
+                    <th>Cantidad y peso sumado</th>
                 </tr>
                 <tr>
                     <td>Vacas horras</td>
-                    <td><?php echo $vacas_horras; ?>
+                    <td><?php echo $vacas_horras . ' | ' .  $horras_peso . 'kg'; ?> 
                     </td>
                 </tr>
                 <tr>
                     <td>Vacas preñadas</td>
-                    <td><?php echo $vacas_prenadas; ?></td>
+                    <td><?php echo $vacas_prenadas . ' | ' .  $peso_total_prenadas . 'kg'; ?></td>
                 </tr>
                 <tr>
                     <td>Vacas paridas</td>
-                    <td><?php echo $vacas_paridas; ?></td>
+                    <td><?php echo $vacas_paridas . ' | ' .  $peso_total_paridas . 'kg'; ?></td>
                 </tr>
                 <tr>
                     <td>Vacas lactantes</td>
-                    <td><?php echo $vacas_lactantes; ?></td>
+                    <td><?php echo $vacas_lactantes . ' | ' .  $peso_total_lactantes . 'kg'; ?></td>
                 </tr>
                 <tr>
                     <td>Vacas secas</td>
-                    <td><?php echo $vacas_secas; ?></td>
+                    <td><?php echo $vacas_secas . ' | ' .  $peso_total_secas . 'kg'; ?></td>
                 </tr>
                 <tr>
                     <td>Vacas novillonas</td>
-                    <td><?php echo $vacas_novillonas; ?></td>
+                    <td><?php echo $vacas_novillonas . ' | ' .  $peso_total_novillonas . 'kg'; ?></td>
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td class="fw-bold"><?php echo (($vacas_horras + $vacas_prenadas + $vacas_paridas + $vacas_lactantes + $vacas_secas + $vacas_novillonas) ); ?></td>
+                    <td class="fw-bold"><?php echo (($vacas_horras + $vacas_prenadas + $vacas_paridas + $vacas_lactantes + $vacas_secas + $vacas_novillonas)  . ' | ' .  $peso_total_todas . 'kg' ); ?></td>
                 </tr>
             </table>
         </div>

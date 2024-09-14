@@ -117,6 +117,8 @@ $totalGanado = $cantidadTotalCrias + $cantidadTotalVacas + $cantidadTotalMachos;
             <p>Usted tiene <?php echo $cantidadTotalCrias?> cria(s)</p>
             <p>Usted tiene <?php echo $cantidadTotalVacas?> hembra(s)</p>
             <p>Usted tiene <?php echo $cantidadTotalMachos?> machos(s)</p>
+            <p>Total =  <?php echo $totalGanado?> animales</p>
+
         </div>
     </div>
     

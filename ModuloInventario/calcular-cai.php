@@ -124,10 +124,9 @@ $pesoTotalGanado = $sumaPesoCrias + $sumaPesoMachos + $sumaPesoVacas;
                 <label class="label-form" for="ua">UA o UGM</label>
                 <div class="d-flex text-center flex-row justify-content-center align-items-center">
                     <select class="form-select" style="cursor: pointer; " id="ua">
-                            <option class="option-hover" value="450" selected>UA</option>
-                            <option class="option-hover" value="1000" >UGM</option>
+                            <option class="option-hover" value="450" selected>UA - 450 kg</option>
+                            <option class="option-hover" value="1000" >UGM - 1000 kg</option>
                     </select>  
-                    <p style="margin-bottom:0px;">Kg.</p>
                 </div>
                 
             </div>

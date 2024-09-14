@@ -27,7 +27,7 @@ $stmtVerificarEjecucion->execute();
 $resultadoVerificarEjecucion = $stmtVerificarEjecucion->fetch(PDO::FETCH_ASSOC);
 
 if ($resultadoVerificarEjecucion['conteo'] > 0) {
-    echo "Ya se han actualizado las edades hoy.\n";
+    //echo "Ya se han actualizado las edades hoy.\n";
 } else {
     // Actualizar la ultima_ejecucion
     $sqlActualizarUltimaEjecucion = "UPDATE crias SET ultima_ejecucion = :fechaActual";
@@ -60,7 +60,7 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
         $stmtActualizarEdad->bindParam(':idCria', $idCria, PDO::PARAM_INT);
         $stmtActualizarEdad->execute();
     }
-    echo "Edades actualizadas con éxito.\n";
+    //echo "Edades actualizadas con éxito.\n";
 }
 
 // CODIGO PARA CAMBIAR ESTADO PRODUCTIVO DE ACUERDO A SU EDAD
@@ -143,10 +143,10 @@ if ($totalToretes > 0) {
         }
     </style>
 
-<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-5 section-buttons2">
+<section class="d-flex justify-content-center align-items-center flex-column col-12 col-md-12 mb-3 mt-3 section-buttons2">
     <div class="col-11 col-md-11">
           <!-- <img class="mb-1 mt-2" src="img/logo-copia.png" alt="" width="110" height="100"> -->
-        <h1 class=" text-center mb-4">Tabla de registros de crias</h1>
+        <h1 class=" text-center mb-4">Inventario de crías</h1>
         
         <div class="d-flex flex-row justify-content-center justify-content-md-end mb-1 mb-0">
             <div class="d-flex flex-row justify-content-around align-items-center col-12 col-xl-4">
@@ -258,7 +258,9 @@ if ($totalToretes > 0) {
                         }
                          
                         if($arreglo_sql['cria_peso_actual']==null){ $kg='-';}else{$kg=' Kg';}
-                        echo '<td>' . $arreglo_sql['cria_peso_actual'] . $kg.'</td>';                         echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
+                         echo '<td>' . $arreglo_sql['cria_peso_actual'] . $kg.'</td>';    
+                                              
+                         echo '<td>' . $arreglo_sql['cria_raza'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_arete'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_tatuaje'] . '</td>';
                          echo '<td>' . $arreglo_sql['cria_finada'] . '</td>';
@@ -313,32 +315,65 @@ if ($totalToretes > 0) {
 <?php 
     /// ESTADO PRODUCTIVO /////////////////////////////////////////////////////////////////////////
     // Realizar la consulta para terneras
-    $sql_terneras = "SELECT COUNT(*) as total_terneras FROM crias WHERE cria_sexo = 'Ternera' AND cria_finada = 'No'";
+    $sql_terneras = "
+        SELECT 
+            COUNT(*) as total_terneras, 
+            SUM(cria_peso_actual) as peso_total_terneras 
+        FROM crias 
+        WHERE cria_sexo = 'Ternera' AND cria_finada = 'No'
+    ";
     $stmt_terneras = $conexion->prepare($sql_terneras);
     $stmt_terneras->execute();
     $result_terneras = $stmt_terneras->fetch(PDO::FETCH_ASSOC);
     $terneras = $result_terneras['total_terneras'];
+    $peso_total_terneras = $result_terneras['peso_total_terneras'];
 
-    // Realizar la consulta para Ternero
-    $sql_ternero = "SELECT COUNT(*) as total_ternero FROM crias WHERE cria_sexo = 'Ternero'  AND cria_finada = 'No'";
+    // Realizar la consulta para terneros
+    $sql_ternero = "
+        SELECT 
+            COUNT(*) as total_ternero, 
+            SUM(cria_peso_actual) as peso_total_terneros 
+        FROM crias 
+        WHERE cria_sexo = 'Ternero' AND cria_finada = 'No'
+    ";
     $stmt_ternero = $conexion->prepare($sql_ternero);
     $stmt_ternero->execute();
     $result_ternero = $stmt_ternero->fetch(PDO::FETCH_ASSOC);
     $terneros = $result_ternero['total_ternero'];
+    $peso_total_terneros = $result_ternero['peso_total_terneros'];
 
-    // Realizar la consulta para Becerra
-    $sql_becerra = "SELECT COUNT(*) as total_becerra FROM crias WHERE cria_sexo = 'Becerra' AND cria_finada = 'No'";
+    // Realizar la consulta para becerras
+    $sql_becerra = "
+        SELECT 
+            COUNT(*) as total_becerra, 
+            SUM(cria_peso_actual) as peso_total_becerras 
+        FROM crias 
+        WHERE cria_sexo = 'Becerra' AND cria_finada = 'No'
+    ";
     $stmt_becerra = $conexion->prepare($sql_becerra);
     $stmt_becerra->execute();
     $result_becerra = $stmt_becerra->fetch(PDO::FETCH_ASSOC);
     $becerras = $result_becerra['total_becerra'];
+    $peso_total_becerras = $result_becerra['peso_total_becerras'];
 
-    // Realizar la consulta para Becerro
-    $sql_becerro = "SELECT COUNT(*) as total_becerro FROM crias WHERE cria_sexo = 'Becerro' AND cria_finada = 'No'";
+    // Realizar la consulta para becerros
+    $sql_becerro = "
+        SELECT 
+            COUNT(*) as total_becerro, 
+            SUM(cria_peso_actual) as peso_total_becerros 
+        FROM crias 
+        WHERE cria_sexo = 'Becerro' AND cria_finada = 'No'
+    ";
     $stmt_becerro = $conexion->prepare($sql_becerro);
     $stmt_becerro->execute();
     $result_becerro = $stmt_becerro->fetch(PDO::FETCH_ASSOC);
     $becerros = $result_becerro['total_becerro'];
+    $peso_total_becerros = $result_becerro['peso_total_becerros'];
+
+    // Calcular totales
+    $total_crias = $terneras + $terneros + $becerras + $becerros;
+    $peso_total_crias = $peso_total_terneras + $peso_total_terneros + $peso_total_becerras + $peso_total_becerros;
+
 
     // Realizar la consulta para Novillona
     // $sql_novillona = "SELECT COUNT(*) as total_novillona FROM crias WHERE cria_sexo = 'Novillona'";
@@ -384,33 +419,33 @@ if ($totalToretes > 0) {
 <section class="d-flex col-12 justify-content-center" style="margin-bottom: 200px;">
     <div class="d-flex col-11 justify-content-md-around justify-content-center flex-md-row flex-column resumen-container">
         <div class="col-md-3">
-            <table class="table table-bordered">
-                <tr>
-                    <th>Estado productivo</th>
-                    <th>Cantidad</th>
-                </tr>
-                <tr>
-                    <td>Terneras</td>
-                    <td><?php echo $terneras; ?></td>
-                </tr>
-                <tr>
-                    <td>Terneros</td>
-                    <td><?php echo $terneros; ?></td>
-                </tr>
-                <tr>
-                    <td>Becerras</td>
-                    <td><?php echo $becerras; ?></td>
-                </tr>
-                <tr>
-                    <td>Becerros</td>
-                    <td><?php echo $becerros; ?></td>
-                </tr>
+        <table class="table table-bordered">
+            <tr>
+                <th>Estado productivo</th>
+                <th>Cantidad y peso sumado</th>
+            </tr>
+            <tr>
+                <td>Terneras</td>
+                <td><?php echo $terneras . ' | ' .  $peso_total_terneras . 'kg'; ?></td>
+            </tr>
+            <tr>
+                <td>Terneros</td>
+                <td><?php echo $terneros . ' | ' .  $peso_total_terneros . 'kg'; ?></td>
+            </tr>
+            <tr>
+                <td>Becerras</td>
+                <td><?php echo $becerras . ' | ' .  $peso_total_becerras . 'kg'; ?></td>
+            </tr>
+            <tr>
+                <td>Becerros</td>
+                <td><?php echo $becerros . ' | ' .  $peso_total_becerros . 'kg'; ?></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td class="fw-bold"><?php echo $total_crias . ' | ' .  $peso_total_crias . 'kg'; ?></td>
+            </tr>
+        </table>
 
-                <tr>
-                    <td>Total</td>
-                    <td class="fw-bold"><?php echo ($terneras + $terneros + $becerras + $becerros); ?></td>
-                </tr>
-            </table>
         </div>
 
         <div class="col-md-3">

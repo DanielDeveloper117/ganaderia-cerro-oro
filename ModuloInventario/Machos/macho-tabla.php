@@ -315,18 +315,37 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 <?php
     /// ESTADO REPRODUCTIVO /////////////////////////////////////////////////////////////////////////
     // Realizar la consulta para machos toretes
-    $sql_toretes = "SELECT COUNT(*) as total_toretes FROM machos WHERE macho_estado_re = 'Torete' AND macho_finado = 'No'";
+    $sql_toretes = "
+        SELECT 
+            COUNT(*) as total_toretes, 
+            SUM(macho_peso_actual) as peso_total_toretes 
+        FROM machos 
+        WHERE macho_estado_re = 'Torete' AND macho_finado = 'No'
+    ";
     $stmt_toretes = $conexion->prepare($sql_toretes);
     $stmt_toretes->execute();
     $result_toretes = $stmt_toretes->fetch(PDO::FETCH_ASSOC);
     $machos_toretes = $result_toretes['total_toretes'];
+    $peso_total_toretes = $result_toretes['peso_total_toretes'];
 
-    // Realizar la consulta para machos preñadas
-    $sql_sementales = "SELECT COUNT(*) as total_sementales FROM machos WHERE macho_estado_re = 'Toro semental' AND macho_finado = 'No'";
+    // Realizar la consulta para machos semental
+    $sql_sementales = "
+        SELECT 
+            COUNT(*) as total_sementales, 
+            SUM(macho_peso_actual) as peso_total_sementales 
+        FROM machos 
+        WHERE macho_estado_re = 'Toro semental' AND macho_finado = 'No'
+    ";
     $stmt_sementales = $conexion->prepare($sql_sementales);
     $stmt_sementales->execute();
     $result_sementales = $stmt_sementales->fetch(PDO::FETCH_ASSOC);
     $machos_sementales = $result_sementales['total_sementales'];
+    $peso_total_sementales = $result_sementales['peso_total_sementales'];
+
+    // Calcular totales
+    $total_machos = $machos_toretes + $machos_sementales;
+    $peso_total_machos = $peso_total_toretes + $peso_total_sementales;
+
 
 
     // ARETADOS //////////////////////////////////////////////////////////////////////////////////////////
@@ -360,24 +379,25 @@ if ($resultadoVerificarEjecucion['conteo'] > 0) {
 <section class="d-flex col-12 justify-content-center" style="margin-bottom: 200px;">
     <div class="d-flex col-11 justify-content-md-around justify-content-center flex-md-row flex-column resumen-container">
         <div class="col-md-3">
-            <table class="table table-bordered">
-                <tr>
-                    <th>Estado reproductivo</th>
-                    <th>Cantidad</th>
-                </tr>
-                <tr>
-                    <td>Toretes</td>
-                    <td><?php echo $machos_toretes; ?></td>
-                </tr>
-                <tr>
-                    <td>Toro semental</td>
-                    <td><?php echo $machos_sementales; ?></td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td class="fw-bold"><?php echo ($machos_toretes + $machos_sementales); ?></td>
-                </tr>
-            </table>
+        <table class="table table-bordered">
+            <tr>
+                <th>Estado reproductivo</th>
+                <th>Cantidad y peso sumado</th>
+            </tr>
+            <tr>
+                <td>Toretes</td>
+                <td><?php echo $machos_toretes . ' | ' .  $peso_total_toretes . 'kg'; ?></td>
+            </tr>
+            <tr>
+                <td>Toro semental</td>
+                <td><?php echo $machos_sementales . ' | ' .  $peso_total_sementales . 'kg'; ?></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td class="fw-bold"><?php echo $total_machos . ' | ' .  $peso_total_machos . 'kg'; ?></td>
+            </tr>
+        </table>
+
         </div>
 
         <div class="col-md-3">
